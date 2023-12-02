@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:main="clr-namespace:ProjectSystems.ViewModel"
+                    xmlns:np="clr-namespace:ProjectSystems.ViewModel.AdministrationProjectAndInfSections"
+                    xmlns:mainview="clr-namespace:ProjectSystems.View"
+                    xmlns:npview="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections">
+    <!--Здесь нужно будет добавить под сам проект и инфомационные секции код-->
+    <DataTemplate DataType="{x:Type main:MainWindowVM}">
+        <mainview:MainWindow/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type main:ProjectsVM}">
+        <mainview:ProjectsMenu/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type main:SettingsVM}">
+        <mainview:SettingsMenu/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type main:WorkersVM}">
+        <mainview:WorkersMenu/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type np:NavigationPanelVM}">
+        <npview:PageAdministrationProjectAndInfSections/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type np:TasksVM}">
+        <npview:TaskMenu/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type np:InfSectionVM}">
+        <npview:InfSectionsMenu/>
+    </DataTemplate>
+    
+</ResourceDictionary>

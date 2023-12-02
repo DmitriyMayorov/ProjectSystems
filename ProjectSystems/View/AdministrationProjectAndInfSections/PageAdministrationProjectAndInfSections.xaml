@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="ProjectSystems.View.AdministrationProjectAndInfSections.PageAdministrationProjectAndInfSections"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections"
+             xmlns:Menu="clr-namespace:ProjectSystems.Util.TemplateElement"
+             xmlns:vm="clr-namespace:ProjectSystems.ViewModel.AdministrationProjectAndInfSections"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="850">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.8*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0"
+              Width="Auto"
+              Background="#272B2F">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.8*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <ComboBox HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Margin="10, 25"
+                          ItemsSource="{Binding Projects}"
+                          SelectedItem="{Binding CurrentProject}"
+                          DisplayMemberPath="Name"
+                          FontSize="25"
+                          Foreground="Wheat"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+                <StackPanel>
+
+                    <Menu:Button Style="{StaticResource BtnStyle}"
+                                 Command="{Binding TaskCommand}">
+                        <Grid>
+
+                            <Image Style="{StaticResource Image_Style}"/>
+
+                            <TextBlock Text="Tasks" Style="{StaticResource Text_Style}"/>
+
+                        </Grid>
+                    </Menu:Button>
+
+                    <Menu:Button Style="{StaticResource BtnStyle}"
+                                 Command="{Binding InfSectionCommand}">
+                        <Grid>
+
+                            <Image Style="{StaticResource Image_Style}"/>
+
+                            <TextBlock Text="Sections" Style="{StaticResource Text_Style}"/>
+
+                        </Grid>
+                    </Menu:Button>
+
+                    <Menu:Button Style="{StaticResource BtnStyle}"
+                                 Command="{Binding InfSectionCommand}">
+                        <Grid>
+
+                            <Image Style="{StaticResource Image_Style}"/>
+
+                            <TextBlock Text="Pages" Style="{StaticResource Text_Style}"/>
+
+                        </Grid>
+                    </Menu:Button>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Column="1" Background="#272B2F">
+            <ContentControl Content="{Binding CurrentViewPanel}" x:Name="NPContext"/>
+        </Grid>
+    </Grid>
+</UserControl>

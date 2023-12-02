@@ -1,0 +1,71 @@
+﻿<Window x:Class="ProjectSystems.View.WorkerAddMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectSystems.View"
+        mc:Ignorable="d"
+        Title="WorkerMenu" 
+        MaxHeight="400"
+        MaxWidth="400"
+        Width="400"
+        Height="400"
+        Background="#272B2F">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <Label Foreground="White" FontSize="24">
+                    ФИО
+                </Label>
+                <TextBox Foreground="White" FontSize="20" 
+                         Margin="10, 0, 0, 0" Text="{Binding FIO}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel>
+                <Label Foreground="White" FontSize="24">
+                    Номер паспорта
+                </Label>
+                <TextBox Text="{Binding PassportNum}" Foreground="White" 
+                         FontSize="20" Margin="10, 0, 0, 0"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel>
+                <Label Foreground="White" FontSize="24">
+                    Серия пасспорта
+                </Label>
+                <TextBox Text="{Binding PassportSeries}" Foreground="White"
+                         FontSize="20" Margin="10, 0, 0, 0"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <StackPanel>
+                <Label Foreground="White" FontSize="24">
+                    Должность
+                </Label>
+                <ComboBox Width="200" HorizontalAlignment="Left" 
+                          Margin="10, 0, 0 ,0" ItemsSource="{Binding PositionsDTO}" 
+                          SelectedItem="{Binding SelectedPosition}"
+                          DisplayMemberPath="Name">
+                    
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Button Width="130" Height="40" HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom" Margin="0, 0, 30, 20"
+                    Command="{Binding AddCommand}">
+                Добавить
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
