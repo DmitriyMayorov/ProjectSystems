@@ -9,6 +9,8 @@ namespace DAL.EF
     [Table("public.Page")]
     public partial class Page
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -18,8 +20,6 @@ namespace DAL.EF
         [Required]
         public string TextSection { get; set; }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IDSection { get; set; }
 
         public virtual InfSection InfSection { get; set; }

@@ -35,7 +35,7 @@ namespace BLL.Services
 
         public void CreateMessage(MessageDTO message)
         {
-            db.Messages.Create(new Message() { Id = message.Id, TextMessage = message.TextMessage, 
+            db.Messages.Create(new Message() { /*Id = message.Id,*/ TextMessage = message.TextMessage, 
                                                DateMessage = message.DateMessage, IDTask = message.IDTask, 
                                                IDWorker = message.IDWorker});
             SaveChanges();
@@ -54,6 +54,11 @@ namespace BLL.Services
         public void DeleteMessage(int id)
         {
             db.Messages.Delete(id);
+        }
+
+        public List<MessageDTO> GetMessagesForCurrentTask(int taskId)
+        {
+            return db.Messages.GetList().Where(i => i.IDTask == taskId).Select(i => new MessageDTO(i)).ToList();
         }
     }
 }

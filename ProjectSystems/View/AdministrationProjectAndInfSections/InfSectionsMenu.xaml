@@ -12,7 +12,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -42,6 +43,37 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.33*"/>
+                <ColumnDefinition Width="0.23*"/>
+                <ColumnDefinition Width="0.23*"/>
+                <ColumnDefinition Width="0.23*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="3">
+                <ComboBox/>
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="3">
+                <Button>
+                    Добавить
+                </Button>
+            </Grid>
+
+            <Grid Grid.Column="2" Margin="2">
+                <Button>
+                    Реадактировать
+                </Button>
+            </Grid>
+            
+            <Grid Grid.Column="3" Margin="3">
+                <Button>
+                    Удалить
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
             
         </Grid>
     </Grid>

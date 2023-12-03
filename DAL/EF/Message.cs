@@ -9,7 +9,7 @@ namespace DAL.EF
     [Table("public.Message")]
     public partial class Message
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

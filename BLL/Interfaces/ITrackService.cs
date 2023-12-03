@@ -16,5 +16,7 @@ namespace BLL.Interfaces
         void CreateTrack(TrackDTO track);
         void UpdateTrack(TrackDTO track);
         void DeleteTrack(int id);
+
+        int GetSumHours(int idTask, string status);
     }
 }

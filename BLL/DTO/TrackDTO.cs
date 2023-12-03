@@ -20,6 +20,8 @@ namespace BLL.DTO
 
         public int IDWorker { get; set; }
 
+        public string StatusTask { get; set; }
+
         public TrackDTO() { }
 
         public TrackDTO(Track tr)
@@ -29,6 +31,7 @@ namespace BLL.DTO
             DateTrack = tr.DateTrack;
             CountHours = tr.CountHours;
             IDWorker = tr.IDWorker;
+            StatusTask = tr.StatusTask;
         }
     }
 }

@@ -16,5 +16,7 @@ namespace BLL.Interfaces
         void CreateMessage(MessageDTO message);
         void UpdateMessage(MessageDTO message);
         void DeleteMessage(int id);
+
+        List<MessageDTO> GetMessagesForCurrentTask(int taskId);
     }
 }

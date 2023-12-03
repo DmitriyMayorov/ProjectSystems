@@ -32,5 +32,13 @@
     <DataTemplate DataType="{x:Type np:InfSectionVM}">
         <npview:InfSectionsMenu/>
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type np:TrackVM}">
+        <npview:TracksMenu/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type np:MessageVM}">
+        <npview:MessagesMenuForCurrentTask/>
+    </DataTemplate>
     
 </ResourceDictionary>

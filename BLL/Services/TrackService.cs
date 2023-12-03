@@ -35,8 +35,8 @@ namespace BLL.Services
 
         public void CreateTrack(TrackDTO track)
         {
-            db.Tracks.Create(new Track() { Id = track.Id, CountHours = track.CountHours, DateTrack = track.DateTrack,
-                                            IDTask = track.IDTask, IDWorker = track.IDWorker});
+            db.Tracks.Create(new Track() { CountHours = track.CountHours, DateTrack = track.DateTrack,
+                                            IDTask = track.IDTask, IDWorker = track.IDWorker, StatusTask = track.StatusTask});
             SaveChanges();
         }
 
@@ -47,12 +47,18 @@ namespace BLL.Services
             tr.DateTrack = track.DateTrack;
             tr.IDWorker = track.IDWorker;
             tr.IDTask = track.IDTask;
+            tr.StatusTask = track.StatusTask;
             SaveChanges();
         }
 
         public void DeleteTrack(int id)
         {
             db.Tracks.Delete(id);
+        }
+
+        public int GetSumHours(int idTask, string status)
+        {
+            return db.Tracks.GetList().Where(i => i.IDTask == idTask && i.StatusTask == status).Sum(i =>  i.CountHours);
         }
     }
 }

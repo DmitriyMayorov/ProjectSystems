@@ -9,7 +9,7 @@
         Height="400"
         Width="400"
         Background="#272B2F">
-    <Grid>
+    <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>

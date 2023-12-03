@@ -7,7 +7,8 @@
              xmlns:Menu="clr-namespace:ProjectSystems.Util.TemplateElement"
              xmlns:vm="clr-namespace:ProjectSystems.ViewModel.AdministrationProjectAndInfSections"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="850">
+             d:DesignHeight="600"
+             d:DesignWidth="850">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -62,12 +63,23 @@
                     </Menu:Button>
 
                     <Menu:Button Style="{StaticResource BtnStyle}"
-                                 Command="{Binding InfSectionCommand}">
+                                 Command="{Binding TrackCommand}">
                         <Grid>
 
                             <Image Style="{StaticResource Image_Style}"/>
 
-                            <TextBlock Text="Pages" Style="{StaticResource Text_Style}"/>
+                            <TextBlock Text="Tracking" Style="{StaticResource Text_Style}"/>
+
+                        </Grid>
+                    </Menu:Button>
+
+                    <Menu:Button Style="{StaticResource BtnStyle}"
+                                 Command="{Binding MessagesCommand}">
+                        <Grid>
+
+                            <Image Style="{StaticResource Image_Style}"/>
+
+                            <TextBlock Text="Messages" Style="{StaticResource Text_Style}"/>
 
                         </Grid>
                     </Menu:Button>
@@ -81,5 +93,6 @@
         <Grid Grid.Column="1" Background="#272B2F">
             <ContentControl Content="{Binding CurrentViewPanel}" x:Name="NPContext"/>
         </Grid>
+        
     </Grid>
 </UserControl>

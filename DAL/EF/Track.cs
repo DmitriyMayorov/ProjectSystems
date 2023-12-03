@@ -9,7 +9,7 @@ namespace DAL.EF
     [Table("public.Track")]
     public partial class Track
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int IDTask { get; set; }
@@ -20,6 +20,9 @@ namespace DAL.EF
         public int CountHours { get; set; }
 
         public int IDWorker { get; set; }
+
+        [Required]
+        public string StatusTask { get; set; }
 
         public virtual Task Task { get; set; }
 

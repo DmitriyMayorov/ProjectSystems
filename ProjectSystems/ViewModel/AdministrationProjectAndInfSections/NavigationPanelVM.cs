@@ -45,10 +45,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         public ICommand InfSectionCommand { get; set; }
         public ICommand TaskCommand { get; set; }
-        public ICommand ProjectCommand { get; set; }
+        public ICommand TrackCommand {  get; set; }
+        public ICommand MessagesCommand {  get; set; }
 
         private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService);
         private void Task(object obj) => CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
+        private void Track(object obj) => CurrentViewPanel = new TrackVM(_trackService, _taskService);
+        private void Message(object obj) => CurrentViewPanel = new MessageVM(_taskService, _messageService);
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
                                  IReportService reportService, ITaskService taskService, ITrackService trackService)
@@ -63,6 +66,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             InfSectionCommand = new RelayCommand(InfSection);
             TaskCommand = new RelayCommand(Task);
+            TrackCommand = new RelayCommand(Track);
+            MessagesCommand = new RelayCommand(Message);
 
             CurrentProject = _projectService.GetProjects().FirstOrDefault();
 

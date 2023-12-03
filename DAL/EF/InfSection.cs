@@ -9,7 +9,7 @@ namespace DAL.EF
     [Table("public.InfSection")]
     public partial class InfSection
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

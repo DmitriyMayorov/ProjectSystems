@@ -81,7 +81,7 @@ namespace ProjectSystems.ViewModel
             RemoveWorker = new RelayCommand(RemoveWorkerExecute);
             UpdateWorker = new RelayCommand(UpdateWorkerExexute);
 
-            this.positionService = positionService;
+/*            this.positionService = positionService;*/
         }
     }
 }
