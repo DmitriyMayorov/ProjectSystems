@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -17,6 +21,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         IMessageService _messageService;
         ITaskService _taskService;
+        Notifier _notifier;
 
         private ObservableCollection<TaskDTO> _tasks;
         public ObservableCollection<TaskDTO> Tasks
@@ -70,9 +75,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 case "CodeRewiew": temp.IDWorker = (int)SelectedTask.IDWorkerMentor; break;
                 case "Stage": temp.IDWorker = (int)SelectedTask.IDWorkerCoder; break;
                 case "Test": temp.IDWorker = (int)SelectedTask.IDWorkerTester; break;
-                case "Ready": MessageBox.Show("Нельзя добавлять сообщения в выполненные задания"); return;
+                case "Ready": _notifier.ShowError("Нельзя добавлять сообщения в выполненные задания"); return;
                 default:
-                    MessageBox.Show("Ошибка!");
+                    _notifier.ShowError("Ошибка!");
                     return;
             }
             temp.IDTask = SelectedTask.Id;
@@ -92,6 +97,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             AddCommand = new RelayCommand(AddCommandExecute);
             ChoiseCommand = new RelayCommand(ChoiseCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

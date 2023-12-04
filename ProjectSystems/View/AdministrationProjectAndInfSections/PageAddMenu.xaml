@@ -17,14 +17,16 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBox Margin="15" Text="{Binding SelectedName}"/>
+            <TextBox Margin="15" Text="{Binding SelectedName}"
+                     Foreground="White"/>
         </Grid>
 
         <Grid Grid.Row="1">
             <TextBox Margin="15"
                      TextWrapping="Wrap" 
                      AcceptsReturn="True"
-                     Text="{Binding SelectedDescription}"/>
+                     Text="{Binding SelectedDescription}"
+                     Foreground="White"/>
         </Grid>
 
         <Grid Grid.Row="2">

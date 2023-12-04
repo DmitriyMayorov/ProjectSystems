@@ -67,7 +67,48 @@ namespace BLL.Services
 
             document.Close();
 
-            MessageBox.Show("Документ сохранен в pdf!");
+        }
+
+        public void SaveStatisitcForCurrentTask(string filename, List<StatisticTrackDTO> data, string header)
+        {
+            Document document = new Document();
+
+            PdfWriter.GetInstance(document, new FileStream(filename, FileMode.Create));
+
+            document.Open();
+
+            BaseFont baseFont = BaseFont.CreateFont(@"D:\Лабораторные Фомина\ProjectSystems\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+
+            PdfPTable table = new PdfPTable(2);
+
+            Paragraph headerPDF = new Paragraph(header, font);
+            headerPDF.Capacity = 4;
+            headerPDF.Alignment = 1;
+            document.Add(headerPDF);
+
+            Paragraph temp = new Paragraph(" ", font);
+            document.Add(temp);
+
+
+            table.AddCell(new PdfPCell(new Phrase(new Phrase("Стадия проекта", font))));
+            table.AddCell(new PdfPCell(new Phrase(new Phrase("Количество часов", font))));
+
+            foreach (StatisticTrackDTO item in data)
+            {
+                table.AddCell(new Phrase(item.NameStatus, font));
+                table.AddCell(new Phrase(item.CountHours.ToString(), font));
+            }
+
+            document.Add(table);
+
+            Paragraph record = new Paragraph("\nПодпись ____________", font);
+            record.Capacity = 4;
+            record.Alignment = 2;
+
+            document.Add(record);
+
+            document.Close();
         }
     }
 }

@@ -16,6 +16,9 @@ using BLL.Interfaces;
 using Ninject;
 using ProjectSystems.ViewModel;
 using ProjectSystems.Util.Ninject;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.View
 {
@@ -54,5 +57,20 @@ namespace ProjectSystems.View
 
             DataContext = new MainWindowVM(_infSerctionService, _messageService, _pageService, _positionService, _projectService, _reportService, _taskService, _trackService, _workerService, _loadFileService);
         }
+
+/*        Notifier notifier = new Notifier(cfg =>
+        {
+            cfg.PositionProvider = new WindowPositionProvider(
+                parentWindow: Application.Current.MainWindow,
+                corner: Corner.TopRight,
+                offsetX: 10,
+                offsetY: 10);
+
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(3),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+            cfg.Dispatcher = Application.Current.Dispatcher;
+        });*/
     }
 }

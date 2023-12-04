@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -15,6 +19,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         ITrackService _trackService;
         TaskDTO _taskDTO;
+
+        Notifier _notifier;
 
         private string selected_count_hours;
         public string SelectedCountHours
@@ -27,6 +33,11 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddCommandExecute(object obj)
         {
+            if(SelectedCountHours == null || SelectedCountHours == "")
+            {
+                _notifier.ShowError("Выбрите число!");
+                return;
+            }
             TrackDTO temp = new TrackDTO();
             temp.DateTrack = DateTime.Now;
             temp.StatusTask = _taskDTO.State;
@@ -37,9 +48,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 case "CodeRewiew": temp.IDWorker = (int)_taskDTO.IDWorkerMentor; break;
                 case "Stage": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
                 case "Test": temp.IDWorker = (int)_taskDTO.IDWorkerTester; break;
-                case "Ready": MessageBox.Show("Нельзя добавлять время в выполненные задания"); return;
+                case "Ready": _notifier.ShowError("Нельзя добавлять время в выполненные задания"); return;
                 default:
-                    MessageBox.Show("Ошибка!");
+                    _notifier.ShowError("Ошибка!");
                     return;
             }
             temp.IDTask = _taskDTO.Id;
@@ -55,6 +66,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _taskDTO = taskDTO;
 
             AddCommand = new RelayCommand(AddCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

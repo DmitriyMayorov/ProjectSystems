@@ -41,7 +41,8 @@
             <Grid Grid.Column="0">
                 <ComboBox Margin="10, 0, 10, 0" ItemsSource="{Binding Tasks}" 
                           SelectedItem="{Binding SelectedTask}"
-                          DisplayMemberPath="Name"/>
+                          DisplayMemberPath="Name"
+                          Foreground="White"/>
             </Grid>
 
             <Grid Grid.Column="1" Margin="10">
@@ -84,7 +85,13 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                
+                <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Width="150"
+                    Margin="0, 0, 30, 0"
+                    Command="{Binding LoadPdfFileCommand}">
+                    Добавить
+                </Button>
             </Grid>
         </Grid>
     </Grid>

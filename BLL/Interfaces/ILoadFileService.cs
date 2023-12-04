@@ -11,5 +11,6 @@ namespace BLL.Interfaces
     public interface ILoadFileService
     {
         void SaveStatisticForAllPerson(string filename, List<ReportStatisticByAllPersonDTO> data, string header);
+        void SaveStatisitcForCurrentTask(string filename, List<StatisticTrackDTO> data, string header);
     }
 }

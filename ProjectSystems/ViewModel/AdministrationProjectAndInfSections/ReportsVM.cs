@@ -11,7 +11,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -19,6 +25,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         IReportService _reportService;
         ILoadFileService _loadFileService;
+
+        Notifier _notifier;
 
         public double YAxis { get; set; }
 
@@ -80,9 +88,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private void LoadPdfFileCommandExecute(object obj)
         {
             if (StartDate == null || EndDate == null)
+            {
+                _notifier.ShowError("Выберите временной промежуток!");
                 return;
+            }
             string header = "Отчёт по эффективности работы сотрудников \nза период между " + StartDate.Date.ToString() + " и " + EndDate.Date.ToString() + "\n";
             _loadFileService.SaveStatisticForAllPerson("StatisticWorker.pdf", _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
+            _notifier.ShowSuccess("Отчёт создан в PDF");
         }
 
         public ReportsVM(IReportService reportService, ILoadFileService loadFileService)
@@ -102,6 +114,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             Series = new SeriesCollection();
             _loadFileService = loadFileService;
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

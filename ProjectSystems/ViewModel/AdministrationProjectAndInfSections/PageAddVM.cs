@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -15,6 +19,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         IPageService _pageService;
         InfSectionDTO _infSection;
+        Notifier _notifier;
 
         private string _selected_name;
         public string SelectedName
@@ -36,14 +41,17 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             if (SelectedName == null || SelectedName == "" ||
                 SelectedDescription == null || SelectedDescription == "")
+            {
+                _notifier.ShowError("Не получилось добавить. Выберите название и описание!");
                 return;
+            }
             PageDTO temp = new PageDTO();
             temp.Name = SelectedName;
             temp.TextSection = SelectedDescription;
             temp.IDSection = _infSection.Id;
 
             _pageService.CreatePage(temp);
-            MessageBox.Show("Успешное добавление");
+            _notifier.ShowSuccess("Успешное добавление");
         }
 
         public PageAddVM(IPageService pageService, InfSectionDTO infSectionDTO)
@@ -52,6 +60,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _infSection = infSectionDTO;
 
             AddCommand = new RelayCommand(AddCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

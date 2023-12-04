@@ -27,7 +27,8 @@
                 <ComboBox Margin="10, 5" 
                           ItemsSource="{Binding Tasks}"
                           SelectedItem="{Binding SelectedTask}"
-                          DisplayMemberPath="Name"/>
+                          DisplayMemberPath="Name"
+                          Foreground="White"/>
             </Grid>
 
             <Grid Grid.Column="1">

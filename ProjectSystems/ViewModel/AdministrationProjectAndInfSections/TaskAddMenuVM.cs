@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -18,6 +22,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         ITaskService _taskService;
         IProjectService _projectService;
         IWorkerService _workerService;
+
+        Notifier _notifier;
 
         private string _name;
         public string Name
@@ -149,6 +155,11 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddTask(object obj)
         {
+            if (Name == null || Description == null || SelectedProject == null)
+            {
+                _notifier.ShowError("Выберите все нужные данные");
+                return;
+            }
             TaskDTO temp = new TaskDTO();
             temp.Name = Name;
             temp.Description = Description;
@@ -167,7 +178,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             temp.IDWorkerTester = SelectedTester.Id;
             
             _taskService.CreateTask(temp);
-            MessageBox.Show("Успешное создание задания");
+            _notifier.ShowSuccess("Успешное создание задания");
         }
 
         public TaskAddMenuVM(ITaskService taskService, IProjectService projectService, IWorkerService workerService) 
@@ -185,6 +196,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             TesterWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
 
             AddCommand = new RelayCommand(AddTask);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

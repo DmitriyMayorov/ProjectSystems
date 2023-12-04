@@ -15,19 +15,22 @@ using System.Windows.Documents;
 using System.Windows.Shell;
 using ProjectSystems.View.AdministrationProjectAndInfSections;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using System.Windows;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
-    public class StatisticTrack
-    {
-        public string NameStatus;
-        public int CountHours;
-    }
-
     public class TrackVM : ViewModelBase
     {
         ITrackService _trackService;
         ITaskService _taskService;
+        ILoadFileService _loadFileService;
+
+        Notifier _notifier;
 
         public double YAxis { get; set; }
         private TrackAddMenu addMenu;
@@ -48,15 +51,16 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         public ICommand ChoiceTask {  get; set; }
         public ICommand AddCommand { get; set; }
+        public ICommand LoadPdfFileCommand { get; set; }
 
         public void ChoiceTaskExecute(object obj)
         {
             if (SelectedTask == null)
                 return;
-            List<StatisticTrack> Stat = new List<StatisticTrack>();
+            List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
             foreach (var status in LabelsTrack)
             {
-                StatisticTrack temp = new StatisticTrack();
+                StatisticTrackDTO temp = new StatisticTrackDTO();
                 temp.NameStatus = status;
                 temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
 
@@ -70,14 +74,17 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         public void AddCommandExecute(object obj)
         {
             if (SelectedTask == null)
+            {
+                _notifier.ShowError("Выберите задание!");
                 return;
+            }
             addMenu = new TrackAddMenu(SelectedTask);
             addMenu.ShowDialog();
 
-            List<StatisticTrack> Stat = new List<StatisticTrack>();
+            List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
             foreach (var status in LabelsTrack)
             {
-                StatisticTrack temp = new StatisticTrack();
+                StatisticTrackDTO temp = new StatisticTrackDTO();
                 temp.NameStatus = status;
                 temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
 
@@ -88,8 +95,29 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             CountHoursTrack = new ChartValues<int>(tempList);
         }
 
-        private ChartValues<StatisticTrack> _result;
-        public ChartValues<StatisticTrack> ResultsTrack 
+        public void LoadPdfFileCommandExecute(object obj)
+        {
+            if (SelectedTask == null)
+            {
+                _notifier.ShowError("Выберите задание!");
+                return;
+            }
+            List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
+            foreach (var status in LabelsTrack)
+            {
+                StatisticTrackDTO temp = new StatisticTrackDTO();
+                temp.NameStatus = status;
+                temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
+                Stat.Add(temp);
+            }
+
+            string header = "Отчёт о количестве затраченных часов\n Название:\n" + SelectedTask.Name;
+            _loadFileService.SaveStatisitcForCurrentTask("TaskReport.pdf", Stat, header);
+            _notifier.ShowSuccess("Отчёт создан в PDF");
+        }
+
+        private ChartValues<StatisticTrackDTO> _result;
+        public ChartValues<StatisticTrackDTO> ResultsTrack 
         {
             get { return _result; }
             set { _result = value; OnPropertyChanged(); }
@@ -106,19 +134,37 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         public Func<double, string> Formatter { get; set; }
 
-        public TrackVM(ITrackService trackService, ITaskService taskService)
+        public TrackVM(ITrackService trackService, ITaskService taskService, ILoadFileService loadFileService)
         {
             _trackService = trackService;
             _taskService = taskService;
+            _loadFileService = loadFileService;
 
             LabelsTrack = new ObservableCollection<string>(new List<string>() { "Plan", "InProgress", "CodeRewiew", "Stage", "Test" });
             Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTasks());
             ChoiceTask = new RelayCommand(ChoiceTaskExecute);
-            CountHoursTrack = new ChartValues<int>(new List<int> {100, 100, 50, 24, 10 });
+            CountHoursTrack = new ChartValues<int>(new List<int> { 100, 100, 50, 24, 10 });
             Formatter = value => (value / 24.0 <= 1.0 || value <= 0) ? value + " часов" : (int)(value / 24) + " дней, " + (int)(value % 24) + " часов";
             YAxis = 0;
 
+            ChoiceTask = new RelayCommand(ChoiceTaskExecute);
             AddCommand = new RelayCommand(AddCommandExecute);
+            LoadPdfFileCommand = new RelayCommand(LoadPdfFileCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

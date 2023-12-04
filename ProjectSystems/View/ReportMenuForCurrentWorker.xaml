@@ -24,11 +24,11 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <DatePicker SelectedDate="{Binding StartDate}"/>
+                <DatePicker SelectedDate="{Binding StartDate}" Foreground="White"/>
             </Grid>
 
             <Grid Grid.Column="1">
-                <DatePicker SelectedDate="{Binding EndDate}"/>
+                <DatePicker SelectedDate="{Binding EndDate}" Foreground="White"/>
             </Grid>
 
             <Grid Grid.Column="2">

@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel
 {
@@ -17,6 +21,8 @@ namespace ProjectSystems.ViewModel
     {
         IWorkerService _workerService;
         IPositionService _positionService;
+
+        Notifier _notifier;
 
         private string _fio;
         public string FIO
@@ -67,7 +73,7 @@ namespace ProjectSystems.ViewModel
 
                 _workerService.CreateWorker(temp);
 
-                MessageBox.Show("Успешно добавлен работник!");
+                _notifier.ShowSuccess("Успешно добавлен работник!");
             }
             catch(Exception ex)
             {
@@ -87,6 +93,21 @@ namespace ProjectSystems.ViewModel
             SelectedPosition = _positionService.GetPositions().FirstOrDefault();
 
             AddCommand = new RelayCommand(AddCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

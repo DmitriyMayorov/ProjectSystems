@@ -9,6 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -16,6 +20,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         IInfSerctionService _infSectionService;
         ProjectDTO _projectDTO;
+        Notifier _notifier;
 
         private string _selected_name;
         public string SelectedName
@@ -29,13 +34,16 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private void AddCommandExecute(object obj)
         {
             if (SelectedName == null || SelectedName == "")
+            {
+                _notifier.ShowError("Не удалось добавить. Выберите название!");
                 return;
+            }
             InfSectionDTO temp = new InfSectionDTO();
             temp.Name = SelectedName;
             temp.IDProject = _projectDTO.Id;
 
             _infSectionService.CreateInfSection(temp);
-            MessageBox.Show("Успешное добавление");
+            _notifier.ShowSuccess("Успешное добавление");
         }
 
         public InfSectionAddVM(IInfSerctionService infSerctionService, ProjectDTO projectDTO)
@@ -44,6 +52,20 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _projectDTO = projectDTO;
 
             AddCommand = new RelayCommand(AddCommandExecute);
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
         }
     }
 }

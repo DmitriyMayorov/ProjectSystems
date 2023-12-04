@@ -51,7 +51,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
         private void Task(object obj) => CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
-        private void Track(object obj) => CurrentViewPanel = new TrackVM(_trackService, _taskService);
+        private void Track(object obj) => CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
         private void Message(object obj) => CurrentViewPanel = new MessageVM(_taskService, _messageService);
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,

@@ -47,7 +47,7 @@
 
         <Grid Grid.Row="1" Margin="20, 20, 20, 0">
             
-            <DataGrid Background="#272B2F" x:Name="TaskGrid" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" Grid.RowSpan="2" Margin="1, 1, 0, 0" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid Background="#272B2F" Foreground="White" x:Name="TaskGrid" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" Grid.RowSpan="2" Margin="1, 1, 0, 0" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="0.5*"/>
                     <DataGridTextColumn Header="Срок сдачи" Binding="{Binding Deadline}" Width="0.5*"/>

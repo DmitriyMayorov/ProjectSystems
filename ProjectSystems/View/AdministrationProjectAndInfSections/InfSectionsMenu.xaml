@@ -56,7 +56,8 @@
             <Grid Grid.Column="0" Margin="3">
                 <ComboBox ItemsSource="{Binding Sections}" 
                           SelectedItem="{Binding SelectedSection}"
-                          DisplayMemberPath="Name"/>
+                          DisplayMemberPath="Name"
+                          Foreground="White"/>
             </Grid>
 
             <Grid Grid.Column="1" Margin="3">
