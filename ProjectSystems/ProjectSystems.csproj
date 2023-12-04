@@ -157,9 +157,11 @@
     <Compile Include="Util\TemplateElement\RelayCommand.cs" />
     <Compile Include="Util\Ninject\ReposModule.cs" />
     <Compile Include="Util\TemplateElement\ViewModelBase.cs" />
+    <Compile Include="ViewModel\AdministrationProjectAndInfSections\InfSectionAddVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\InfSectionVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\MessageVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\NavigationPanelVM.cs" />
+    <Compile Include="ViewModel\AdministrationProjectAndInfSections\PageAddVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\ReportsVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TaskAddMenuVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TasksVM.cs" />
@@ -171,11 +173,17 @@
     <Compile Include="ViewModel\WorkerAddMenuVM.cs" />
     <Compile Include="ViewModel\WorkersVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
+    <Compile Include="View\AdministrationProjectAndInfSections\InfSectionAddMenu.xaml.cs">
+      <DependentUpon>InfSectionAddMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\InfSectionsMenu.xaml.cs">
       <DependentUpon>InfSectionsMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\MessagesMenuForCurrentTask.xaml.cs">
       <DependentUpon>MessagesMenuForCurrentTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AdministrationProjectAndInfSections\PageAddMenu.xaml.cs">
+      <DependentUpon>PageAddMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\PageAdministrationProjectAndInfSections.xaml.cs">
       <DependentUpon>PageAdministrationProjectAndInfSections.xaml</DependentUpon>
@@ -206,11 +214,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AdministrationProjectAndInfSections\InfSectionAddMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AdministrationProjectAndInfSections\InfSectionsMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AdministrationProjectAndInfSections\MessagesMenuForCurrentTask.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdministrationProjectAndInfSections\PageAddMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ProjectsMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ReportMenuForCurrentWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +293,9 @@
     </Compile>
     <Compile Include="View\ProjectsMenu.xaml.cs">
       <DependentUpon>ProjectsMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReportMenuForCurrentWorker.xaml.cs">
+      <DependentUpon>ReportMenuForCurrentWorker.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsMenu.xaml.cs">
       <DependentUpon>SettingsMenu.xaml</DependentUpon>

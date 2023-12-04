@@ -12,11 +12,7 @@ namespace BLL.DTO
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
-
-        public string Surname { get; set; }
-
-        public string Patronymic { get; set; }
+        public string Person {  get; set; }
 
         public long CountHours { get; set; }
 
@@ -29,8 +25,7 @@ namespace BLL.DTO
         public ReportStatisticByAllPersonDTO(ReportStatisticByAllPerson rep)
         {
             ID = rep.ID;
-            Name = rep.Name;
-            Surname = rep.Surname;
+            Person = rep.Person;
             CountHours = rep.CountHours;
             CountCompletedTasks = rep.CountCompletedTasks;
             Position = rep.Position;

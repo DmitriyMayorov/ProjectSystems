@@ -22,6 +22,7 @@ namespace ProjectSystems.Util.Ninject
             Bind<IInfSerctionService>().To<InfSectionService>();
             Bind<IPageService>().To<PageService>();
             Bind<IReportService>().To<ReportService>();
+            Bind<ILoadFileService>().To<LoadFileService>();
         }
     }
 }

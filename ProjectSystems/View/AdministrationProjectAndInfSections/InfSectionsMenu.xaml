@@ -20,19 +20,22 @@
 
             <WrapPanel >
 
-                <Menu:Button Style="{StaticResource BtnStyle}">
+                <Menu:Button Style="{StaticResource BtnStyle}"
+                             Command="{Binding AddCommand}">
 
                     <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
-                <Menu:Button Style="{StaticResource BtnStyle}">
+                <Menu:Button Style="{StaticResource BtnStyle}"
+                             Command="{Binding UpdateCommand}">
 
                     <Image Source="../../Images/Edit.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
-                <Menu:Button Style="{StaticResource BtnStyle}">
+                <Menu:Button Style="{StaticResource BtnStyle}"
+                             Command="{Binding RemoveCommand}">
 
                     <Image Source="../../Images/Delete.png" Style="{StaticResource CRUD_Image_Style}"/>
 
@@ -51,30 +54,58 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="3">
-                <ComboBox/>
+                <ComboBox ItemsSource="{Binding Sections}" 
+                          SelectedItem="{Binding SelectedSection}"
+                          DisplayMemberPath="Name"/>
             </Grid>
 
             <Grid Grid.Column="1" Margin="3">
-                <Button>
+                <Button Command="{Binding AddInfSectionCommand}">
                     Добавить
                 </Button>
             </Grid>
 
             <Grid Grid.Column="2" Margin="2">
-                <Button>
+                <Button Command="{Binding UpdateInfSectionCommand}">
                     Реадактировать
                 </Button>
             </Grid>
             
             <Grid Grid.Column="3" Margin="3">
-                <Button>
+                <Button Command="{Binding RemoveInfSectionCommand}">
                     Удалить
                 </Button>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="2">
-            
+            <ListView ItemsSource="{Binding Pages}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.8*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0"
+                                  VerticalAlignment="Center"
+                                  Margin="5">
+                                <TextBlock Text="{Binding Name}"
+                                           TextWrapping="Wrap"/>
+                            </Grid>
+
+                            <Grid Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  Margin="5">
+                                <TextBox Text="{Binding TextSection}"
+                                         TextWrapping="Wrap"
+                                         AcceptsReturn="True"/>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </UserControl>

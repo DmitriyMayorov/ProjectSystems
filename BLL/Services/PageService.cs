@@ -53,5 +53,10 @@ namespace BLL.Services
         {
             db.Pages.Delete(id);
         }
+
+        public List<PageDTO> GetPagesForCurrentInfSection(int id)
+        {
+            return db.Pages.GetList().Where(i => i.IDSection == id).Select(i => new PageDTO(i)).ToList();
+        }
     }
 }

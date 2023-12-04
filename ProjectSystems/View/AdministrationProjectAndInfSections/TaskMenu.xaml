@@ -18,7 +18,7 @@
 
         <Grid Grid.Row="0">
 
-            <WrapPanel >
+            <WrapPanel>
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
                              Command="{Binding AddTask}">

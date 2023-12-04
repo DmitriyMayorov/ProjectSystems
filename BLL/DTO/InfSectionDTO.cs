@@ -17,6 +17,8 @@ namespace BLL.DTO
 
         public int IDProject { get; set; }
 
+        public InfSectionDTO() { } 
+
         public InfSectionDTO(InfSection inf) 
         {
             Id = inf.Id;

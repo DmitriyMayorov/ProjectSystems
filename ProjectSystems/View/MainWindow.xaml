@@ -33,6 +33,7 @@
                             <Image Source="../Images/Project.png" Style="{StaticResource Image_Style}"/>
                             
                         </Grid>
+                        
                     </Menu:Button>
 
                     <Menu:Button Style="{StaticResource BtnStyle}"
@@ -42,6 +43,7 @@
                             <Image Source="../Images/User.png" Style="{StaticResource Image_Style}"/>
 
                         </Grid>
+                        
                     </Menu:Button>
 
                     <Menu:Button Style="{StaticResource BtnStyle}"
@@ -51,6 +53,17 @@
                             <Image Source="../Images/Projects.png" Style="{StaticResource Image_Style}"/>
 
                         </Grid>
+                        
+                    </Menu:Button>
+
+                    <Menu:Button Style="{StaticResource BtnStyle}"
+                                 Command="{Binding ReportCommand}">
+                        <Grid>
+
+                            <Image Source="../Images/User.png" Style="{StaticResource Image_Style}"/>
+
+                        </Grid>
+                        
                     </Menu:Button>
 
                 </StackPanel>

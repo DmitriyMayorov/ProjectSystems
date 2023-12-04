@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace DAL.ReportForms
 {
@@ -10,11 +11,7 @@ namespace DAL.ReportForms
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
-
-        public string Surname { get; set; }
-
-        public string Patronymic { get; set; }
+        public string Person {  get; set; }
 
         public long CountHours { get; set; }
 

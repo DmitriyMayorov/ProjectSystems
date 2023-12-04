@@ -21,6 +21,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private IReportService _reportService;
         private ITaskService _taskService;
         private ITrackService _trackService;
+        ILoadFileService _loadFileService;
 
         private object _currentViewPanel;
         public object CurrentViewPanel
@@ -48,13 +49,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         public ICommand TrackCommand {  get; set; }
         public ICommand MessagesCommand {  get; set; }
 
-        private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService);
+        private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
         private void Task(object obj) => CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
         private void Track(object obj) => CurrentViewPanel = new TrackVM(_trackService, _taskService);
         private void Message(object obj) => CurrentViewPanel = new MessageVM(_taskService, _messageService);
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
-                                 IReportService reportService, ITaskService taskService, ITrackService trackService)
+                                 IReportService reportService, ITaskService taskService, ITrackService trackService, ILoadFileService loadFileService)
         {
             _infSerctionService = infSectionService;
             _messageService = messageService;
@@ -63,6 +64,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _reportService = reportService;
             _taskService = taskService;
             _trackService = trackService;
+            _loadFileService = loadFileService;
 
             InfSectionCommand = new RelayCommand(InfSection);
             TaskCommand = new RelayCommand(Task);

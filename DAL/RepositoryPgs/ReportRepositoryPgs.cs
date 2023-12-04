@@ -1,9 +1,11 @@
 ﻿using DAL.EF;
 using DAL.Interfaces;
 using DAL.ReportForms;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +29,11 @@ namespace DAL.RepositoryPgs
         public List<ReportStatisticByAllPerson> MakeDiagnosisReport(DateTime firstDate, DateTime secondTime)
         {
             //Заглушка
-            return new List<ReportStatisticByAllPerson>();
+            NpgsqlParameter param1 = new NpgsqlParameter("fd", firstDate);
+            NpgsqlParameter param2 = new NpgsqlParameter("ld", secondTime);
+            var result = db.Database.SqlQuery<ReportStatisticByAllPerson>("select * from get_statistic_for_workers(:fd::date,:ld::date);", new object[] { param1, param2 }).ToList();
+
+            return result;
         }
     }
 }

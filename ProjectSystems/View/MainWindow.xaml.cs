@@ -33,6 +33,7 @@ namespace ProjectSystems.View
         ITaskService _taskService;
         ITrackService _trackService;
         IWorkerService _workerService;
+        ILoadFileService _loadFileService;
 
         public MainWindow()
         {
@@ -49,8 +50,9 @@ namespace ProjectSystems.View
             _taskService = kernel.Get<ITaskService>();
             _trackService = kernel.Get<ITrackService>();
             _workerService = kernel.Get<IWorkerService>();
+            _loadFileService = kernel.Get<ILoadFileService>();
 
-            DataContext = new MainWindowVM(_infSerctionService, _messageService, _pageService, _positionService, _projectService, _reportService, _taskService, _trackService, _workerService);
+            DataContext = new MainWindowVM(_infSerctionService, _messageService, _pageService, _positionService, _projectService, _reportService, _taskService, _trackService, _workerService, _loadFileService);
         }
     }
 }

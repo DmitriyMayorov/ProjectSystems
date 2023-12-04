@@ -1,10 +1,9 @@
-﻿<UserControl x:Class="ProjectSystems.View.AdministrationProjectAndInfSections.TracksMenu"
+﻿<UserControl x:Class="ProjectSystems.View.ReportMenuForCurrentWorker"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections"
-             xmlns:Menu="clr-namespace:ProjectSystems.Util.TemplateElement"
+             xmlns:local="clr-namespace:ProjectSystems.View"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="600" 
@@ -13,59 +12,49 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-
-            <WrapPanel >
-
-                <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding AddCommand}">
-
-                    <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
-
-                </Menu:Button>
-
-            </WrapPanel>
-
-        </Grid>
-
-        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.33*"/>
+                <ColumnDefinition Width="0.33*"/>
+                <ColumnDefinition Width="0.33*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <ComboBox Margin="10, 0, 10, 0" ItemsSource="{Binding Tasks}" 
-                          SelectedItem="{Binding SelectedTask}"
-                          DisplayMemberPath="Name"/>
+                <DatePicker SelectedDate="{Binding StartDate}"/>
             </Grid>
 
-            <Grid Grid.Column="1" Margin="10">
-                <Button Command="{Binding ChoiceTask}">
+            <Grid Grid.Column="1">
+                <DatePicker SelectedDate="{Binding EndDate}"/>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Button Width="150" HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding ChoiseCommand}">
                     Найти
                 </Button>
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.9*"/>
-                <RowDefinition Height="0.1*"/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.45*"/>
+                <ColumnDefinition Width="0.45*"/>
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Margin="5">
-                
-                <lvc:CartesianChart Loaded="CartesianChart_Loaded">
+            <Grid Grid.Column="0">
+                <!--Столбчатая диаграмма на количество затреканных часов-->
+                <lvc:CartesianChart>
                     <lvc:CartesianChart.Series>
                         <lvc:StackedColumnSeries Values="{Binding CountHoursTrack}" StrokeThickness="2" 
-                                 Fill="Blue" StackMode="Values" DataLabels="false" />
+                                 Fill="Green" StackMode="Values" DataLabels="false" />
                     </lvc:CartesianChart.Series>
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Статистика по заданию"  
+                        <lvc:Axis Title="Статистика по затреканному времени"  
                           Labels="{Binding LabelsTrack}" 
                           Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
                     </lvc:CartesianChart.AxisX>
@@ -80,12 +69,21 @@
                         <lvc:DefaultTooltip SelectionMode="OnlySender" ShowSeries="False"/>
                     </lvc:CartesianChart.DataTooltip>
                 </lvc:CartesianChart>
-                
             </Grid>
+            <Grid Grid.Column="1">
+                <!--Круговая диаграмма для показа количества сдеалнных тасков-->
+                <lvc:PieChart Series="{Binding Series}" Hoverable="True" LegendLocation="Bottom"/>
+            </Grid>
+        </Grid>
 
-            <Grid Grid.Row="1">
-                
-            </Grid>
+        <Grid Grid.Row="2">
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Width="150"
+                    Margin="0, 0, 30, 0"
+                    Command="{Binding LoadPdfFileCommand}">
+                Добавить
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

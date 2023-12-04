@@ -16,5 +16,7 @@ namespace BLL.Interfaces
         void CreatePage(PageDTO page);
         void UpdatePage(PageDTO page);
         void DeletePage(int id);
+
+        List<PageDTO> GetPagesForCurrentInfSection(int id);
     }
 }
