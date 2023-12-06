@@ -38,5 +38,10 @@ namespace ProjectSystems.View.AdministrationProjectAndInfSections
 
             DataContext = new TaskAddMenuVM(_taskService, _projectService, _workerService);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

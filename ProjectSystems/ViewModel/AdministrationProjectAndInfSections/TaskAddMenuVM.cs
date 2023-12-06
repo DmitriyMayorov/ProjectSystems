@@ -190,10 +190,12 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
             Status = new ObservableCollection<string>(new List<string>() {"Plan", "InProgress", "CodeRewiew", "Stage", "Test", "Ready"});
             Category = new ObservableCollection<string>(new List<string>() { "NEW", "BFX" });
-            Priorities = new ObservableCollection<string>(new List<string> { "low", "high", "medium" });
+            Priorities = new ObservableCollection<string>(new List<string> { "low", "medium", "high" });
             AnalystWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
             CoderWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
             TesterWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
+
+            SelectedDate = DateTime.Now;
 
             AddCommand = new RelayCommand(AddTask);
 

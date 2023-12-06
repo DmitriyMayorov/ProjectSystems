@@ -4,68 +4,93 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectSystems.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="WorkerMenu" 
         MaxHeight="400"
         MaxWidth="400"
         Width="400"
         Height="400"
-        Background="#272B2F">
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
     <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.2*"/>
-        </Grid.RowDefinitions>
+        <Border Background="MediumAquamarine" 
+                BorderThickness="5 2 5 2" CornerRadius="10"
+                Margin="3">
+        </Border>
+        <Grid Margin="15">
+            <StackPanel>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="88"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="ФИО"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding FIO}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
 
-        <Grid Grid.Row="0">
-            <StackPanel>
-                <Label Foreground="White" FontSize="24">
-                    ФИО
-                </Label>
-                <TextBox Foreground="White" FontSize="20" 
-                         Margin="10, 0, 0, 0" Text="{Binding FIO}"/>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="50"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Номер паспорта"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding PassportNum}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
+
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="50"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Номер паспорта"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding PassportSeries}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
+
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <ComboBox materialDesign:HintAssist.Hint="Должность"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding PositionsDTO}"
+                              SelectedItem="{Binding SelectedPosition}"
+                              Foreground="White"
+                              DisplayMemberPath="Name">
+                        <ComboBox.Resources>
+                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                        </ComboBox.Resources>
+                    </ComboBox>
+                </Border>
+
+                <WrapPanel>
+                    <Button Width="152"
+                            Margin="10, 5, 10, 0"
+                            Height="32"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent" 
+                            Click="Button_Click">
+                        Закрыть
+                    </Button>
+                    <Button Width="142"
+                            Margin="10, 5, 10, 0"
+                            Command="{Binding AddCommand}" 
+                            Click="Button_Click_1" Height="32"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent">
+                        Добавить
+                    </Button>
+                </WrapPanel>
             </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1">
-            <StackPanel>
-                <Label Foreground="White" FontSize="24">
-                    Номер паспорта
-                </Label>
-                <TextBox Text="{Binding PassportNum}" Foreground="White" 
-                         FontSize="20" Margin="10, 0, 0, 0"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="2">
-            <StackPanel>
-                <Label Foreground="White" FontSize="24">
-                    Серия пасспорта
-                </Label>
-                <TextBox Text="{Binding PassportSeries}" Foreground="White"
-                         FontSize="20" Margin="10, 0, 0, 0"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="3">
-            <StackPanel>
-                <Label Foreground="White" FontSize="24">
-                    Должность
-                </Label>
-                <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding PositionsDTO}" 
-                          SelectedItem="{Binding SelectedPosition}"
-                          DisplayMemberPath="Name">
-                    
-                </ComboBox>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="4">
-            <Button Width="130" Height="40" HorizontalAlignment="Right" 
-                    VerticalAlignment="Bottom" Margin="0, 0, 30, 20"
-                    Command="{Binding AddCommand}">
-                Добавить
-            </Button>
         </Grid>
     </Grid>
 </Window>

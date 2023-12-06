@@ -33,5 +33,15 @@ namespace ProjectSystems.View
             _projectService = kernel.Get<IProjectService>();
             DataContext = new ProjectAddMenuVM(_projectService);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -33,7 +33,7 @@
             <Button Width="150"
                     HorizontalAlignment="Right"
                     Margin="0, 0, 20, 0"
-                    Command="{Binding AddCommand}">
+                    Command="{Binding AddCommand}" Click="Button_Click">
                 Добавить
             </Button>
         </Grid>

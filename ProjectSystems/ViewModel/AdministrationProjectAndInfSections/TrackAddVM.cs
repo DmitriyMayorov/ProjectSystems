@@ -57,7 +57,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             temp.CountHours = Int32.Parse(SelectedCountHours);
 
             _trackService.CreateTrack(temp);
-            MessageBox.Show("Успешое добавление");
+            _notifier.ShowSuccess("Успешное добавление");
         }
 
         public TrackAddVM(ITrackService trackService, TaskDTO taskDTO)

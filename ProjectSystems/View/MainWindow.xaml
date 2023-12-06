@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:ProjectSystems.View"
         xmlns:vm="clr-namespace:ProjectSystems.ViewModel"
         xmlns:Menu="clr-namespace:ProjectSystems.Util.TemplateElement"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" 
         d:DesignHeight="600" 
         d:DesignWidth="850"
-        Background="Transparent">
+        Background="Transparent"
+        FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Grid>
         <Grid.ColumnDefinitions>

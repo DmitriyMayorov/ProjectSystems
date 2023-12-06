@@ -48,39 +48,35 @@ namespace ProjectSystems.ViewModel
         private ObservableCollection<PositionDTO> _positionsDTO;
         public ObservableCollection<PositionDTO> PositionsDTO
         {
-            get { return _positionsDTO; } 
-            set { _positionsDTO = value; OnPropertyChanged(); } 
+            get { return _positionsDTO; }
+            set { _positionsDTO = value; OnPropertyChanged(); }
         }
 
         private PositionDTO _selected_position;
         public PositionDTO SelectedPosition
         {
             get { return _selected_position; }
-            set { _selected_position = value; OnPropertyChanged();}
+            set { _selected_position = value; OnPropertyChanged(); }
         }
 
         private void AddCommandExecute(object obj)
         {
-            try
+            if (FIO == null || PassportNum == null ||
+                PassportSeries == null || SelectedPosition == null)
             {
-                WorkerDTO temp = new WorkerDTO();
-/*                temp.Id = _workerService.GetWorkers().Count() == 0 ? 1 : _workerService.GetWorkers().Max(x => x.Id) + 1;*/
-                temp.Person = _fio;
-                temp.PassportNum = Int32.Parse(_passport_num);
-                temp.PassportSeries = Int32.Parse(_passport_series);
-                temp.IDPosition = SelectedPosition.Id;
-                temp.Position = SelectedPosition;
-
-                _workerService.CreateWorker(temp);
-
-                _notifier.ShowSuccess("Успешно добавлен работник!");
+                _notifier.ShowError("Некорректные данные");
+                return;
             }
-            catch(Exception ex)
-            {
-            
-                MessageBox.Show(ex.Message);
-                //MessageBox.Show("Данные не кореектны");
-            }
+            WorkerDTO temp = new WorkerDTO();
+            temp.Person = _fio;
+            temp.PassportNum = Int32.Parse(_passport_num);
+            temp.PassportSeries = Int32.Parse(_passport_series);
+            temp.IDPosition = SelectedPosition.Id;
+            temp.Position = SelectedPosition;
+
+            _workerService.CreateWorker(temp);
+
+            _notifier.ShowSuccess("Успешно добавлен работник!");
         }
 
         public ICommand AddCommand { get; set; }

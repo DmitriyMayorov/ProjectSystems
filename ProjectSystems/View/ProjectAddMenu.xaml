@@ -4,40 +4,60 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectSystems.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="ProjectAddMenu" 
         Height="400"
         Width="400"
-        Background="#272B2F">
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
     <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Border Background="MediumAquamarine" 
+                BorderThickness="5 2 5 2" CornerRadius="10"
+                Margin="3">
+        </Border>
+        <Grid Margin="15">
+            <StackPanel>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="127"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Название проекта"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding ProjectName}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
 
-        <Grid Grid.Row="0">
-            <StackPanel>
-                <Label FontSize="24" Foreground="White">
-                    Название
-                </Label>
-                <TextBox Text="{Binding ProjectName}" FontSize="24" Foreground="White"/>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <DatePicker Height="45" SelectedDate="{Binding Date}"
+                                               Foreground="Black"/>
+                </Border>
+
+
+                <WrapPanel>
+                    <Button Width="152"
+                            Margin="10, 5, 10, 0"
+                            Height="32"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent" 
+                            Click="Button_Click">
+                        Закрыть
+                    </Button>
+                    <Button Width="142"
+                            Margin="10, 5, 10, 0"
+                            Command="{Binding AddCommand}" 
+                            Click="Button_Click_1" Height="32"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent">
+                        Добавить
+                    </Button>
+                </WrapPanel>
             </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1">
-            <StackPanel>
-                <Label Foreground="White" FontSize="24">
-                    Дедлайн
-                </Label>
-                <DatePicker SelectedDate="{Binding Date}"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="2">
-            <Button Width="168" Height="48" HorizontalAlignment="Right" 
-                    VerticalAlignment="Bottom" Margin="0,0,13,12"
-                    Command="{Binding AddCommand}">
-                Добавить
-            </Button>
         </Grid>
     </Grid>
 </Window>
+<!--ProjectName - Date-->

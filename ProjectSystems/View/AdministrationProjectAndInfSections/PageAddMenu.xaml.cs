@@ -35,5 +35,10 @@ namespace ProjectSystems.View.AdministrationProjectAndInfSections
 
             DataContext = new PageAddVM(_pageService, infSectionDTO);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

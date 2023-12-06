@@ -38,6 +38,11 @@ namespace ProjectSystems.ViewModel
 
         private void AddProjectExecute(object obj)
         {
+            if (ProjectName == "" || ProjectName == null)
+            {
+                _notifier.ShowError("Некорректные данные");
+                return;
+            }
             ProjectDTO temp = new ProjectDTO();
             temp.Name = ProjectName;
             temp.DeadLine = Date;
@@ -50,6 +55,8 @@ namespace ProjectSystems.ViewModel
         {
             _projectService = projectService;
             AddCommand = new RelayCommand(AddProjectExecute);
+
+            Date = DateTime.Now;
 
             _notifier = new Notifier(cfg =>
             {
