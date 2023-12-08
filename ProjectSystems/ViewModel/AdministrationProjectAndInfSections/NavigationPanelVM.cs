@@ -21,7 +21,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private IReportService _reportService;
         private ITaskService _taskService;
         private ITrackService _trackService;
-        ILoadFileService _loadFileService;
+        private ILoadFileService _loadFileService;
 
         private object _currentViewPanel;
         public object CurrentViewPanel

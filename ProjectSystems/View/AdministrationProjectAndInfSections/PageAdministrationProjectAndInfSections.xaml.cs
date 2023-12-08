@@ -24,5 +24,10 @@ namespace ProjectSystems.View.AdministrationProjectAndInfSections
         {
             InitializeComponent();
         }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

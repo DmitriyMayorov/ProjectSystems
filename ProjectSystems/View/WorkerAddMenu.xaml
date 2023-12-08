@@ -16,7 +16,7 @@
         WindowStyle="None"
         Background="Transparent">
     <Grid Margin="15">
-        <Border Background="MediumAquamarine" 
+        <Border Background="CadetBlue" 
                 BorderThickness="5 2 5 2" CornerRadius="10"
                 Margin="3">
         </Border>

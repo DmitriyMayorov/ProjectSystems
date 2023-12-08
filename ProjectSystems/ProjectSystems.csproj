@@ -370,6 +370,14 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Message.png" />
+    <Resource Include="Images\Task.png" />
+    <Resource Include="Images\Tracking.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SectionPage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

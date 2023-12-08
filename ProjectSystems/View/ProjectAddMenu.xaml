@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="ProjectAddMenu" 
-        Height="400"
+        Height="300"
         Width="400"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
@@ -34,9 +34,16 @@
 
                 <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
                     <DatePicker Height="45" SelectedDate="{Binding Date}"
-                                               Foreground="Black"/>
+                                Foreground="White">
+                        <DatePicker.CalendarStyle>
+                            <Style TargetType="Calendar" BasedOn="{StaticResource MaterialDesignCalendarPortrait}">
+                                <Style.Resources>
+                                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#373A6B" />
+                                </Style.Resources>
+                            </Style>
+                        </DatePicker.CalendarStyle>
+                    </DatePicker>
                 </Border>
-
 
                 <WrapPanel>
                     <Button Width="152"

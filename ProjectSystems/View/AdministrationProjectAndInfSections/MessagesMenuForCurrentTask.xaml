@@ -24,11 +24,15 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <ComboBox Margin="10, 5" 
+                <Border Background="CadetBlue" Margin="15" CornerRadius="15">
+                    <ComboBox Margin="10, 5" 
                           ItemsSource="{Binding Tasks}"
                           SelectedItem="{Binding SelectedTask}"
+                          Text="{Binding SelectedTask.Name}"
                           DisplayMemberPath="Name"
-                          Foreground="White"/>
+                          Foreground="White"
+                          BorderBrush="Transparent"/>
+                </Border>
             </Grid>
 
             <Grid Grid.Column="1">
@@ -41,30 +45,34 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding Messages}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Height="100">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.8*"/>
-                            </Grid.ColumnDefinitions>
+            <Border Background="CadetBlue" Margin="15" CornerRadius="15">
+                <ListView ItemsSource="{Binding Messages}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="100">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.2*"/>
+                                    <ColumnDefinition Width="0.8*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Grid Grid.Column="0"
+                                <Grid Grid.Column="0"
                                   VerticalAlignment="Center"
                                   Margin="5">
-                                <TextBlock Text="{Binding DateMessage}"/>
-                            </Grid>
+                                    <TextBlock Text="{Binding DateMessage}" 
+                                               FontSize="18"/>
+                                </Grid>
 
-                            <Grid Grid.Column="1"
+                                <Grid Grid.Column="1"
                                   VerticalAlignment="Center"
                                   Margin="5">
-                                <TextBox Text="{Binding TextMessage}"/>
+                                    <TextBox Text="{Binding TextMessage}"
+                                             FontSize="18"/>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
         </Grid>
 
         <Grid Grid.Row="2">
@@ -73,10 +81,13 @@
                 <ColumnDefinition Width="0.1*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
-                <TextBox Margin="10"
-                         Text="{Binding NewMessageText}"/>
-            </Grid>
+            <Border Background="CadetBlue" Margin="15, 12, 15, 15"
+                    CornerRadius="15">
+                <Grid Grid.Column="0">
+                    <TextBox Margin="10" Text="{Binding NewMessageText}"
+                             BorderBrush="Transparent"/>
+                </Grid>
+            </Border>
 
             <Grid Grid.Column="1">
                 

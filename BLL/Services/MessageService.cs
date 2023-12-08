@@ -35,7 +35,7 @@ namespace BLL.Services
 
         public void CreateMessage(MessageDTO message)
         {
-            db.Messages.Create(new Message() { /*Id = message.Id,*/ TextMessage = message.TextMessage, 
+            db.Messages.Create(new Message() { TextMessage = message.TextMessage, 
                                                DateMessage = message.DateMessage, IDTask = message.IDTask, 
                                                IDWorker = message.IDWorker});
             SaveChanges();

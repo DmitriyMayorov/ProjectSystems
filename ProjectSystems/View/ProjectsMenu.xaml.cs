@@ -33,5 +33,10 @@ namespace ProjectSystems.View
             projectService = kernel.Get<IProjectService>();
             DataContext = new ProjectsVM(projectService);
         }
+
+/*        private void TaskGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }*/
     }
 }

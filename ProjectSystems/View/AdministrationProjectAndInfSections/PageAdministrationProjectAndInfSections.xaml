@@ -12,8 +12,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0"
@@ -26,14 +26,16 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <ComboBox HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
+                <ComboBox HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
                           Margin="10, 25"
                           ItemsSource="{Binding Projects}"
                           SelectedItem="{Binding CurrentProject}"
+                          Text="{Binding CurrentProject.Name}"
                           DisplayMemberPath="Name"
                           FontSize="25"
-                          Foreground="Wheat"/>
+                          BorderBrush="Transparent"
+                          Foreground="White" Width="160"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -44,7 +46,6 @@
                                  Command="{Binding TaskCommand}">
                         <Grid>
 
-                            <Image Style="{StaticResource Image_Style}"/>
 
                             <TextBlock Text="Tasks" Style="{StaticResource Text_Style}"/>
 
@@ -55,8 +56,6 @@
                                  Command="{Binding InfSectionCommand}">
                         <Grid>
 
-                            <Image Style="{StaticResource Image_Style}"/>
-
                             <TextBlock Text="Sections" Style="{StaticResource Text_Style}"/>
 
                         </Grid>
@@ -65,8 +64,6 @@
                     <Menu:Button Style="{StaticResource BtnStyle}"
                                  Command="{Binding TrackCommand}">
                         <Grid>
-
-                            <Image Style="{StaticResource Image_Style}"/>
 
                             <TextBlock Text="Tracking" Style="{StaticResource Text_Style}"/>
 

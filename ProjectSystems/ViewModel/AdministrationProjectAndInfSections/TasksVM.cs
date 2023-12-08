@@ -44,7 +44,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         public void AddTaskExecute(object obj)
         {
-            addMenu = new TaskAddMenu();
+            addMenu = new TaskAddMenu(_projectDTO);
             addMenu.ShowDialog();
             Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTasksByProjectID(_projectDTO.Id));
         }

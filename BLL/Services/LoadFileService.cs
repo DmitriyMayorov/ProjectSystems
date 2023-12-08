@@ -11,6 +11,7 @@ using iTextSharp.text;
 using System.IO;
 using System.Windows;
 using BLL.DTO;
+using System.Reflection;
 
 namespace BLL.Services
 {
@@ -30,7 +31,7 @@ namespace BLL.Services
 
             document.Open();
 
-            BaseFont baseFont = BaseFont.CreateFont(@"D:\Лабораторные Фомина\ProjectSystems\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont baseFont = BaseFont.CreateFont(@"C:\КПО КР\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
             PdfPTable table = new PdfPTable(4);
@@ -77,7 +78,9 @@ namespace BLL.Services
 
             document.Open();
 
-            BaseFont baseFont = BaseFont.CreateFont(@"D:\Лабораторные Фомина\ProjectSystems\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            string test = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            BaseFont baseFont = BaseFont.CreateFont(@"C:\КПО КР\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
             PdfPTable table = new PdfPTable(2);

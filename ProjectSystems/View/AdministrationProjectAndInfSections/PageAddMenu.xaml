@@ -4,38 +4,67 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="PageAddMenu" 
         Height="600"
         Width="400"
-        Background="#272B2F">
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.8*"/>
-            <RowDefinition Height="0.1*"/>
-        </Grid.RowDefinitions>
+        <Border Background="MediumAquamarine" 
+                BorderThickness="5 2 5 2" CornerRadius="10"
+                Margin="3">
+        </Border>
+        <Grid Margin="15">
+            <StackPanel>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="45"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Название проекта"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding SelectedName}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
 
-        <Grid Grid.Row="0">
-            <TextBox Margin="15" Text="{Binding SelectedName}"
-                     Foreground="White"/>
-        </Grid>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10" Height="442">
+                    <TextBox Foreground="White" FontSize="20" Height="443"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Название проекта"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding SelectedDescription}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
 
-        <Grid Grid.Row="1">
-            <TextBox Margin="15"
-                     TextWrapping="Wrap" 
-                     AcceptsReturn="True"
-                     Text="{Binding SelectedDescription}"
-                     Foreground="White"/>
-        </Grid>
+                <Grid Height="15"/>
 
-        <Grid Grid.Row="2">
-            <Button Width="150"
-                    HorizontalAlignment="Right"
-                    Margin="0, 0, 20, 0"
-                    Command="{Binding AddCommand}" Click="Button_Click">
-                Добавить
-            </Button>
+                <WrapPanel>
+                    <Button Width="167"
+                            Margin="10, 5, 10, 0"
+                            Height="32"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent" 
+                            Click="Button_Click">
+                        Закрыть
+                    </Button>
+                    <Button Width="160"
+                            Margin="10, 5, 10, 0"
+                            Command="{Binding AddCommand}" 
+                            Click="Button_Click_1" Height="32"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent">
+                        Добавить
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

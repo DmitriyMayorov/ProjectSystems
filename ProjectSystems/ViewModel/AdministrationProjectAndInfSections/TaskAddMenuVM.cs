@@ -20,10 +20,10 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     public class TaskAddMenuVM : ViewModelBase
     {
         ITaskService _taskService;
-        IProjectService _projectService;
         IWorkerService _workerService;
 
         Notifier _notifier;
+        ProjectDTO _projectDTO;
 
         private string _name;
         public string Name
@@ -37,34 +37,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             get { return _description; }
             set { _description = value; OnPropertyChanged(); }
-        }
-
-        private ObservableCollection<ProjectDTO> _projects;
-        public ObservableCollection<ProjectDTO> Projects
-        {
-            get { return _projects; }
-            set { _projects = value; OnPropertyChanged(); }
-        }
-
-        private ProjectDTO _selectdes_project;
-        public ProjectDTO SelectedProject
-        {
-            get { return _selectdes_project; }
-            set { _selectdes_project = value; OnPropertyChanged(); }
-        }
-
-        private ObservableCollection<string> _states;
-        public ObservableCollection<string> Status
-        {
-            get { return _states; }
-            set { _states = value; OnPropertyChanged(); }
-        }
-
-        private string _selectdes_status;
-        public string SelectedStatus
-        {
-            get { return _selectdes_status; } 
-            set { _selectdes_status = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<string> _category;
@@ -155,7 +127,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddTask(object obj)
         {
-            if (Name == null || Description == null || SelectedProject == null)
+            if (Name == null || Description == null)
             {
                 _notifier.ShowError("Выберите все нужные данные");
                 return;
@@ -163,15 +135,15 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             TaskDTO temp = new TaskDTO();
             temp.Name = Name;
             temp.Description = Description;
-            temp.Project = SelectedProject;
+            temp.Project = _projectDTO;
             temp.Category = SelectedCategory;
-            temp.State = SelectedStatus;
+            temp.State = "Plan";
             temp.Priority = SelectedPriority;
             temp.WorkerAnalyst = SelectedAnalyst;
             temp.WorkerCoder = SelectedCoder;
             temp.WorkerTechlid = SelectedTechlid;
             temp.WorkerTester = SelectedTester;
-            temp.IDProject = SelectedProject.Id;
+            temp.IDProject = _projectDTO.Id;
             temp.IDWorkerAnalyst = SelectedAnalyst.Id;
             temp.IDWorkerCoder = SelectedCoder.Id;
             temp.IDWorkerMentor = SelectedTechlid.Id;
@@ -181,14 +153,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _notifier.ShowSuccess("Успешное создание задания");
         }
 
-        public TaskAddMenuVM(ITaskService taskService, IProjectService projectService, IWorkerService workerService) 
+        public TaskAddMenuVM(ITaskService taskService, IWorkerService workerService, ProjectDTO CurrentProject) 
         {
             _taskService = taskService;
-            _projectService = projectService;
             _workerService = workerService;
 
-            Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
-            Status = new ObservableCollection<string>(new List<string>() {"Plan", "InProgress", "CodeRewiew", "Stage", "Test", "Ready"});
+            _projectDTO = CurrentProject;
+
             Category = new ObservableCollection<string>(new List<string>() { "NEW", "BFX" });
             Priorities = new ObservableCollection<string>(new List<string> { "low", "medium", "high" });
             AnalystWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());

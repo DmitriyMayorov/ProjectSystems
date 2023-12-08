@@ -23,11 +23,11 @@
                 <ColumnDefinition Width="0.33*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Margin="15">
                 <DatePicker SelectedDate="{Binding StartDate}" Foreground="White"/>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Margin="15">
                 <DatePicker SelectedDate="{Binding EndDate}" Foreground="White"/>
             </Grid>
 

@@ -4,180 +4,168 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="TaskAddMenu" 
-        Height="500"
+        Height="550"
         Width="600"
-        Background="#272B2F">
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
     <Grid Margin="12">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Border Background="MediumAquamarine" 
+                BorderThickness="5 2 5 2" CornerRadius="10"
+                Margin="3">
+        </Border>
+        <Grid Margin="15">
+            <StackPanel>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="45"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Название задания"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding Name}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
 
-        <Grid Grid.Column="0">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <TextBox Foreground="White" FontSize="20" Height="139"
+                         Style="{StaticResource MaterialDesignTextBox}"
+                         materialDesign:HintAssist.Hint="Описание задания"
+                         TextWrapping="Wrap" VerticalAlignment="Center"
+                         BorderBrush="Transparent" Text="{Binding Description}">
+                        <TextBox.Background>
+                            <SolidColorBrush Opacity="0.8" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Border>
 
-            <Grid Grid.Row="0">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Название
-                    </Label>
-                    <TextBox Foreground="White" FontSize="20" 
-                         Margin="10, 0, 0, 0" Text="{Binding Name}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                        <ComboBox materialDesign:HintAssist.Hint="Категория"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding Category}"
+                              SelectedItem="{Binding SelectedCategory}"
+                              Foreground="White"
+                              Width="262">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Border>
+
+                    <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                        <ComboBox materialDesign:HintAssist.Hint="Приоритет"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding Priorities}"
+                              SelectedItem="{Binding SelectedPriority}"
+                              Foreground="White"
+                              Width="259">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Border>
                 </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Описание
-                    </Label>
-                    <TextBox Text="{Binding Description}" Foreground="White" 
-                         FontSize="20" Margin="10, 0, 0, 0"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                        <ComboBox materialDesign:HintAssist.Hint="Аналитик"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding AnalystWorkers}"
+                              SelectedItem="{Binding SelectedAnalyst}"
+                              Foreground="White"
+                              DisplayMemberPath="Person" Width="262">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Border>
+
+                    <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                        <ComboBox materialDesign:HintAssist.Hint="Программист"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding CoderWorkers}"
+                              SelectedItem="{Binding SelectedCoder}"
+                              Foreground="White"
+                              DisplayMemberPath="Person" Width="259">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Border>
                 </StackPanel>
-            </Grid>
-            <Grid Grid.Row="2">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Проект
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding Projects}" 
-                          SelectedItem="{Binding SelectedProject}"
-                          DisplayMemberPath="Name">
 
-                    </ComboBox>
+                <StackPanel Orientation="Horizontal">
+                    <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                        <ComboBox materialDesign:HintAssist.Hint="Тестировщик"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding TesterWorkers}"
+                              SelectedItem="{Binding SelectedTester}"
+                              Foreground="White"
+                              DisplayMemberPath="Person" Width="262">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Border>
+
+                    <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                        <ComboBox materialDesign:HintAssist.Hint="Техлид"
+                              FontSize="20" Height="50" 
+                              BorderBrush="Transparent"  
+                              ItemsSource="{Binding CoderWorkers}"
+                              SelectedItem="{Binding SelectedTechlid}"
+                              Foreground="White"
+                              DisplayMemberPath="Person" Width="259">
+                            <ComboBox.Resources>
+                                <SolidColorBrush x:Key="MaterialDesignPaper" Color="DarkTurquoise"/>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </Border>
                 </StackPanel>
-            </Grid>
-            <Grid Grid.Row="3">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Категория
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding Category}" 
-                          SelectedItem="{Binding SelectedCategory}">
 
-                    </ComboBox>
+                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                    <DatePicker Height="45" SelectedDate="{Binding SelectedDate}"
+                                Foreground="White">
+                        <DatePicker.CalendarStyle>
+                            <Style TargetType="Calendar" BasedOn="{StaticResource MaterialDesignCalendarPortrait}">
+                                <Style.Resources>
+                                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#373A6B" />
+                                </Style.Resources>
+                            </Style>
+                        </DatePicker.CalendarStyle>
+                    </DatePicker>
+                </Border>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="254"
+                            Margin="10, 5, 10, 0"
+                            Height="50"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent" 
+                            Click="Button_Click">
+                        Закрыть
+                    </Button>
+                    <Button Width="252"
+                            Margin="10, 5, 10, 0"
+                            Command="{Binding AddCommand}" 
+                            Click="Button_Click_1" Height="50"
+                            Background="#FF33B0B3"
+                            BorderBrush="Transparent">
+                        Добавить
+                    </Button>
                 </StackPanel>
-            </Grid>
-            <Grid Grid.Row="4">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Статус
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding Status}" 
-                          SelectedItem="{Binding SelectedStatus}">
-
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="5">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Приоритет
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding Priorities}" 
-                          SelectedItem="{Binding SelectedPriority}">
-
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Column="1">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Аналитик
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding AnalystWorkers}" 
-                          SelectedItem="{Binding SelectedAnalyst}"
-                          DisplayMemberPath="Person">
-
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Программист
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding CoderWorkers}" 
-                          SelectedItem="{Binding SelectedCoder}"
-                          DisplayMemberPath="Person">
-
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Тестировщик
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding TesterWorkers}" 
-                          SelectedItem="{Binding SelectedTester}"
-                          DisplayMemberPath="Person">
-
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="3">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Техлиды
-                    </Label>
-                    <ComboBox Width="200" HorizontalAlignment="Left" 
-                          Margin="10, 0, 0 ,0" ItemsSource="{Binding CoderWorkers}" 
-                          SelectedItem="{Binding SelectedTechlid}"
-                          DisplayMemberPath="Person">
-
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="4">
-                <StackPanel>
-                    <Label Foreground="White" FontSize="24">
-                        Дедлайн
-                    </Label>
-                    <DatePicker SelectedDate="{Binding SelectedDate}"/>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Row="5">
-                <Button Width="150" Height="40" HorizontalAlignment="Right" 
-                    VerticalAlignment="Bottom" Margin="0, 0, 30, 20"
-                    Command="{Binding AddCommand}" Click="Button_Click">
-                    Добавить
-                </Button>
-            </Grid>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

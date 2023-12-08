@@ -42,16 +42,35 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="10, 10, 10, 10">
+                <Border CornerRadius="15" Margin="10">
+                    <DataGrid Foreground="White" 
+                          ItemsSource="{Binding Workers}"
+                          SelectedItem="{Binding SelectedWorker}"
+                          Grid.RowSpan="2" AutoGenerateColumns="False"
+                          CanUserAddRows="False" Background="CadetBlue"
+                          FontSize="18">
 
-            <DataGrid Background="#272B2F" Foreground="White" x:Name="TaskGrid" ItemsSource="{Binding Workers}" SelectedItem="{Binding SelectedWorker}" Grid.RowSpan="2" Margin="1, 1, 0, 0" AutoGenerateColumns="False" CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ФИО" Binding="{Binding Person}" Width="0.3*"/>
-                    <DataGridTextColumn Header="Номер пасспорта" Binding="{Binding PassportNum}" Width="0.25*"/>
-                    <DataGridTextColumn Header="Серия пасспорта" Binding="{Binding PassportSeries}" Width="0.25*"/>
-                    <DataGridTextColumn Header="Должность" Binding="{Binding Position.Name}" Width="0.2*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding Person}" Width="0.3*"/>
+                            <DataGridTextColumn Header="Номер пасспорта" Binding="{Binding PassportNum}" Width="0.25*"/>
+                            <DataGridTextColumn Header="Серия пасспорта" Binding="{Binding PassportSeries}" Width="0.25*"/>
+                            <DataGridTemplateColumn Header="Должность" Width="0.2*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox DisplayMemberPath="Name"
+                                                  SelectedValue="{Binding Specialization_id,
+                                                  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  SelectedValuePath="Id"
+                                                  ItemsSource="{Binding Path=DataContext.AllSpecializations, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
 
+                    </DataGrid>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
