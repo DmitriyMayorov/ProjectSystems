@@ -12,23 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BLL.Interfaces;
-using Ninject;
-using ProjectSystems.ViewModel;
-using ProjectSystems.Util.Ninject;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Position;
 
 namespace ProjectSystems.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Authorization.xaml
     /// </summary>
-    public partial class MainWindow : UserControl
-    { 
-
-        public MainWindow()
+    public partial class Authorization : UserControl
+    {
+        public Authorization()
         {
             InitializeComponent();
         }

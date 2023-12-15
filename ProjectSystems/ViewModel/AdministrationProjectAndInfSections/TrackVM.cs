@@ -69,6 +69,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             ResultsTrack = Stat.ToArray().AsChartValues();
             List<int> tempList = Stat.Select(x => x.CountHours).ToList();
             CountHoursTrack = new ChartValues<int>(tempList);
+            //отправить логику в BLL
         }
 
         public void AddCommandExecute(object obj)

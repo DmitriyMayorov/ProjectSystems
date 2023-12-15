@@ -16,13 +16,13 @@
         WindowStyle="None"
         Background="Transparent">
     <Grid Margin="15">
-        <Border Background="CadetBlue" 
+        <Border Background="DarkGray" 
                 BorderThickness="5 2 5 2" CornerRadius="10"
                 Margin="3">
         </Border>
         <Grid Margin="15">
             <StackPanel>
-                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <TextBox Foreground="White" FontSize="20" Height="88"
                          Style="{StaticResource MaterialDesignTextBox}"
                          materialDesign:HintAssist.Hint="ФИО"
@@ -34,7 +34,7 @@
                     </TextBox>
                 </Border>
 
-                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <TextBox Foreground="White" FontSize="20" Height="50"
                          Style="{StaticResource MaterialDesignTextBox}"
                          materialDesign:HintAssist.Hint="Номер паспорта"
@@ -46,7 +46,7 @@
                     </TextBox>
                 </Border>
 
-                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <TextBox Foreground="White" FontSize="20" Height="50"
                          Style="{StaticResource MaterialDesignTextBox}"
                          materialDesign:HintAssist.Hint="Номер паспорта"
@@ -58,7 +58,7 @@
                     </TextBox>
                 </Border>
 
-                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <ComboBox materialDesign:HintAssist.Hint="Должность"
                               FontSize="20" Height="50" 
                               BorderBrush="Transparent"  
@@ -76,7 +76,7 @@
                     <Button Width="152"
                             Margin="10, 5, 10, 0"
                             Height="32"
-                            Background="#FF33B0B3"
+                            Background="DarkSlateGray"
                             BorderBrush="Transparent" 
                             Click="Button_Click">
                         Закрыть
@@ -85,7 +85,7 @@
                             Margin="10, 5, 10, 0"
                             Command="{Binding AddCommand}" 
                             Click="Button_Click_1" Height="32"
-                            Background="#FF33B0B3"
+                            Background="DarkSlateGray"
                             BorderBrush="Transparent">
                         Добавить
                     </Button>

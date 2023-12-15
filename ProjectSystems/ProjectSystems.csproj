@@ -86,6 +86,9 @@
     <Reference Include="ScottPlot.WPF, Version=4.1.68.0, Culture=neutral, PublicKeyToken=e53b06131e34a3aa, processorArchitecture=MSIL">
       <HintPath>..\packages\ScottPlot.WPF.4.1.68\lib\net472\ScottPlot.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.3.1.1\lib\net471\Serilog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -96,8 +99,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.7.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -168,11 +171,14 @@
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\MessageVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\NavigationPanelVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\PageAddVM.cs" />
+    <Compile Include="ViewModel\AdministrationProjectAndInfSections\PagesVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\ReportsVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TaskAddMenuVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TasksVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TrackAddVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TrackVM.cs" />
+    <Compile Include="ViewModel\ApplicationVM.cs" />
+    <Compile Include="ViewModel\AuthorizationVM.cs" />
     <Compile Include="ViewModel\ProjectAddMenuVM.cs" />
     <Compile Include="ViewModel\ProjectsVM.cs" />
     <Compile Include="ViewModel\SettingsVM.cs" />
@@ -193,6 +199,9 @@
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\PageAdministrationProjectAndInfSections.xaml.cs">
       <DependentUpon>PageAdministrationProjectAndInfSections.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AdministrationProjectAndInfSections\PagesMenu.xaml.cs">
+      <DependentUpon>PagesMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\TaskAddMenu.xaml.cs">
       <DependentUpon>TaskAddMenu.xaml</DependentUpon>
@@ -240,6 +249,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AdministrationProjectAndInfSections\PagesMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AdministrationProjectAndInfSections\TaskAddMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,6 +266,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AdministrationProjectAndInfSections\TracksMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Application.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Authorization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -293,6 +314,12 @@
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\TracksMenu.xaml.cs">
       <DependentUpon>TracksMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Application.xaml.cs">
+      <DependentUpon>Application.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Authorization.xaml.cs">
+      <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProjectAddMenu.xaml.cs">
       <DependentUpon>ProjectAddMenu.xaml</DependentUpon>

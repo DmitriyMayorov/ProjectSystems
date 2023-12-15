@@ -11,6 +11,7 @@ using BLL.Interfaces;
 using System.Windows.Input;
 using BLL.Services;
 using ProjectSystems.ViewModel.AdministrationProjectAndInfSections;
+using System.Windows;
 
 namespace ProjectSystems.ViewModel
 {
@@ -34,6 +35,27 @@ namespace ProjectSystems.ViewModel
             set { _currentView = value; OnPropertyChanged(); }
         }
 
+        private Visibility _isEnableCRUDWorkers = Visibility.Visible;
+        public Visibility IsEnableCRUDWorkers
+        {
+            get { return _isEnableCRUDWorkers; }
+            set { _isEnableCRUDWorkers = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _isEnableCRUDProjects = Visibility.Visible;
+        public Visibility IsEnableCRUDProjects
+        {
+            get { return _isEnableCRUDProjects; }
+            set { _isEnableCRUDProjects = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _isEnableReports = Visibility.Visible;
+        public Visibility IsEnableReports
+        {
+            get { return _isEnableReports; }
+            set { _isEnableReports = value; OnPropertyChanged(); }
+        }
+
         public ICommand WorkerCommand { get; set; }
         public ICommand SettingsCommand { get; set; }
         public ICommand ProjectsCommand { get; set; }
@@ -53,7 +75,7 @@ namespace ProjectSystems.ViewModel
                               IPageService pageService, IPositionService positionService,
                               IProjectService projectService, IReportService reportService,
                               ITaskService taskService, ITrackService trackService,
-                              IWorkerService workerService, ILoadFileService loadFileService)
+                              IWorkerService workerService, ILoadFileService loadFileService, string status)
         {
             _infSerctionService = infSerctionService;
             _messageService = messageService;
@@ -65,6 +87,18 @@ namespace ProjectSystems.ViewModel
             _trackService = trackService;
             _workerService = workerService;
             _loadFileService = loadFileService;
+
+            if (status == "Coder")
+            {
+                IsEnableCRUDWorkers = Visibility.Hidden;
+                IsEnableCRUDProjects = Visibility.Hidden;
+                IsEnableReports = Visibility.Hidden;
+            }
+            if (status == "Tester")
+            {
+                IsEnableCRUDWorkers = Visibility.Hidden;
+                IsEnableCRUDProjects = Visibility.Hidden;
+            }
 
             NavigationPanelCommand = new RelayCommand(NavigationPanel);
             WorkerCommand = new RelayCommand(Worker);

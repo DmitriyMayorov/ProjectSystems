@@ -5,6 +5,11 @@
                     xmlns:mainview="clr-namespace:ProjectSystems.View"
                     xmlns:npview="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections">
     <!--Здесь нужно будет добавить под сам проект и инфомационные секции код-->
+    <!--Секции, конструктор DataContext которых - нулевой-->
+    <DataTemplate DataType="{x:Type main:AuthorizationVM}">
+        <mainview:Authorization/>
+    </DataTemplate>
+    
     <DataTemplate DataType="{x:Type main:MainWindowVM}">
         <mainview:MainWindow/>
     </DataTemplate>
@@ -31,6 +36,10 @@
 
     <DataTemplate DataType="{x:Type np:InfSectionVM}">
         <npview:InfSectionsMenu/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type np:PagesVM}">
+        <npview:PagesMenu/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type np:TrackVM}">

@@ -49,10 +49,18 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         public ICommand TrackCommand {  get; set; }
         public ICommand MessagesCommand {  get; set; }
 
+        public ICommand PageCommand { get; set; }
+
         private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
         private void Task(object obj) => CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
         private void Track(object obj) => CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
         private void Message(object obj) => CurrentViewPanel = new MessageVM(_taskService, _messageService);
+
+        private void Page(object obj)
+        {
+            InfSectionDTO temp = ((InfSectionVM)CurrentViewPanel).SelectedSection;
+            CurrentViewPanel = new PagesVM(temp);
+        }
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
                                  IReportService reportService, ITaskService taskService, ITrackService trackService, ILoadFileService loadFileService)
@@ -70,6 +78,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             TaskCommand = new RelayCommand(Task);
             TrackCommand = new RelayCommand(Track);
             MessagesCommand = new RelayCommand(Message);
+
+            PageCommand = new RelayCommand(Page);
 
             CurrentProject = _projectService.GetProjects().FirstOrDefault();
 
