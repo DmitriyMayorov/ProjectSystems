@@ -19,29 +19,29 @@
 
             <WrapPanel >
 
-                                <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding AddInfSectionCommand}">
+                <Menu:Button Style="{StaticResource BtnStyle}"
+                             Command="{Binding AddCommand}">
 
                     <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
                 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding AddInfSectionCommand}">
+                             Command="{Binding AddCommand}">
 
                     <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding UpdateInfSectionCommand}">
+                             Command="{Binding UpdateCommand}">
 
                     <Image Source="../../Images/Edit.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding RemoveInfSectionCommand}">
+                             Command="{Binding DeleteCommand}">
 
                     <Image Source="../../Images/Delete.png" Style="{StaticResource CRUD_Image_Style}"/>
 
@@ -53,8 +53,8 @@
 
         <Grid Grid.Row="1">
             <ListView Grid.Row="3"
-                  ItemsSource="{Binding Sections}"
-                  SelectedItem="{Binding SelectedSection}"
+                  ItemsSource="{Binding Pages}"
+                  SelectedItem="{Binding SelectedPage}"
                   VerticalAlignment="Top" Background="{x:Null}">
 
                 <ListView.ItemsPanel>

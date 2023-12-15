@@ -59,7 +59,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private void Page(object obj)
         {
             InfSectionDTO temp = ((InfSectionVM)CurrentViewPanel).SelectedSection;
-            CurrentViewPanel = new PagesVM(temp);
+            CurrentViewPanel = new PagesVM(_pageService, temp);
         }
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
