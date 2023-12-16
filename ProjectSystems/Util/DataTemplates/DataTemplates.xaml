@@ -42,6 +42,10 @@
         <npview:PagesMenu/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type np:PageCurrentVM}">
+        <npview:PageCurrentMenu/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type np:TrackVM}">
         <npview:TracksMenu/>
     </DataTemplate>
@@ -50,7 +54,7 @@
         <npview:MessagesMenuForCurrentTask/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type np:ReportsVM}">
+    <DataTemplate DataType="{x:Type main:ReportsVM}">
         <mainview:ReportMenuForCurrentWorker/>
     </DataTemplate>
     

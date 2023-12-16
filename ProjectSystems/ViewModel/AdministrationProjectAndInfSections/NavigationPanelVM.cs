@@ -23,6 +23,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private ITrackService _trackService;
         private ILoadFileService _loadFileService;
 
+        private InfSectionDTO _currentInfSectionDTO;
+        private PageDTO _currentPageDTO;
+
         private object _currentViewPanel;
         public object CurrentViewPanel
         {
@@ -50,6 +53,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         public ICommand MessagesCommand {  get; set; }
 
         public ICommand PageCommand { get; set; }
+        public ICommand PageCurrentCommand { get; set; }
 
         private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
         private void Task(object obj) => CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
@@ -58,8 +62,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void Page(object obj)
         {
-            InfSectionDTO temp = ((InfSectionVM)CurrentViewPanel).SelectedSection;
-            CurrentViewPanel = new PagesVM(_pageService, temp);
+            _currentInfSectionDTO = _currentInfSectionDTO == null ? ((InfSectionVM)CurrentViewPanel).SelectedSection : _currentInfSectionDTO;
+            CurrentViewPanel = new PagesVM(_pageService, _currentInfSectionDTO);
+        }
+
+        private void PageCurrent(object obj)
+        {
+            _currentPageDTO = _currentPageDTO == null ? ((PagesVM)CurrentViewPanel).SelectedPage : _currentPageDTO;
+            CurrentViewPanel = new PageCurrentVM(_pageService, _currentPageDTO);
         }
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
@@ -80,6 +90,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             MessagesCommand = new RelayCommand(Message);
 
             PageCommand = new RelayCommand(Page);
+            PageCurrentCommand = new RelayCommand(PageCurrent);
 
             CurrentProject = _projectService.GetProjects().FirstOrDefault();
 

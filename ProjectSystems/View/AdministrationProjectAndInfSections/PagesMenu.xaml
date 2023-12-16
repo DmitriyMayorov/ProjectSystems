@@ -20,23 +20,17 @@
             <WrapPanel >
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding AddCommand}">
+                             Command="{Binding DataContext.InfSectionCommand,
+          RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}">
 
-                    <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
-
-                </Menu:Button>
-                
-                <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding AddCommand}">
-
-                    <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
+                    <Image Source="../../Images/Exit.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding UpdateCommand}">
+                             Command="{Binding AddCommand}">
 
-                    <Image Source="../../Images/Edit.png" Style="{StaticResource CRUD_Image_Style}"/>
+                    <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
@@ -67,8 +61,8 @@
                     <DataTemplate>
                         <Grid Height="170" Width="150">
                             <Grid.InputBindings>
-                                <MouseBinding Command="{Binding DataContext.toSecondWindowAsCoder ,
-                                                        RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}"/>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PageCurrentCommand ,
+                                            RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}"/>
                             </Grid.InputBindings>
                             <Border Margin="10" CornerRadius="15" Background="#372B2F">
                                 <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Name}" Margin="15"

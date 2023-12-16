@@ -171,8 +171,9 @@
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\MessageVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\NavigationPanelVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\PageAddVM.cs" />
+    <Compile Include="ViewModel\AdministrationProjectAndInfSections\PageCurrentVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\PagesVM.cs" />
-    <Compile Include="ViewModel\AdministrationProjectAndInfSections\ReportsVM.cs" />
+    <Compile Include="ViewModel\ReportsVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TaskAddMenuVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TasksVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TrackAddVM.cs" />
@@ -199,6 +200,9 @@
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\PageAdministrationProjectAndInfSections.xaml.cs">
       <DependentUpon>PageAdministrationProjectAndInfSections.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AdministrationProjectAndInfSections\PageCurrentMenu.xaml.cs">
+      <DependentUpon>PageCurrentMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\PagesMenu.xaml.cs">
       <DependentUpon>PagesMenu.xaml</DependentUpon>
@@ -246,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AdministrationProjectAndInfSections\PageAdministrationProjectAndInfSections.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdministrationProjectAndInfSections\PageCurrentMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -404,6 +412,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\SectionPage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Statistic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Import.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

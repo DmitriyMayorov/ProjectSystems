@@ -25,15 +25,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             set { _pages = value; OnPropertyChanged(); }
         }
 
-        private PageDTO _selected_pages;
-        public PageDTO SelectedPages
+        private PageDTO _selected_page;
+        public PageDTO SelectedPage
         {
-            get { return _selected_pages; }
-            set { _selected_pages = value; OnPropertyChanged(); }
+            get { return _selected_page; }
+            set { _selected_page = value; OnPropertyChanged(); }
         }
 
         public ICommand AddCommand { get; set; }
-        public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
 
         private PageAddMenu _addMenu;
@@ -44,14 +43,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _addMenu.ShowDialog();
 
             Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection.Id));
-        }
-
-        private void UpdateCommandExecute(object obj)
-        {
-            foreach (var page in Pages)
-            {
-                _pageService.UpdatePage(page);
-            }
         }
 
         private void DeleteCommandExecute(object obj)
@@ -67,7 +58,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _currentInfSection = currentInfSection;
 
             AddCommand = new RelayCommand(AddCommandExecute);
-            UpdateCommand = new RelayCommand(UpdateCommandExecute);
             DeleteCommand = new RelayCommand(DeleteCommandExecute);
 
             Pages = new ObservableCollection<PageDTO>(_pageService.GetPages());

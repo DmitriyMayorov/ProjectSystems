@@ -145,6 +145,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ReportForms\ReportProjectStates.cs" />
     <Compile Include="ReportForms\ReportTasksForPerson.cs" />
     <Compile Include="ReportForms\ReportStatisticByAllPerson.cs" />
     <Compile Include="RepositoryPgs\DbReposPgs.cs" />

@@ -1,4 +1,6 @@
-﻿using BLL.Interfaces;
+﻿using BLL.DTO;
+using BLL.Interfaces;
+using BLL.Services;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
@@ -9,9 +11,12 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using ToastNotifications;
@@ -19,17 +24,19 @@ using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
-namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
+namespace ProjectSystems.ViewModel
 {
     public class ReportsVM : ViewModelBase
     {
+        IProjectService _projectService;
         IReportService _reportService;
         ILoadFileService _loadFileService;
 
         Notifier _notifier;
-
+        
         public double YAxis { get; set; }
 
+        //Описание состяний на первую вкладку TabControl
         private DateTime _startDate;
         public DateTime StartDate
         { 
@@ -58,12 +65,59 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             set { _labelTrack = value; OnPropertyChanged(); }
         }
 
+        private Visibility _visDiagram = Visibility.Hidden;
+        public Visibility VisDiagram
+        {
+            get { return _visDiagram; }
+            set { _visDiagram = value; OnPropertyChanged(); }
+        }
+
         public Func<double, string> Formatter { get; set; }
 
         public SeriesCollection Series {  get; set; }
 
+        //Описание второй вкладки TabControl
+        private ObservableCollection<ProjectDTO> _projects;
+        public ObservableCollection<ProjectDTO> Projects
+        {
+            get { return _projects; }
+            set { _projects = value; OnPropertyChanged(); }
+        }
+
+        private ProjectDTO _currentProject;
+        public ProjectDTO CurrentProject
+        {
+            get { return _currentProject; }
+            set { _currentProject = value; OnPropertyChanged(); }
+        }
+
+        private ChartValues<int> _countTasksForCurrentProjectSortByState;
+        public ChartValues<int> CountTasksForCurrentProjectSortByState
+        {
+            get { return _countTasksForCurrentProjectSortByState; }
+            set { _countTasksForCurrentProjectSortByState = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<string> _labelsNameSate;
+        public ObservableCollection<string> LabelsNameSate
+        {
+            get { return _labelsNameSate; }
+            set { _labelsNameSate = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _visDiagramSecond = Visibility.Hidden;
+        public Visibility VisDiagramSecond
+        {
+            get { return _visDiagramSecond; }
+            set { _visDiagramSecond = value; OnPropertyChanged(); }
+        }
+
+        public Func<double, string> FormatterTask { get; set; }
+
         public ICommand ChoiseCommand { get; set; }
         public ICommand LoadPdfFileCommand {  get; set; }
+        public ICommand ChoiseProjectCommand { get; set; }
+        public ICommand LoadPdfFileSecondReportCommand { get; set; }
 
         private void ChoiseCommandExecute(object obj)
         {
@@ -83,6 +137,17 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                     Values = new ChartValues<ObservableValue>() { new ObservableValue(item.CountCompletedTasks) }
                 });
             }
+            VisDiagram = Visibility.Visible;
+        }
+
+        private void ChoiseProjectExecute(object obj)
+        {
+            if (CurrentProject == null)
+                return;
+            var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
+            CountTasksForCurrentProjectSortByState = new ChartValues<int>(result.Select(i => i.CountTasks).ToList());
+            LabelsNameSate = new ObservableCollection<string>(result.Select(i => i.NameState).ToList());
+            VisDiagramSecond = Visibility.Visible;
         }
 
         private void LoadPdfFileCommandExecute(object obj)
@@ -97,22 +162,43 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _notifier.ShowSuccess("Отчёт создан в PDF");
         }
 
-        public ReportsVM(IReportService reportService, ILoadFileService loadFileService)
+        private void LoadPdfFileSecondReportExecute(object obj)
         {
+            if (CurrentProject == null)
+                return;
+            var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
+            string header = "Отчёт по состяонию заданий на " + DateTime.Now + "\n" + " для проекта " + CurrentProject.Name;
+            _loadFileService.SaveStatisitcForTasksInCurrentProjectByStates("ProjectStatistic.pdf", result, header);
+            _notifier.ShowSuccess("Отчёт создан в PDF");
+        }
+
+        public ReportsVM(IProjectService projectService, IReportService reportService, ILoadFileService loadFileService)
+        {
+            _projectService = projectService;
             _reportService = reportService;
             _loadFileService = loadFileService;
+            
+            //Стартовые значения для первой вкладки
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now;
+            YAxis = 1;
+            CountHoursTrack = new ChartValues<int>();
+            LabelsTrack = new ObservableCollection<string>();
+            Series = new SeriesCollection();
+            Formatter = value => (value / 24.0 <= 1.0 || value <= 0) ? value + " часов" : (int)(value / 24) + " дней, " + (int)(value % 24) + " часов";
+
+            //Стартовые значения для второй вкладки
+            Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
+            CurrentProject = _projectService.GetProjects().FirstOrDefault();
+            LabelsNameSate = new ObservableCollection<string>();
+            CountTasksForCurrentProjectSortByState = new ChartValues<int>();
+            FormatterTask = value => value + " заданий";
 
             ChoiseCommand = new RelayCommand(ChoiseCommandExecute);
             LoadPdfFileCommand = new RelayCommand(LoadPdfFileCommandExecute);
+            ChoiseProjectCommand = new RelayCommand(ChoiseProjectExecute);
+            LoadPdfFileSecondReportCommand = new RelayCommand(LoadPdfFileSecondReportExecute);
 
-            StartDate = DateTime.Now;
-            EndDate = DateTime.Now;
-            YAxis = 0;
-            CountHoursTrack = new ChartValues<int>();
-            LabelsTrack = new ObservableCollection<string>();
-            Formatter = value => (value / 24.0 <= 1.0 || value <= 0) ? value + " часов" : (int)(value / 24) + " дней, " + (int)(value % 24) + " часов";
-
-            Series = new SeriesCollection();
             _loadFileService = loadFileService;
 
             _notifier = new Notifier(cfg =>

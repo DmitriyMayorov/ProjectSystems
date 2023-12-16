@@ -12,5 +12,6 @@ namespace DAL.Interfaces
     {
         List<ReportTasksForPerson> MakeTasksForPerson(int IDPerson);
         List<ReportStatisticByAllPerson> MakeDiagnosisReport(DateTime firstDate, DateTime secondTime);
+        List<ReportProjectStates> MakeCountTasksForCurrentProjectByStates(int IDProject);
     }
 }

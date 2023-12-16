@@ -129,6 +129,7 @@
     <Compile Include="DTO\PageDTO.cs" />
     <Compile Include="DTO\PositionDTO.cs" />
     <Compile Include="DTO\ProjectDTO.cs" />
+    <Compile Include="DTO\ReportProjectStatesDTO.cs" />
     <Compile Include="DTO\ReportTasksForPersonDTO.cs" />
     <Compile Include="DTO\ReportStatisticByAllPersonDTO.cs" />
     <Compile Include="DTO\StatisticTrackDTO.cs" />

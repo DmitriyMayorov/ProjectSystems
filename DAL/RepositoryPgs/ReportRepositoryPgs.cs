@@ -5,6 +5,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,18 @@ namespace DAL.RepositoryPgs
             var result = db.Database.SqlQuery<ReportStatisticByAllPerson>("select * from get_statistic_for_workers(:fd::date,:ld::date);", new object[] { param1, param2 }).ToList();
 
             return result;
+        }
+
+        public List<ReportProjectStates> MakeCountTasksForCurrentProjectByStates(int IDProject)
+        {
+            var States = new List<string>() { "Plan", "InProgress", "Review", "Stage", "Test", "Ready" };
+            var res = new List<ReportProjectStates>();
+            foreach (var state in States)
+            {
+                ReportProjectStates el = new ReportProjectStates() { CountTasks = db.Tasks.ToList().Where(i => i.State == state && i.IDProject == IDProject).Count(), NameState = state };
+                res.Add(el);
+            }
+            return res;
         }
     }
 }

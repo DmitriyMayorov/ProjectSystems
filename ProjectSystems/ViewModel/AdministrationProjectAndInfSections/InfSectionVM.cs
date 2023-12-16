@@ -38,61 +38,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             set { _selected_section = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<PageDTO> _pages;
-        public ObservableCollection<PageDTO> Pages
-        {
-            get { return _pages; }
-            set { _pages = value; OnPropertyChanged(); }
-        }
-
-        private PageDTO _selected_pages;
-        public PageDTO SelectedPages
-        {
-            get { return _selected_pages; }
-            set { _selected_pages = value; OnPropertyChanged(); }
-        }
-
-        public ICommand AddCommand { get; set; }
-        public ICommand UpdateCommand { get; set; }
-        public ICommand RemoveCommand { get; set; }
-        public ICommand ChoiseCommand { get; set; }
         public ICommand AddInfSectionCommand {  get; set; }
         public ICommand UpdateInfSectionCommand { get; set; }
         public ICommand RemoveInfSectionCommand { get; set; }
-
-        private void AddCommandExecute(object obj)
-        {
-            if (SelectedSection == null)
-                return;
-            _pageAddMenu = new PageAddMenu(SelectedSection);
-            _pageAddMenu.ShowDialog();
-
-            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(SelectedSection.Id));
-        }
-
-        private void UpdateCommandExecute(object obj) 
-        {
-            if (SelectedSection == null)
-                return;
-            foreach (var page in Pages)
-            {
-                _pageService.UpdatePage(page);
-            }
-        }
-
-        private void RemoveCommandExecute(object obj) 
-        {
-            if (SelectedSection == null)
-                return;
-            _pageService.DeletePage(SelectedSection.Id);
-        }
-
-        private void ChoiseCommandExecute(object obj)
-        {
-            if (SelectedSection == null)
-                return;
-            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(SelectedSection.Id));
-        }
 
         private void AddInfSectionCommandExecute(object obj)
         {
@@ -111,7 +59,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             if (SelectedSection == null)
                 return;
             _infSerctionService.DeleteInfSection(SelectedSection.Id);
-/*            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(SelectedSection.Id));*/
+            Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
         }
 
         public InfSectionVM(IInfSerctionService infSerctionService, IPageService pageService, ProjectDTO projectDTO)
@@ -122,10 +70,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
 
-            AddCommand = new RelayCommand(AddCommandExecute);
-            UpdateCommand = new RelayCommand(UpdateCommandExecute);
-            RemoveCommand = new RelayCommand(RemoveCommandExecute);
-            ChoiseCommand = new RelayCommand(ChoiseCommandExecute);
             AddInfSectionCommand = new RelayCommand(AddInfSectionCommandExecute);
             UpdateInfSectionCommand = new RelayCommand(UpdateInfSectionCommandExecute);
             RemoveInfSectionCommand = new RelayCommand(RemoveInfSectionCommandExecute);

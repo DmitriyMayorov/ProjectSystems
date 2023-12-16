@@ -45,6 +45,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 _notifier.ShowError("Не получилось добавить. Выберите название и описание!");
                 return;
             }
+
             PageDTO temp = new PageDTO();
             temp.Name = SelectedName;
             temp.TextSection = SelectedDescription;

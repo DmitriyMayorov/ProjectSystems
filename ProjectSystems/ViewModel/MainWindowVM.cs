@@ -69,7 +69,7 @@ namespace ProjectSystems.ViewModel
         private void Worker(object obj) => CurrentView = new WorkersVM(_workerService, _positionService);
         private void Settings(object obj) => CurrentView = new SettingsVM();
         private void Projects(object obj) => CurrentView = new ProjectsVM(_projectService);
-        private void Report(object obj) => CurrentView = new ReportsVM(_reportService, _loadFileService);
+        private void Report(object obj) => CurrentView = new ReportsVM(_projectService, _reportService, _loadFileService);
 
         public MainWindowVM(IInfSerctionService infSerctionService, IMessageService messageService,
                               IPageService pageService, IPositionService positionService,

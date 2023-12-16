@@ -48,7 +48,7 @@
                                  Visibility="{Binding IsEnableReports}">
                             <Grid>
 
-                                <Image Source="../Images/User.png" Style="{StaticResource Image_Style}"/>
+                                <Image Source="../Images/Statistic.png" Style="{StaticResource Image_Style}"/>
 
                             </Grid>
 
@@ -87,7 +87,7 @@
                                        RelativeSource={RelativeSource AncestorType={x:Type local:Application}}}">
                     <Grid>
 
-                        <Image Source="../Images/Projects.png" Style="{StaticResource Image_Style}"/>
+                        <Image Source="../Images/Exit.png" Style="{StaticResource Image_Style}"/>
 
                     </Grid>
 

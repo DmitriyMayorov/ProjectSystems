@@ -12,5 +12,6 @@ namespace BLL.Interfaces
     {
         void SaveStatisticForAllPerson(string filename, List<ReportStatisticByAllPersonDTO> data, string header);
         void SaveStatisitcForCurrentTask(string filename, List<StatisticTrackDTO> data, string header);
+        void SaveStatisitcForTasksInCurrentProjectByStates(string filename, List<ReportProjectStatesDTO> data, string header);
     }
 }

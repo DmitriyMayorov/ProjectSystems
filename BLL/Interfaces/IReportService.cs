@@ -13,5 +13,6 @@ namespace BLL.Interfaces
     {
         List<ReportStatisticByAllPersonDTO> GetStatisticByAllPerson(DateTime startDate, DateTime endDate);
         List<ReportTasksForPersonDTO> GetTasksForPerson(string Person);
+        List<ReportProjectStatesDTO> MakeCountTasksForCurrentProjectByStates(ProjectDTO project);
     }
 }

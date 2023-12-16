@@ -28,5 +28,11 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
+
+        public List<ReportProjectStatesDTO> MakeCountTasksForCurrentProjectByStates(ProjectDTO project)
+        {
+            var result = db.Reports.MakeCountTasksForCurrentProjectByStates(project.Id);
+            return result.Select(i => new ReportProjectStatesDTO(i)).ToList();
+        }
     }
 }
