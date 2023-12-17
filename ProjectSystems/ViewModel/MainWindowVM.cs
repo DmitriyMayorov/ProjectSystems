@@ -12,6 +12,7 @@ using System.Windows.Input;
 using BLL.Services;
 using ProjectSystems.ViewModel.AdministrationProjectAndInfSections;
 using System.Windows;
+using System.Data.Entity.Core;
 
 namespace ProjectSystems.ViewModel
 {
@@ -57,19 +58,24 @@ namespace ProjectSystems.ViewModel
         }
 
         public ICommand WorkerCommand { get; set; }
-        public ICommand SettingsCommand { get; set; }
         public ICommand ProjectsCommand { get; set; }
         public ICommand ReportCommand { get; set; }
         public ICommand NavigationPanelCommand { get; set; }
+
+        public ICommand AboutCommand { get; set; }
 
 
         private void NavigationPanel(object obj) => CurrentView = new AdministrationProjectAndInfSections.NavigationPanelVM(_infSerctionService, _messageService,
                                                                                                                             _pageService,_projectService, _reportService,
                                                                                                                             _taskService, _trackService, _loadFileService);
         private void Worker(object obj) => CurrentView = new WorkersVM(_workerService, _positionService);
-        private void Settings(object obj) => CurrentView = new SettingsVM();
         private void Projects(object obj) => CurrentView = new ProjectsVM(_projectService);
         private void Report(object obj) => CurrentView = new ReportsVM(_projectService, _reportService, _loadFileService);
+
+        private void AboutExecute(object obj)
+        {
+            CurrentView = new AboutVM();
+        }
 
         public MainWindowVM(IInfSerctionService infSerctionService, IMessageService messageService,
                               IPageService pageService, IPositionService positionService,
@@ -102,9 +108,10 @@ namespace ProjectSystems.ViewModel
 
             NavigationPanelCommand = new RelayCommand(NavigationPanel);
             WorkerCommand = new RelayCommand(Worker);
-            SettingsCommand = new RelayCommand(Settings);
             ProjectsCommand = new RelayCommand(Projects);
             ReportCommand = new RelayCommand(Report);
+
+            AboutCommand = new RelayCommand(AboutExecute);
 
             CurrentView = new AdministrationProjectAndInfSections.NavigationPanelVM(_infSerctionService, _messageService,
                                                                                     _pageService, _projectService, _reportService,

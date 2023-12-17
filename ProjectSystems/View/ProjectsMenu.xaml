@@ -53,7 +53,7 @@
                           ItemsSource="{Binding Projects}"
                           SelectedItem="{Binding SelectedProject}"
                           Grid.RowSpan="2" AutoGenerateColumns="False"
-                          CanUserAddRows="False" Background="CadetBlue"
+                          CanUserAddRows="False" Background="#372B2F"
                           FontSize="18">
                     
                     <DataGrid.Columns>

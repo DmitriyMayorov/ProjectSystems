@@ -13,6 +13,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -35,6 +36,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             if (SelectedName == null || SelectedName == "")
             {
+                Log.Error("Добавление информационной секции отменено. Не введено либо название, либо описание секции");
                 _notifier.ShowError("Не удалось добавить. Выберите название!");
                 return;
             }
@@ -43,6 +45,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             temp.IDProject = _projectDTO.Id;
 
             _infSectionService.CreateInfSection(temp);
+            Log.Information("Добавление информационной секции. Название - ", SelectedName);
             _notifier.ShowSuccess("Успешное добавление");
         }
 

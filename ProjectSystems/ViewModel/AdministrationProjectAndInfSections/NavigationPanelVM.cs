@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Serilog;
+using System.Diagnostics;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -55,20 +57,41 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         public ICommand PageCommand { get; set; }
         public ICommand PageCurrentCommand { get; set; }
 
-        private void InfSection(object obj) => CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
-        private void Task(object obj) => CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
-        private void Track(object obj) => CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
-        private void Message(object obj) => CurrentViewPanel = new MessageVM(_taskService, _messageService);
+        private void InfSection(object obj)
+        {
+            CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
+            Log.Information("Выбор в навигационной панели пользовательского элемента с информационными секциями");
+        }
+
+        private void Task(object obj)
+        {
+            CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
+            Log.Information("Выбор в навигационной панели пользовательского элемента с заданиями");
+        }
+
+        private void Track(object obj)
+        {
+            CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
+            Log.Information("Выбор в навигационной панели пользовательского элемента с треккингом времени для заданий");
+        }
+
+        private void Message(object obj)
+        {
+            CurrentViewPanel = new MessageVM(_taskService, _messageService);
+            Log.Information("Выбор в навигационной панели пользовательского элемента с сообщениями по заданию");
+        }
 
         private void Page(object obj)
         {
             _currentInfSectionDTO = _currentInfSectionDTO == null ? ((InfSectionVM)CurrentViewPanel).SelectedSection : _currentInfSectionDTO;
+            Log.Debug("Выбранная информационная секция - Название: ", _currentInfSectionDTO.Name);
             CurrentViewPanel = new PagesVM(_pageService, _currentInfSectionDTO);
         }
 
         private void PageCurrent(object obj)
         {
             _currentPageDTO = _currentPageDTO == null ? ((PagesVM)CurrentViewPanel).SelectedPage : _currentPageDTO;
+            Log.Debug("Выбранная страница - Название: ", _currentPageDTO.Name);
             CurrentViewPanel = new PageCurrentVM(_pageService, _currentPageDTO);
         }
 
@@ -96,6 +119,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
             Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
+
+            Log.Information("Инициализация конструктора навигационной модели проекта");
         }
     }
 }

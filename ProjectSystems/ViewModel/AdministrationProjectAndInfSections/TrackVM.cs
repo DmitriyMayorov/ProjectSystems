@@ -144,7 +144,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             LabelsTrack = new ObservableCollection<string>(new List<string>() { "Plan", "InProgress", "CodeRewiew", "Stage", "Test" });
             Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTasks());
             ChoiceTask = new RelayCommand(ChoiceTaskExecute);
-            CountHoursTrack = new ChartValues<int>(new List<int> { 100, 100, 50, 24, 10 });
+            CountHoursTrack = new ChartValues<int>(new List<int> { 100, 100, 50, 24, 1 });
             Formatter = value => (value / 24.0 <= 1.0 || value <= 0) ? value + " часов" : (int)(value / 24) + " дней, " + (int)(value % 24) + " часов";
             YAxis = 0;
 

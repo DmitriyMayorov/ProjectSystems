@@ -194,6 +194,7 @@
     <Compile Include="Util\TemplateElement\RelayCommand.cs" />
     <Compile Include="Util\Ninject\ReposModule.cs" />
     <Compile Include="Util\TemplateElement\ViewModelBase.cs" />
+    <Compile Include="ViewModel\AboutVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\InfSectionAddVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\InfSectionVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\MessageVM.cs" />
@@ -210,10 +211,12 @@
     <Compile Include="ViewModel\AuthorizationVM.cs" />
     <Compile Include="ViewModel\ProjectAddMenuVM.cs" />
     <Compile Include="ViewModel\ProjectsVM.cs" />
-    <Compile Include="ViewModel\SettingsVM.cs" />
     <Compile Include="ViewModel\WorkerAddMenuVM.cs" />
     <Compile Include="ViewModel\WorkersVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
+    <Compile Include="View\AboutMenu.xaml.cs">
+      <DependentUpon>AboutMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\InfSectionAddMenu.xaml.cs">
       <DependentUpon>InfSectionAddMenu.xaml</DependentUpon>
     </Compile>
@@ -258,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Util\DataTemplates\DataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AboutMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -325,10 +332,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SettingsMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\WorkerAddMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -365,9 +368,6 @@
     </Compile>
     <Compile Include="View\ReportMenuForCurrentWorker.xaml.cs">
       <DependentUpon>ReportMenuForCurrentWorker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SettingsMenu.xaml.cs">
-      <DependentUpon>SettingsMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WorkerAddMenu.xaml.cs">
       <DependentUpon>WorkerAddMenu.xaml</DependentUpon>

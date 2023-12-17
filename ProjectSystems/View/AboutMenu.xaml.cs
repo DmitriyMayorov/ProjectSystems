@@ -13,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using ProjectSystems.ViewModel;
-
 namespace ProjectSystems.View
 {
     /// <summary>
-    /// Логика взаимодействия для SettingsMenu.xaml
+    /// Логика взаимодействия для AboutMenu.xaml
     /// </summary>
-    public partial class SettingsMenu : UserControl
+    public partial class AboutMenu : UserControl
     {
-        public SettingsMenu()
+        public AboutMenu()
         {
             InitializeComponent();
-            DataContext = new SettingsVM();
         }
     }
 }
