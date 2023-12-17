@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Serilog;
 using BLL.DTO;
 using BLL.Interfaces;
 using System.Windows.Input;
@@ -110,6 +110,9 @@ namespace ProjectSystems.ViewModel
                                                                                     _pageService, _projectService, _reportService,
                                                                                     _taskService, _trackService, loadFileService);
             _loadFileService = loadFileService;
+
+            Log.Information("Загрузка конструктора приложения - главного экрана");
+            Log.Debug("Статус роли - ", status);
         }
     }
 }

@@ -12,6 +12,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel
 {

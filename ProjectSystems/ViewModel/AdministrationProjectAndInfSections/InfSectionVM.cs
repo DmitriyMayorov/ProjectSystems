@@ -22,7 +22,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         ProjectDTO _projectDTO;
         InfSectionAddMenu _infSectionMenu;
-        PageAddMenu _pageAddMenu;
 
         private ObservableCollection<InfSectionDTO> _sections;
         public ObservableCollection<InfSectionDTO> Sections

@@ -157,6 +157,8 @@ namespace ProjectSystems.ViewModel
                 _notifier.ShowError("Выберите временной промежуток!");
                 return;
             }
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.ShowDialog();
             string header = "Отчёт по эффективности работы сотрудников \nза период между " + StartDate.Date.ToString() + " и " + EndDate.Date.ToString() + "\n";
             _loadFileService.SaveStatisticForAllPerson("StatisticWorker.pdf", _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
             _notifier.ShowSuccess("Отчёт создан в PDF");
@@ -165,7 +167,12 @@ namespace ProjectSystems.ViewModel
         private void LoadPdfFileSecondReportExecute(object obj)
         {
             if (CurrentProject == null)
+            {
+                _notifier.ShowError("Выберите проект!");
                 return;
+            }
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.ShowDialog();
             var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
             string header = "Отчёт по состяонию заданий на " + DateTime.Now + "\n" + " для проекта " + CurrentProject.Name;
             _loadFileService.SaveStatisitcForTasksInCurrentProjectByStates("ProjectStatistic.pdf", result, header);

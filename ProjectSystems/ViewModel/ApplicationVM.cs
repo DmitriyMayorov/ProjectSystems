@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Serilog;
 
 namespace ProjectSystems.ViewModel
 {
@@ -35,25 +36,41 @@ namespace ProjectSystems.ViewModel
         public ICommand toSecondWindowAsAnalyst { get; set; }
         public ICommand toSecondWindowAsTester { get; set; }
 
-        private void toFirstWindowExecute(object obj) => CurrentView = new AuthorizationVM();
+        private void toFirstWindowExecute(object obj)
+        {
+            CurrentView = new AuthorizationVM();
+            Log.Information("Изменение отображаемого экрана на авторизацию");
+        }
 
-        private void toSecondWindowAsCoderExecute(object obj) =>  CurrentView = new MainWindowVM(_infSerctionService, _messageService,
-                                                                                                 _pageService, _positionService,
-                                                                                                 _projectService, _reportService,
-                                                                                                 _taskService, _trackService,
-                                                                                                 _workerService, _loadFileService, "Coder");
+        private void toSecondWindowAsCoderExecute(object obj)
+        {
+            CurrentView = new MainWindowVM(_infSerctionService, _messageService,
+                                           _pageService, _positionService,
+                                           _projectService, _reportService,
+                                           _taskService, _trackService,
+                                           _workerService, _loadFileService, "Coder");
+            Log.Information("Изменение отображаемого экрана на экран приложение в роли программиста");
+        }
 
-        private void toSecondWindowAsAnalystExecute(object obj) =>  CurrentView = new MainWindowVM(_infSerctionService, _messageService,
-                                                                                                    _pageService, _positionService,
-                                                                                                    _projectService, _reportService,
-                                                                                                    _taskService, _trackService,
-                                                                                                    _workerService, _loadFileService, "Analyst");
+        private void toSecondWindowAsAnalystExecute(object obj)
+        {
+            CurrentView = new MainWindowVM(_infSerctionService, _messageService,
+                                           _pageService, _positionService,
+                                           _projectService, _reportService,
+                                           _taskService, _trackService,
+                                           _workerService, _loadFileService, "Analyst");
+            Log.Information("Изменение отображаемого экрана на экран приложения в роли аналитика");
+        }
 
-        private void toSecondWindowAsTesterExecute(object obj) => CurrentView = new MainWindowVM(_infSerctionService, _messageService,
-                                                                                                 _pageService, _positionService,
-                                                                                                 _projectService, _reportService,
-                                                                                                 _taskService, _trackService,
-                                                                                                 _workerService, _loadFileService, "Tester");
+        private void toSecondWindowAsTesterExecute(object obj)
+        {
+            CurrentView = new MainWindowVM(_infSerctionService, _messageService,
+                                           _pageService, _positionService,
+                                           _projectService, _reportService,
+                                           _taskService, _trackService,
+                                           _workerService, _loadFileService, "Tester");
+            Log.Information("Изменение отображаемого экрана на экран приложения в роли тестировщика");
+        }
 
         public ApplicationVM(IInfSerctionService infSerctionService, IMessageService messageService,
                               IPageService pageService, IPositionService positionService,
@@ -78,6 +95,8 @@ namespace ProjectSystems.ViewModel
             toSecondWindowAsTester = new RelayCommand(toSecondWindowAsTesterExecute);
 
             _currentView = new AuthorizationVM();
+
+            Log.Information("Загрузка главного окна приложения");
         }
     }
 }
