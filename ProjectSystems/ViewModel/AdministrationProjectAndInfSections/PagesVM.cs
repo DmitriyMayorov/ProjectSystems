@@ -10,12 +10,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Serilog;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
     public class PagesVM : ViewModelBase
     {
         IPageService _pageService;
+
+        private Notifier _notifier;
 
         InfSectionDTO _currentInfSection;
 
@@ -48,9 +54,18 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void DeleteCommandExecute(object obj)
         {
-            _pageService.DeletePage(_currentInfSection.Id);
+            try
+            {
+                _pageService.DeletePage(_currentInfSection.Id);
 
-            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection.Id));
+                Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection.Id));
+                _notifier.ShowInformation("Успешное удаление информационной секции");
+            }
+            catch (Exception ex)
+            {
+                _notifier.ShowError("Ошибка при удалении информационной страницы. Смотрите журанл логирования");
+                Log.Error("Ошибка при удалении информационной страницы - " + ex.Message);
+            }
         }
 
         public PagesVM(IPageService pageService, InfSectionDTO currentInfSection) 
@@ -62,6 +77,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             DeleteCommand = new RelayCommand(DeleteCommandExecute);
 
             Pages = new ObservableCollection<PageDTO>(_pageService.GetPages());
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: System.Windows.Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+            });
         }
     }
 }

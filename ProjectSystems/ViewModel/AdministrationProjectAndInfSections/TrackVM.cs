@@ -21,6 +21,7 @@ using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using System.Windows;
 using ToastNotifications.Messages;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -55,66 +56,91 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         public void ChoiceTaskExecute(object obj)
         {
-            if (SelectedTask == null)
-                return;
-            List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
-            foreach (var status in LabelsTrack)
+            try
             {
-                StatisticTrackDTO temp = new StatisticTrackDTO();
-                temp.NameStatus = status;
-                temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
+                if (SelectedTask == null)
+                {
+                    _notifier.ShowWarning("Выберите задание");
+                    return;
+                }
+                List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
+                foreach (var status in LabelsTrack)
+                {
+                    StatisticTrackDTO temp = new StatisticTrackDTO();
+                    temp.NameStatus = status;
+                    temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
 
-                Stat.Add(temp);
+                    Stat.Add(temp);
+                }
+                ResultsTrack = Stat.ToArray().AsChartValues();
+                List<int> tempList = Stat.Select(x => x.CountHours).ToList();
+                CountHoursTrack = new ChartValues<int>(tempList);
             }
-            ResultsTrack = Stat.ToArray().AsChartValues();
-            List<int> tempList = Stat.Select(x => x.CountHours).ToList();
-            CountHoursTrack = new ChartValues<int>(tempList);
-            //отправить логику в BLL
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при выборе задания. Смотрите журнал логирования");
+                Log.Error("Ошибка при выборе задания - " + ex.Message);
+            }
         }
 
         public void AddCommandExecute(object obj)
         {
-            if (SelectedTask == null)
+            try
             {
-                _notifier.ShowError("Выберите задание!");
-                return;
-            }
-            addMenu = new TrackAddMenu(SelectedTask);
-            addMenu.ShowDialog();
+                if (SelectedTask == null)
+                {
+                    _notifier.ShowWarning("Выберите задание!");
+                    return;
+                }
+                addMenu = new TrackAddMenu(SelectedTask);
+                addMenu.ShowDialog();
 
-            List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
-            foreach (var status in LabelsTrack)
+                List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
+                foreach (var status in LabelsTrack)
+                {
+                    StatisticTrackDTO temp = new StatisticTrackDTO();
+                    temp.NameStatus = status;
+                    temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
+
+                    Stat.Add(temp);
+                }
+                ResultsTrack = Stat.ToArray().AsChartValues();
+                List<int> tempList = Stat.Select(x => x.CountHours).ToList();
+                CountHoursTrack = new ChartValues<int>(tempList);
+            }
+            catch(Exception ex)
             {
-                StatisticTrackDTO temp = new StatisticTrackDTO();
-                temp.NameStatus = status;
-                temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
 
-                Stat.Add(temp);
             }
-            ResultsTrack = Stat.ToArray().AsChartValues();
-            List<int> tempList = Stat.Select(x => x.CountHours).ToList();
-            CountHoursTrack = new ChartValues<int>(tempList);
         }
 
         public void LoadPdfFileCommandExecute(object obj)
         {
-            if (SelectedTask == null)
+            try
             {
-                _notifier.ShowError("Выберите задание!");
-                return;
-            }
-            List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
-            foreach (var status in LabelsTrack)
-            {
-                StatisticTrackDTO temp = new StatisticTrackDTO();
-                temp.NameStatus = status;
-                temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
-                Stat.Add(temp);
-            }
+                if (SelectedTask == null)
+                {
+                    _notifier.ShowWarning("Выберите задание!");
+                    return;
+                }
+                List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
+                foreach (var status in LabelsTrack)
+                {
+                    StatisticTrackDTO temp = new StatisticTrackDTO();
+                    temp.NameStatus = status;
+                    temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
+                    Stat.Add(temp);
+                }
 
-            string header = "Отчёт о количестве затраченных часов\n Название:\n" + SelectedTask.Name;
-            _loadFileService.SaveStatisitcForCurrentTask("TaskReport.pdf", Stat, header);
-            _notifier.ShowSuccess("Отчёт создан в PDF");
+                string header = "Отчёт о количестве затраченных часов\n Название:\n" + SelectedTask.Name;
+                _loadFileService.SaveStatisitcForCurrentTask("TaskReport.pdf", Stat, header);
+                _notifier.ShowSuccess("Отчёт создан в PDF");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при выгрузке отчёта по треккингу времени в PDF");
+                Log.Error("Ошибка при выгрузке отчёта по треккингу времени в PDF - " + ex.Message);
+            }
         }
 
         private ChartValues<StatisticTrackDTO> _result;

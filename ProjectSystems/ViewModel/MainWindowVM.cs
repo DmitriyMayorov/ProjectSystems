@@ -119,7 +119,7 @@ namespace ProjectSystems.ViewModel
             _loadFileService = loadFileService;
 
             Log.Information("Загрузка конструктора приложения - главного экрана");
-            Log.Debug("Статус роли - ", status);
+            Log.Debug("Статус роли - " + status);
         }
     }
 }

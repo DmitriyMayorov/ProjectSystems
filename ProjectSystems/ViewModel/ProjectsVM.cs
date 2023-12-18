@@ -12,12 +12,20 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using Serilog;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel
 {
     public class ProjectsVM : ViewModelBase
     {
         private IProjectService _projectService;
+
+        private Notifier _notifier;
+
         private ObservableCollection<ProjectDTO> _projects;
         public ObservableCollection<ProjectDTO> Projects
         {
@@ -42,22 +50,39 @@ namespace ProjectSystems.ViewModel
         {
             _menu = new ProjectAddMenu();
             _menu.ShowDialog();
-
             Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
         }
 
         private void UpdateProjectsExecute(object obj)
         {
-            foreach (ProjectDTO project in Projects)
+            try
             {
-                _projectService.UpdateProject(project);
+                foreach (ProjectDTO project in Projects)
+                {
+                    _projectService.UpdateProject(project);
+                }
+                _notifier.ShowSuccess("Успешное обновление информации о проектах");
+            }
+            catch (Exception ex)
+            {
+                _notifier.ShowSuccess("Ошибка при обновлении инфомации о проектах. Смотрите журнал логирования");
+                Log.Error("Ошибка при обновлении инфомации о проектах - " + ex.Message);
             }
         }
 
         private void RemoveProjectExecute(object obj)
         {
-            _projectService.DeleteProject(SelectedProject.Id);
-            Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
+            try
+            {
+                _projectService.DeleteProject(SelectedProject.Id);
+                Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
+                _notifier.ShowSuccess("Успешное удаление проекта");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Общика при удалении проекта. Смотрите журнал логирования");
+                Log.Error("Ошибка при удалении проекта - " + ex.Message);
+            }
         }
 
         public ProjectsVM(IProjectService projectService)
@@ -68,6 +93,21 @@ namespace ProjectSystems.ViewModel
             AddProject = new RelayCommand(AddProjectExecute);
             UpdateProjects = new RelayCommand(UpdateProjectsExecute);
             RemoveProject = new RelayCommand(RemoveProjectExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: System.Windows.Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+            });
         }
     }
 }

@@ -14,6 +14,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -56,36 +57,58 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void ChoiseCommandExecute(object obj)
         {
-            if (SelectedTask == null)
-                return;
-            Messages = new ObservableCollection<MessageDTO>(_messageService.GetMessagesForCurrentTask(SelectedTask.Id));
+            try
+            {
+                if (SelectedTask == null)
+                {
+                    _notifier.ShowWarning("Выберите нужное задание");
+                    return;
+                }
+                Messages = new ObservableCollection<MessageDTO>(_messageService.GetMessagesForCurrentTask(SelectedTask.Id));
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при загрузке чата для нужного задания в проекте. Смотрите журнал логирования");
+                Log.Error("Ошибка при загрузке чата для нужного задания в проекте - " +  ex.Message);
+            }
         }
 
         public void AddCommandExecute(object obj)
         {
-            if (SelectedTask == null)
-                return;
-            MessageDTO temp = new MessageDTO();
-            temp.TextMessage = NewMessageText;
-            temp.DateMessage = DateTime.Now;
-            switch (SelectedTask.State)
+            try
             {
-                case "Plan": temp.IDWorker = (int)SelectedTask.IDWorkerAnalyst; break;
-                case "InProgress": temp.IDWorker = (int)SelectedTask.IDWorkerCoder; break;
-                case "CodeRewiew": temp.IDWorker = (int)SelectedTask.IDWorkerMentor; break;
-                case "Stage": temp.IDWorker = (int)SelectedTask.IDWorkerCoder; break;
-                case "Test": temp.IDWorker = (int)SelectedTask.IDWorkerTester; break;
-                case "Ready": _notifier.ShowError("Нельзя добавлять сообщения в выполненные задания"); return;
-                default:
-                    _notifier.ShowError("Ошибка!");
+                if (SelectedTask == null)
+                {
+                    _notifier.ShowWarning("Выберите нужное задание");
                     return;
+                }
+                MessageDTO temp = new MessageDTO();
+                temp.TextMessage = NewMessageText;
+                temp.DateMessage = DateTime.Now;
+                switch (SelectedTask.State)
+                {
+                    case "Plan": temp.IDWorker = (int)SelectedTask.IDWorkerAnalyst; break;
+                    case "InProgress": temp.IDWorker = (int)SelectedTask.IDWorkerCoder; break;
+                    case "CodeRewiew": temp.IDWorker = (int)SelectedTask.IDWorkerMentor; break;
+                    case "Stage": temp.IDWorker = (int)SelectedTask.IDWorkerCoder; break;
+                    case "Test": temp.IDWorker = (int)SelectedTask.IDWorkerTester; break;
+                    case "Ready": _notifier.ShowError("Нельзя добавлять сообщения в выполненные задания"); return;
+                    default:
+                        _notifier.ShowError("Ошибка!");
+                        return;
+                }
+                temp.IDTask = SelectedTask.Id;
+
+                _messageService.CreateMessage(temp);
+
+                Messages = new ObservableCollection<MessageDTO>(_messageService.GetMessagesForCurrentTask(SelectedTask.Id));
+                NewMessageText = "";
             }
-            temp.IDTask = SelectedTask.Id;
-
-            _messageService.CreateMessage(temp);
-
-            Messages = new ObservableCollection<MessageDTO>(_messageService.GetMessagesForCurrentTask(SelectedTask.Id));
-            NewMessageText = "";
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при добавлении нового сообщения. Смотрите журнал логирования");
+                Log.Error("Ошибка при добавлении нового сообщения - " + ex.Message);
+            }
         }
 
         public MessageVM(ITaskService taskService, IMessageService messageService)

@@ -39,17 +39,25 @@ namespace ProjectSystems.ViewModel
 
         private void AddProjectExecute(object obj)
         {
-            if (ProjectName == "" || ProjectName == null)
+            try
             {
-                _notifier.ShowError("Некорректные данные");
-                return;
-            }
-            ProjectDTO temp = new ProjectDTO();
-            temp.Name = ProjectName;
-            temp.DeadLine = Date;
+                if (ProjectName == "" || ProjectName == null)
+                {
+                    _notifier.ShowError("Некорректные данные");
+                    return;
+                }
+                ProjectDTO temp = new ProjectDTO();
+                temp.Name = ProjectName;
+                temp.DeadLine = Date;
 
-            _projectService.CreateProject(temp);
-            _notifier.ShowSuccess("Успешное добавление проекта");
+                _projectService.CreateProject(temp);
+                _notifier.ShowSuccess("Успешное добавление проекта");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка добавления проекта! Смотрите журнал логирования");
+                Log.Error("Ошибка добавления задания\n" + ex.Message);
+            }
         }
 
         public ProjectAddMenuVM(IProjectService projectService)

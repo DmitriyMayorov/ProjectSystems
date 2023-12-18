@@ -12,6 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ToastNotifications;
+using Serilog;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -19,6 +24,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         IInfSerctionService _infSerctionService;
         IPageService _pageService;
+
+        private Notifier _notifier;
 
         ProjectDTO _projectDTO;
         InfSectionAddMenu _infSectionMenu;
@@ -50,15 +57,37 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void UpdateInfSectionCommandExecute(object obj)
         {
-            _infSerctionService.UpdateInfSection(SelectedSection);
+            try
+            {
+                _infSerctionService.UpdateInfSection(SelectedSection);
+                Log.Information("Обновление выбранной информационной секции. Название секции - " + SelectedSection.Name);
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при обновлении данных выбранной информационной секций. Смотрите журнал логирования");
+                Log.Error("Ошибка при обновлении данных выбранной информаицонной секций - " + ex.Message);
+            }
         }
 
         private void RemoveInfSectionCommandExecute(object obj)
         {
-            if (SelectedSection == null)
-                return;
-            _infSerctionService.DeleteInfSection(SelectedSection.Id);
-            Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
+            try
+            {
+                if (SelectedSection == null)
+                {
+                    _notifier.ShowError("Выберите секцию для удаления");
+                    return;
+                }
+                _infSerctionService.DeleteInfSection(SelectedSection.Id);
+                Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
+                _notifier.ShowError("Успешное удаление информационной секции");
+                Log.Information("Удаление информационной секции из базы данных. Название информационной секции - " + SelectedSection.Name);
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при удалении информационной секции. Смотрите журнал логирования");
+                Log.Error("Ошибка при удалении информационной секции - " +  ex.Message);
+            }
         }
 
         public InfSectionVM(IInfSerctionService infSerctionService, IPageService pageService, ProjectDTO projectDTO)
@@ -72,6 +101,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             AddInfSectionCommand = new RelayCommand(AddInfSectionCommandExecute);
             UpdateInfSectionCommand = new RelayCommand(UpdateInfSectionCommandExecute);
             RemoveInfSectionCommand = new RelayCommand(RemoveInfSectionCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: System.Windows.Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+            });
         }
     }
 }

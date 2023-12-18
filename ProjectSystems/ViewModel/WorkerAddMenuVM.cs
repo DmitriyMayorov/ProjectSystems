@@ -14,6 +14,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel
 {
@@ -61,22 +62,30 @@ namespace ProjectSystems.ViewModel
 
         private void AddCommandExecute(object obj)
         {
-            if (FIO == null || PassportNum == null ||
-                PassportSeries == null || SelectedPosition == null)
+            try
             {
-                _notifier.ShowError("Некорректные данные");
-                return;
+                if (FIO == null || PassportNum == null ||
+                    PassportSeries == null || SelectedPosition == null)
+                {
+                    _notifier.ShowWarning("Некорректные данные");
+                    return;
+                }
+                WorkerDTO temp = new WorkerDTO();
+                temp.Person = _fio;
+                temp.PassportNum = Int32.Parse(_passport_num);
+                temp.PassportSeries = Int32.Parse(_passport_series);
+                temp.IDPosition = SelectedPosition.Id;
+                temp.Position = SelectedPosition;
+
+                _workerService.CreateWorker(temp);
+
+                _notifier.ShowSuccess("Успешно добавлен работник!");
             }
-            WorkerDTO temp = new WorkerDTO();
-            temp.Person = _fio;
-            temp.PassportNum = Int32.Parse(_passport_num);
-            temp.PassportSeries = Int32.Parse(_passport_series);
-            temp.IDPosition = SelectedPosition.Id;
-            temp.Position = SelectedPosition;
-
-            _workerService.CreateWorker(temp);
-
-            _notifier.ShowSuccess("Успешно добавлен работник!");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при добавлении работника. Смотрите журанл логирования");
+                Log.Error("Ошибка при добавлении работника - " + ex.Message);
+            }
         }
 
         public ICommand AddCommand { get; set; }

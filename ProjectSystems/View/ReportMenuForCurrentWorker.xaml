@@ -16,8 +16,8 @@
                      Foreground="White" Background="White" BorderBrush="Transparent">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.1*"/>
-                        <RowDefinition Height="0.9*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -93,7 +93,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Отчёт по зданиям для проекта">
+            <TabItem Header="Отчёт по заданиям для проекта">
                 <Grid>
                     
                     <Grid.RowDefinitions>

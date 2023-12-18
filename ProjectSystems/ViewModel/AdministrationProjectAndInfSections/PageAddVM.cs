@@ -12,6 +12,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using ToastNotifications.Messages;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -39,20 +40,28 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddCommandExecute(object obj)
         {
-            if (SelectedName == null || SelectedName == "" ||
-                SelectedDescription == null || SelectedDescription == "")
+            try
             {
-                _notifier.ShowError("Не получилось добавить. Выберите название и описание!");
-                return;
+                if (SelectedName == null || SelectedName == "" ||
+                    SelectedDescription == null || SelectedDescription == "")
+                {
+                    _notifier.ShowError("Не получилось добавить. Выберите название и описание!");
+                    return;
+                }
+
+                PageDTO temp = new PageDTO();
+                temp.Name = SelectedName;
+                temp.TextSection = SelectedDescription;
+                temp.IDSection = _infSection.Id;
+
+                _pageService.CreatePage(temp);
+                _notifier.ShowSuccess("Успешное добавление");
             }
-
-            PageDTO temp = new PageDTO();
-            temp.Name = SelectedName;
-            temp.TextSection = SelectedDescription;
-            temp.IDSection = _infSection.Id;
-
-            _pageService.CreatePage(temp);
-            _notifier.ShowSuccess("Успешное добавление");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при добавлении новой информационной страницы. Смотрите журнал логирования");
+                Log.Error("Ошибка при добавлении новой информационной страницы - " + ex.Message);
+            }
         }
 
         public PageAddVM(IPageService pageService, InfSectionDTO infSectionDTO)

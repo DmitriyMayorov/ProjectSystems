@@ -23,6 +23,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel
 {
@@ -121,62 +122,100 @@ namespace ProjectSystems.ViewModel
 
         private void ChoiseCommandExecute(object obj)
         {
-            if (StartDate == null || EndDate == null)
-                return;
-            var temp = _reportService.GetStatisticByAllPerson(StartDate, EndDate);
-            CountHoursTrack = new ChartValues<int>(temp.Select(i => (int)i.CountHours).ToList());
-            LabelsTrack = new ObservableCollection<string>(temp.Select(i => i.Person.ToString()).ToList());
-
-            Series.Clear();
-            foreach(var item in temp)
+            try
             {
-                Series.Add(new PieSeries()
+                if (StartDate == null || EndDate == null)
                 {
-                    Title = item.Person,
-                    DataLabels = true,
-                    Values = new ChartValues<ObservableValue>() { new ObservableValue(item.CountCompletedTasks) }
-                });
+                    _notifier.ShowWarning("Выбрите временной промежуток");
+                    return;
+                }
+                var temp = _reportService.GetStatisticByAllPerson(StartDate, EndDate);
+                CountHoursTrack = new ChartValues<int>(temp.Select(i => (int)i.CountHours).ToList());
+                LabelsTrack = new ObservableCollection<string>(temp.Select(i => i.Person.ToString()).ToList());
+
+                Series.Clear();
+                foreach (var item in temp)
+                {
+                    Series.Add(new PieSeries()
+                    {
+                        Title = item.Person,
+                        DataLabels = true,
+                        Values = new ChartValues<ObservableValue>() { new ObservableValue(item.CountCompletedTasks) }
+                    });
+                }
+                VisDiagram = Visibility.Visible;
             }
-            VisDiagram = Visibility.Visible;
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при выведении статистики по работникам. Смотрите журнал логирования");
+                Log.Error("Ошибка при выведении статистики по работникам - ", ex.Message);
+            }
         }
 
         private void ChoiseProjectExecute(object obj)
         {
-            if (CurrentProject == null)
-                return;
-            var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
-            CountTasksForCurrentProjectSortByState = new ChartValues<int>(result.Select(i => i.CountTasks).ToList());
-            LabelsNameSate = new ObservableCollection<string>(result.Select(i => i.NameState).ToList());
-            VisDiagramSecond = Visibility.Visible;
+            try
+            {
+                if (CurrentProject == null)
+                {
+                    _notifier.ShowWarning("Выберите проект для статистики");
+                    return;
+                }
+                var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
+                CountTasksForCurrentProjectSortByState = new ChartValues<int>(result.Select(i => i.CountTasks).ToList());
+                LabelsNameSate = new ObservableCollection<string>(result.Select(i => i.NameState).ToList());
+                VisDiagramSecond = Visibility.Visible;
+            }
+            catch( Exception ex )
+            {
+                _notifier.ShowError("Ошибка при выведении статистики по заданиям проекта. Смотрите журанл логирования");
+                Log.Error("Ошибка при выведении статистики по заданиям проекта - " + ex.Message);
+            }
         }
 
         private void LoadPdfFileCommandExecute(object obj)
         {
-            if (StartDate == null || EndDate == null)
+            try
             {
-                _notifier.ShowError("Выберите временной промежуток!");
-                return;
+                if (StartDate == null || EndDate == null)
+                {
+                    _notifier.ShowWarning("Выберите временной промежуток!");
+                    return;
+                }
+                System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+                dialog.ShowDialog();
+                string header = "Отчёт по эффективности работы сотрудников \nза период между " + StartDate.Date.ToString() + " и " + EndDate.Date.ToString() + "\n";
+                _loadFileService.SaveStatisticForAllPerson("StatisticWorker.pdf", _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
+                _notifier.ShowSuccess("Отчёт создан в PDF");
             }
-            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-            dialog.ShowDialog();
-            string header = "Отчёт по эффективности работы сотрудников \nза период между " + StartDate.Date.ToString() + " и " + EndDate.Date.ToString() + "\n";
-            _loadFileService.SaveStatisticForAllPerson("StatisticWorker.pdf", _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
-            _notifier.ShowSuccess("Отчёт создан в PDF");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при формировании отчёта по сотрудникам. Смотрите журанл логирования");
+                Log.Error("Ошибка при формировании отчёта по сотрудникам - ", ex.Message);
+            }
         }
 
         private void LoadPdfFileSecondReportExecute(object obj)
         {
-            if (CurrentProject == null)
+            try
             {
-                _notifier.ShowError("Выберите проект!");
-                return;
+                if (CurrentProject == null)
+                {
+                    _notifier.ShowWarning("Выберите проект!");
+                    return;
+                }
+                System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+                dialog.ShowDialog();
+                var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
+                string header = "Отчёт по состяонию заданий на " + DateTime.Now + "\n" + " для проекта " + CurrentProject.Name;
+                _loadFileService.SaveStatisitcForTasksInCurrentProjectByStates("ProjectStatistic.pdf", result, header);
+                _notifier.ShowSuccess("Отчёт создан в PDF");
             }
-            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-            dialog.ShowDialog();
-            var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
-            string header = "Отчёт по состяонию заданий на " + DateTime.Now + "\n" + " для проекта " + CurrentProject.Name;
-            _loadFileService.SaveStatisitcForTasksInCurrentProjectByStates("ProjectStatistic.pdf", result, header);
-            _notifier.ShowSuccess("Отчёт создан в PDF");
+            catch( Exception ex)
+            {
+                _notifier.ShowError("Ошибка при формировании отчёта по заданиям проекта. Смотрите журнал логирвоания");
+                Log.Error("Ошибка при формировании отчёта по здааниям проекта - " + ex.Message);
+            }
         }
 
         public ReportsVM(IProjectService projectService, IReportService reportService, ILoadFileService loadFileService)

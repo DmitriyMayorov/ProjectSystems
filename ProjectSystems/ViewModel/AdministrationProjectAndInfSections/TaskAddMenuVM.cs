@@ -14,6 +14,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -127,30 +128,38 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddTask(object obj)
         {
-            if (Name == null || Description == null)
+            try
             {
-                _notifier.ShowError("Выберите все нужные данные");
-                return;
+                if (Name == null || Description == null)
+                {
+                    _notifier.ShowWarning("Выберите все нужные данные");
+                    return;
+                }
+                TaskDTO temp = new TaskDTO();
+                temp.Name = Name;
+                temp.Description = Description;
+                temp.Project = _projectDTO;
+                temp.Category = SelectedCategory;
+                temp.State = "Plan";
+                temp.Priority = SelectedPriority;
+                temp.WorkerAnalyst = SelectedAnalyst;
+                temp.WorkerCoder = SelectedCoder;
+                temp.WorkerTechlid = SelectedTechlid;
+                temp.WorkerTester = SelectedTester;
+                temp.IDProject = _projectDTO.Id;
+                temp.IDWorkerAnalyst = SelectedAnalyst.Id;
+                temp.IDWorkerCoder = SelectedCoder.Id;
+                temp.IDWorkerMentor = SelectedTechlid.Id;
+                temp.IDWorkerTester = SelectedTester.Id;
+
+                _taskService.CreateTask(temp);
+                _notifier.ShowSuccess("Успешное создание задания");
             }
-            TaskDTO temp = new TaskDTO();
-            temp.Name = Name;
-            temp.Description = Description;
-            temp.Project = _projectDTO;
-            temp.Category = SelectedCategory;
-            temp.State = "Plan";
-            temp.Priority = SelectedPriority;
-            temp.WorkerAnalyst = SelectedAnalyst;
-            temp.WorkerCoder = SelectedCoder;
-            temp.WorkerTechlid = SelectedTechlid;
-            temp.WorkerTester = SelectedTester;
-            temp.IDProject = _projectDTO.Id;
-            temp.IDWorkerAnalyst = SelectedAnalyst.Id;
-            temp.IDWorkerCoder = SelectedCoder.Id;
-            temp.IDWorkerMentor = SelectedTechlid.Id;
-            temp.IDWorkerTester = SelectedTester.Id;
-            
-            _taskService.CreateTask(temp);
-            _notifier.ShowSuccess("Успешное создание задания");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при добавлении задания. Смотрите журанал логирования");
+                Log.Error("Ошибка при добавлении задания - " + ex.Message);
+            }
         }
 
         public TaskAddMenuVM(ITaskService taskService, IWorkerService workerService, ProjectDTO CurrentProject) 

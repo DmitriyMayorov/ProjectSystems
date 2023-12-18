@@ -12,6 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -20,6 +23,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         ITaskService _taskService;
         ITrackService _trackService;
         IMessageService _messageService;
+
+        private Notifier _notifier;
 
         ProjectDTO _projectDTO;
         TaskAddMenu addMenu;
@@ -76,6 +81,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             AddTask = new RelayCommand(AddTaskExecute);
             UpdateTask = new RelayCommand(UpdateCommandExecute);
             RemoveTask = new RelayCommand(RemoveCommandExecute);
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: System.Windows.Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+            });
         }
     }
 }

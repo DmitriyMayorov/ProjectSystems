@@ -6,6 +6,7 @@ using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Serilog;
 
 namespace ProjectSystems.ViewModel
 {
@@ -116,6 +117,8 @@ namespace ProjectSystems.ViewModel
             ReportStateTaskForCurrentProjectInfoCommand = new RelayCommand(ReportStateTaskForCurrentProjectInfoExecute);
             WorkersGridProjectCommand = new RelayCommand(WorkersGridProjectExecute);
             ProjectsGridCommand = new RelayCommand(ProjectsGridExecute);
+
+            Log.Information("Згрузка окна информации о системе");
         }
     }
 }

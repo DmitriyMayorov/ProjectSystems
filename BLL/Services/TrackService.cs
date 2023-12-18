@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -35,13 +36,17 @@ namespace BLL.Services
 
         public void CreateTrack(TrackDTO track)
         {
+            if (track.StatusTask == "Ready" || track.CountHours <= 0)
+            {
+                return;
+            }
             db.Tracks.Create(new Track() { CountHours = track.CountHours, DateTrack = track.DateTrack,
                                             IDTask = track.IDTask, IDWorker = track.IDWorker, StatusTask = track.StatusTask});
             SaveChanges();
         }
 
         public void UpdateTrack(TrackDTO track)
-        {
+        { 
             Track tr = db.Tracks.GetItem(track.Id);
             tr.CountHours = track.CountHours;
             tr.DateTrack = track.DateTrack;

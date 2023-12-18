@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Serilog;
 using System.Diagnostics;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using System.Windows;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -24,6 +29,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private ITaskService _taskService;
         private ITrackService _trackService;
         private ILoadFileService _loadFileService;
+
+        private Notifier _notifier;
 
         private InfSectionDTO _currentInfSectionDTO;
         private PageDTO _currentPageDTO;
@@ -59,40 +66,88 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void InfSection(object obj)
         {
-            CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
-            Log.Information("Выбор в навигационной панели пользовательского элемента с информационными секциями");
+            try
+            {
+                CurrentViewPanel = new InfSectionVM(_infSerctionService, _pageService, CurrentProject);
+                Log.Information("Выбор в навигационной панели пользовательского элемента с информационными секциями");
+            }
+            catch (Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно информационных секций. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно информационных секций - " + ex.Message);
+            }
         }
 
         private void Task(object obj)
         {
-            CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
-            Log.Information("Выбор в навигационной панели пользовательского элемента с заданиями");
+            try
+            {
+                CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
+                Log.Information("Выбор в навигационной панели пользовательского элемента с заданиями");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно заданий. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно заданий - " + ex.Message);
+            }
         }
 
         private void Track(object obj)
         {
-            CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
-            Log.Information("Выбор в навигационной панели пользовательского элемента с треккингом времени для заданий");
+            try
+            {
+                CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
+                Log.Information("Выбор в навигационной панели пользовательского элемента с треккингом времени для заданий");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно треккинга. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно треккинга - " + ex.Message);
+            }
         }
 
         private void Message(object obj)
         {
-            CurrentViewPanel = new MessageVM(_taskService, _messageService);
-            Log.Information("Выбор в навигационной панели пользовательского элемента с сообщениями по заданию");
+            try
+            {
+                CurrentViewPanel = new MessageVM(_taskService, _messageService);
+                Log.Information("Выбор в навигационной панели пользовательского элемента с сообщениями по заданию");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно сообщений. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно сообщений - " + ex.Message);
+            }
         }
 
         private void Page(object obj)
         {
-            _currentInfSectionDTO = _currentInfSectionDTO == null ? ((InfSectionVM)CurrentViewPanel).SelectedSection : _currentInfSectionDTO;
-            Log.Debug("Выбранная информационная секция - Название: ", _currentInfSectionDTO.Name);
-            CurrentViewPanel = new PagesVM(_pageService, _currentInfSectionDTO);
+            try
+            {
+                _currentInfSectionDTO = _currentInfSectionDTO == null ? ((InfSectionVM)CurrentViewPanel).SelectedSection : _currentInfSectionDTO;
+                Log.Debug("Выбранная информационная секция - Название: " + _currentInfSectionDTO.Name);
+                CurrentViewPanel = new PagesVM(_pageService, _currentInfSectionDTO);
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно страниц информационных секций. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно страниц информационных секций - " + ex.Message);
+            }
         }
 
         private void PageCurrent(object obj)
         {
-            _currentPageDTO = _currentPageDTO == null ? ((PagesVM)CurrentViewPanel).SelectedPage : _currentPageDTO;
-            Log.Debug("Выбранная страница - Название: ", _currentPageDTO.Name);
-            CurrentViewPanel = new PageCurrentVM(_pageService, _currentPageDTO);
+            try
+            {
+                _currentPageDTO = _currentPageDTO == null ? ((PagesVM)CurrentViewPanel).SelectedPage : _currentPageDTO;
+                Log.Debug("Выбранная страница - Название: " + _currentPageDTO.Name);
+                CurrentViewPanel = new PageCurrentVM(_pageService, _currentPageDTO);
+            }
+            catch( Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно инфомарционной страницы. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно информационной страницы - " + ex.Message);
+            }
         }
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
@@ -119,6 +174,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
             Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
+
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
 
             Log.Information("Инициализация конструктора навигационной модели проекта");
         }

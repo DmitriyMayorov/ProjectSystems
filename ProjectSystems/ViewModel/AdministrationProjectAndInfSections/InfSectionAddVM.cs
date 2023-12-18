@@ -34,19 +34,27 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddCommandExecute(object obj)
         {
-            if (SelectedName == null || SelectedName == "")
+            try
             {
-                Log.Error("Добавление информационной секции отменено. Не введено либо название, либо описание секции");
-                _notifier.ShowError("Не удалось добавить. Выберите название!");
-                return;
-            }
-            InfSectionDTO temp = new InfSectionDTO();
-            temp.Name = SelectedName;
-            temp.IDProject = _projectDTO.Id;
+                if (SelectedName == null || SelectedName == "")
+                {
+                    Log.Error("Добавление информационной секции отменено. Не введено либо название, либо описание секции");
+                    _notifier.ShowError("Не удалось добавить. Выберите название!");
+                    return;
+                }
+                InfSectionDTO temp = new InfSectionDTO();
+                temp.Name = SelectedName;
+                temp.IDProject = _projectDTO.Id;
 
-            _infSectionService.CreateInfSection(temp);
-            Log.Information("Добавление информационной секции. Название - ", SelectedName);
-            _notifier.ShowSuccess("Успешное добавление");
+                _infSectionService.CreateInfSection(temp);
+                Log.Information("Добавление информационной секции. Название - " + SelectedName);
+                _notifier.ShowSuccess("Успешное добавление");
+            }
+            catch (Exception ex)
+            {
+                _notifier.ShowError("Ошибка при создании информационной секции. Смотрите журанл логирования");
+                Log.Error("Ошибка при создании информационной секции - " + ex.Message);
+            }
         }
 
         public InfSectionAddVM(IInfSerctionService infSerctionService, ProjectDTO projectDTO)

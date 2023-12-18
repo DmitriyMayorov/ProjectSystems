@@ -12,6 +12,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -33,31 +34,39 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddCommandExecute(object obj)
         {
-            if(SelectedCountHours == null || SelectedCountHours == "")
+            try
             {
-                _notifier.ShowError("Выбрите число!");
-                return;
-            }
-            TrackDTO temp = new TrackDTO();
-            temp.DateTrack = DateTime.Now;
-            temp.StatusTask = _taskDTO.State;
-            switch(temp.StatusTask)
-            {
-                case "Plan": temp.IDWorker = (int)_taskDTO.IDWorkerAnalyst; break;
-                case "InProgress": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
-                case "CodeRewiew": temp.IDWorker = (int)_taskDTO.IDWorkerMentor; break;
-                case "Stage": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
-                case "Test": temp.IDWorker = (int)_taskDTO.IDWorkerTester; break;
-                case "Ready": _notifier.ShowError("Нельзя добавлять время в выполненные задания"); return;
-                default:
-                    _notifier.ShowError("Ошибка!");
+                if (SelectedCountHours == null || SelectedCountHours == "")
+                {
+                    _notifier.ShowWarning("Выбрите число!");
                     return;
-            }
-            temp.IDTask = _taskDTO.Id;
-            temp.CountHours = Int32.Parse(SelectedCountHours);
+                }
+                TrackDTO temp = new TrackDTO();
+                temp.DateTrack = DateTime.Now;
+                temp.StatusTask = _taskDTO.State;
+                switch (temp.StatusTask)
+                {
+                    case "Plan": temp.IDWorker = (int)_taskDTO.IDWorkerAnalyst; break;
+                    case "InProgress": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
+                    case "CodeRewiew": temp.IDWorker = (int)_taskDTO.IDWorkerMentor; break;
+                    case "Stage": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
+                    case "Test": temp.IDWorker = (int)_taskDTO.IDWorkerTester; break;
+                    case "Ready": _notifier.ShowError("Нельзя добавлять время в выполненные задания"); return;
+                    default:
+                        _notifier.ShowError("Ошибка!");
+                        return;
+                }
+                temp.IDTask = _taskDTO.Id;
+                temp.CountHours = Int32.Parse(SelectedCountHours);
 
-            _trackService.CreateTrack(temp);
-            _notifier.ShowSuccess("Успешное добавление");
+                _trackService.CreateTrack(temp);
+                _notifier.ShowSuccess("Успешное добавление");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при добавлении трекка времени. Смотрите журнал логирования");
+                Log.Error("Ошибка при добавлении трекка времени - " + ex.Message);
+            }
         }
 
         public TrackAddVM(ITrackService trackService, TaskDTO taskDTO)

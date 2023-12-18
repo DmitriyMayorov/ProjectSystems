@@ -13,6 +13,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using Serilog;
+using ToastNotifications.Messages;
 
 namespace ProjectSystems.ViewModel
 {
@@ -20,6 +25,8 @@ namespace ProjectSystems.ViewModel
     {
         private IWorkerService workerService;
         private IPositionService positionService;
+
+        private Notifier _notifier;
 
         private  ObservableCollection<WorkerDTO> _workersDTO;
         public ObservableCollection<WorkerDTO> Workers
@@ -55,18 +62,29 @@ namespace ProjectSystems.ViewModel
             {
                 workerService.DeleteWorker(SelectedWorker.Id);
                 Workers = new ObservableCollection<WorkerDTO>(workerService.GetWorkers());
+                _notifier.ShowSuccess("Успешное удаление сотрудника");
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _notifier.ShowError("Ошибка при удалении сотрудника. Смотрите журнал логирования");
+                Log.Error("Ошибка при удалении сотрдуника - " + ex.Message);
             }
         }
 
         private void UpdateWorkerExexute(object obj)
         {
-            foreach(WorkerDTO worker in Workers)
+            try
             {
-                workerService.UpdateWorker(worker);
+                foreach (WorkerDTO worker in Workers)
+                {
+                    workerService.UpdateWorker(worker);
+                }
+                _notifier.ShowSuccess("Успешное обновление информации о сотрдуниках");
+            }
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при обновлении информации о сотрудниках. Смотрите журанл логирования");
+                Log.Error("Ошибка при обновлении информации о сотрудниках - " + ex.Message);
             }
         }
 
@@ -81,7 +99,20 @@ namespace ProjectSystems.ViewModel
             RemoveWorker = new RelayCommand(RemoveWorkerExecute);
             UpdateWorker = new RelayCommand(UpdateWorkerExexute);
 
-/*            this.positionService = positionService;*/
+            _notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: System.Windows.Application.Current.MainWindow,
+                    corner: Corner.TopRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+            });
         }
     }
 }
