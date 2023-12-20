@@ -241,6 +241,9 @@
     <Compile Include="View\AdministrationProjectAndInfSections\TaskAddMenu.xaml.cs">
       <DependentUpon>TaskAddMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AdministrationProjectAndInfSections\TaskCurrentMenu.xaml.cs">
+      <DependentUpon>TaskCurrentMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AdministrationProjectAndInfSections\TaskMenu.xaml.cs">
       <DependentUpon>TaskMenu.xaml</DependentUpon>
     </Compile>
@@ -297,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AdministrationProjectAndInfSections\TaskAddMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdministrationProjectAndInfSections\TaskCurrentMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

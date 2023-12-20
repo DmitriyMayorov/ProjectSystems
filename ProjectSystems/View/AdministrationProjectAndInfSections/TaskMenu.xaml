@@ -5,7 +5,7 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:Menu="clr-namespace:ProjectSystems.Util.TemplateElement"
             xmlns:Main="clr-namespace:ProjectSystems.ViewModel"
-            xmlns:local="clr-namespace:ProjectSystems.View"
+            xmlns:local="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections"
             mc:Ignorable="d" 
             d:DesignHeight="600" d:DesignWidth="622"
             Background="#272B2F">
@@ -47,16 +47,34 @@
 
         <Grid Grid.Row="1">
 
-            <DataGrid Background="#272B2F" Foreground="White" x:Name="TaskGrid" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}"  Grid.RowSpan="2" Margin="1, 1, 0, 0" AutoGenerateColumns="False" CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="0.16*"/>
-                    <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="0.16*"/>
-                    <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="0.16*"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding State}" Width="0.16*"/>
-                    <DataGridTextColumn Header="Приоритет" Binding="{Binding Priority}" Width="0.16*"/>
-                    <DataGridTextColumn Header="Срок сдачи" Binding="{Binding Deadline}" Width="0.16*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ListView
+                  ItemsSource="{Binding Tasks}"
+                  SelectedItem="{Binding SelectedTask}"
+                  VerticalAlignment="Top">
+
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Margin="0, 0, 0, 10"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="Auto">
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PageCommand ,
+                                            RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}"/>
+                            </Grid.InputBindings>
+                            <Border Margin="10" CornerRadius="15" Background="#372B2F">
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Name}" Margin="15"
+                                       VerticalAlignment="Top" Foreground="White"
+                                       HorizontalAlignment="Left" Height="Auto" FontSize="16"/>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
 
         </Grid>
     </Grid>
