@@ -28,13 +28,6 @@
                 </Menu:Button>
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding UpdateTask}">
-
-                    <Image Source="../../Images/Edit.png" Style="{StaticResource CRUD_Image_Style}"/>
-
-                </Menu:Button>
-
-                <Menu:Button Style="{StaticResource BtnStyle}"
                              Command="{Binding RemoveTask}">
 
                     <Image Source="../../Images/Delete.png" Style="{StaticResource CRUD_Image_Style}"/>
@@ -62,7 +55,7 @@
                     <DataTemplate>
                         <Grid Height="Auto">
                             <Grid.InputBindings>
-                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.PageCommand ,
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.TaskCurrentCommand ,
                                             RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}"/>
                             </Grid.InputBindings>
                             <Border Margin="10" CornerRadius="15" Background="#372B2F">

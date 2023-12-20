@@ -48,7 +48,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 {
                     case "Plan": temp.IDWorker = (int)_taskDTO.IDWorkerAnalyst; break;
                     case "InProgress": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
-                    case "CodeRewiew": temp.IDWorker = (int)_taskDTO.IDWorkerMentor; break;
+                    case "Review": temp.IDWorker = (int)_taskDTO.IDWorkerMentor; break;
                     case "Stage": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
                     case "Test": temp.IDWorker = (int)_taskDTO.IDWorkerTester; break;
                     case "Ready": _notifier.ShowError("Нельзя добавлять время в выполненные задания"); return;

@@ -188,7 +188,6 @@
     </Compile>
     <Compile Include="Services\InfSectionService.cs" />
     <Compile Include="Services\LoadFileService.cs" />
-    <Compile Include="Services\LoggerService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\PageService.cs" />
     <Compile Include="Services\PositionService.cs" />

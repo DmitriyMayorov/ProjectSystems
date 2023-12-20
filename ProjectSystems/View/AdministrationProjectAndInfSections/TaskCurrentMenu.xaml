@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ProjectSystems.View.AdministrationProjectAndInfSections"
              xmlns:Menu="clr-namespace:ProjectSystems.Util.TemplateElement"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="600" 
              d:DesignWidth="622"
@@ -21,7 +22,8 @@
             <WrapPanel>
 
                 <Menu:Button Style="{StaticResource BtnStyle}"
-                             Command="{Binding AddTask}">
+                             Command="{Binding DataContext.TaskCommand ,
+                                            RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}">
 
                     <Image Source="../../Images/Exit.png" Style="{StaticResource CRUD_Image_Style}"/>
 
@@ -35,27 +37,10 @@
                 </Menu:Button>
 
                 <Grid Width="100">
-                    <Grid.CommandBindings>
-                        <CommandBinding Command="{Binding }"/>
-                    </Grid.CommandBindings>
+                    <Grid.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding ToInProgressCommand}"/>
+                    </Grid.InputBindings>
                     <Border Background="DarkRed"
-                            Margin="5, 10"
-                            CornerRadius="15">
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Foreground="White"
-                                   FontSize="18">
-                            Plan
-                        </TextBlock>
-                    </Border>
-                    
-                </Grid>
-
-                <Grid Width="100">
-                    <Grid.CommandBindings>
-                        <CommandBinding Command="{Binding }"/>
-                    </Grid.CommandBindings>
-                    <Border Background="OrangeRed"
                             Margin="5, 10"
                             CornerRadius="15">
                         <TextBlock HorizontalAlignment="Center"
@@ -65,13 +50,29 @@
                             InProgress
                         </TextBlock>
                     </Border>
+                </Grid>
+
+                <Grid Width="100">
+                    <Grid.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding ToReviewCommand}"/>
+                    </Grid.InputBindings>
+                    <Border Background="OrangeRed"
+                            Margin="5, 10"
+                            CornerRadius="15">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="18">
+                            Rewiew
+                        </TextBlock>
+                    </Border>
 
                 </Grid>
 
                 <Grid Width="100">
-                    <Grid.CommandBindings>
-                        <CommandBinding Command="{Binding }"/>
-                    </Grid.CommandBindings>
+                    <Grid.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding ToStageCommand}"/>
+                    </Grid.InputBindings>
                     <Border Background="Brown"
                             Margin="5, 10"
                             CornerRadius="15">
@@ -86,9 +87,9 @@
                 </Grid>
 
                 <Grid Width="100">
-                    <Grid.CommandBindings>
-                        <CommandBinding Command="{Binding }"/>
-                    </Grid.CommandBindings>
+                    <Grid.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding ToTestCommand}"/>
+                    </Grid.InputBindings>
                     <Border Background="Purple"
                             Margin="5, 10"
                             CornerRadius="15">
@@ -103,9 +104,9 @@
                 </Grid>
 
                 <Grid Width="100">
-                    <Grid.CommandBindings>
-                        <CommandBinding Command="{Binding }"/>
-                    </Grid.CommandBindings>
+                    <Grid.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding ToReadyCoomand}"/>
+                    </Grid.InputBindings>
                     <Border Background="DarkSeaGreen"
                             Margin="5, 10"
                             CornerRadius="15">
@@ -143,8 +144,10 @@
                     <Border Background="#372B2F"
                             Margin="15"
                             CornerRadius="15">
-                        <TextBox Text="{Binding }" Margin="15"
+                        <TextBox Text="{Binding Name}" Margin="15"
                                  Foreground="White"
+                                 materialDesign:HintAssist.Hint="Название"
+                                 TextWrapping="WrapWithOverflow"
                                  FontSize="16" BorderBrush="Transparent"/>
                     </Border>
                 </Grid>
@@ -155,17 +158,25 @@
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <TextBlock Text="{Binding }"
+                        <TextBlock Text="TEST"
+                                   Margin="15"
                                    Width="350"
                                    Foreground="White"
                                    FontSize="16"/>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <ComboBox SelectedIndex="{Binding }"
-                                  ItemsSource="{Binding }"
-                                  Width="120" 
-                                  Margin="10, 15"
-                                  BorderBrush="Brown"/>
+                        <Border CornerRadius="8" Background="#372B2F" Margin="0, 0, 15, 10">
+                            <ComboBox materialDesign:HintAssist.Hint="Категория"
+                                      FontSize="20" Height="50" 
+                                      BorderBrush="Transparent"  
+                                      ItemsSource="{Binding Priority}"
+                                      SelectedItem="{Binding SelectedPriority}"
+                                      Foreground="White">
+                                <ComboBox.Resources>
+                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                </ComboBox.Resources>
+                            </ComboBox>
+                        </Border>
                     </Grid>
                 </Grid>
 
@@ -182,17 +193,35 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
-                            <ComboBox SelectedIndex="{Binding }"
-                                  ItemsSource="{Binding }"
-                                  Margin="10, 15"
-                                  BorderBrush="Brown"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 5, 10">
+                                <ComboBox materialDesign:HintAssist.Hint="Программист"
+                                      FontSize="20" Height="50" 
+                                      BorderBrush="Transparent"  
+                                      ItemsSource="{Binding WorkerCoderDTO}"
+                                      SelectedItem="{Binding SelectedCoderDTO}"
+                                      Foreground="White"
+                                      DisplayMemberPath="Person">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Border>
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <ComboBox SelectedIndex="{Binding }"
-                                  ItemsSource="{Binding }"
-                                  Margin="10, 15"
-                                  BorderBrush="Brown"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="10, 0, 15, 10">
+                                <ComboBox materialDesign:HintAssist.Hint="Техлид"
+                                      FontSize="20" Height="50" 
+                                      BorderBrush="Transparent"  
+                                      ItemsSource="{Binding WorkerCoderDTO}"
+                                      SelectedItem="{Binding SelectedTechlidDTO}"
+                                      Foreground="White"
+                                      DisplayMemberPath="Person">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Border>
                         </Grid>
                     </Grid>
                     
@@ -203,17 +232,35 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
-                            <ComboBox SelectedIndex="{Binding }"
-                                  ItemsSource="{Binding }"
-                                  Margin="10, 15"
-                                  BorderBrush="Brown"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 5, 10">
+                                <ComboBox materialDesign:HintAssist.Hint="Тестировщик"
+                                      FontSize="20" Height="50" 
+                                      BorderBrush="Transparent"  
+                                      ItemsSource="{Binding WorkerTesterDTO}"
+                                      SelectedItem="{Binding SelectedTesterDTO}"
+                                      Foreground="White"
+                                      DisplayMemberPath="Person">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Border>
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <ComboBox SelectedIndex="{Binding }"
-                                  ItemsSource="{Binding }"
-                                  Margin="10, 15"
-                                  BorderBrush="Brown"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="10, 0, 15, 10">
+                                <ComboBox materialDesign:HintAssist.Hint="Тестировщик"
+                                      FontSize="20" Height="50" 
+                                      BorderBrush="Transparent"  
+                                      ItemsSource="{Binding WorkerAnalystDTO}"
+                                      SelectedItem="{Binding SelectedAnalystDTO}"
+                                      Foreground="White"
+                                      DisplayMemberPath="Person">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Border>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -222,8 +269,10 @@
                     <Border Background="#372B2F"
                             Margin="15"
                             CornerRadius="15">
-                        <TextBox Text="{Binding }" Margin="15"
+                        <TextBox Text="{Binding Description}" Margin="15"
                                  Foreground="White"
+                                 materialDesign:HintAssist.Hint="Описания задания"
+                                 TextWrapping="WrapWithOverflow"
                                  FontSize="16" BorderBrush="Transparent"/>
                     </Border>
                 </Grid>
@@ -231,31 +280,49 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                
-                <lvc:CartesianChart Loaded="CartesianChart_Loaded">
-                    <lvc:CartesianChart.Series>
-                        <lvc:StackedColumnSeries Values="{Binding CountHoursTrack}" StrokeThickness="2" 
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="-5, 0, 0, 0">
+                    <lvc:CartesianChart>
+                        <lvc:CartesianChart.Series>
+                            <lvc:StackedColumnSeries Values="{Binding CountHoursTrack}" StrokeThickness="2" 
                                  Fill="Blue" StackMode="Values" DataLabels="false" />
-                    </lvc:CartesianChart.Series>
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Статистика по заданию"  
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis  
                           Labels="{Binding LabelsTrack}" 
                           Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Name="Axis" Title="Количество часов" LabelFormatter="{Binding Formatter}" MinValue="0" >
-                            <lvc:Axis.Sections>
-                                <lvc:AxisSection Value="{Binding YAxis}" StrokeThickness="2" Stroke="Red"/>
-                            </lvc:Axis.Sections>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <lvc:CartesianChart.DataTooltip>
-                        <lvc:DefaultTooltip SelectionMode="OnlySender" ShowSeries="False"/>
-                    </lvc:CartesianChart.DataTooltip>
-                </lvc:CartesianChart>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Name="Axis" Title="Количество часов" LabelFormatter="{Binding Formatter}" MinValue="0" >
+                                <lvc:Axis.Sections>
+                                    <lvc:AxisSection Value="0" StrokeThickness="2" Stroke="Red"/>
+                                </lvc:Axis.Sections>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.DataTooltip>
+                            <lvc:DefaultTooltip SelectionMode="OnlySender" ShowSeries="False"/>
+                        </lvc:CartesianChart.DataTooltip>
+                    </lvc:CartesianChart>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    
+                    <Menu:Button Style="{StaticResource BtnStyle}"
+                             Command="{Binding AddCommand}">
+
+                        <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
+
+                    </Menu:Button>
+                    
+                </Grid>
                 
             </Grid>
-            
+
         </Grid>
     </Grid>
 </UserControl>

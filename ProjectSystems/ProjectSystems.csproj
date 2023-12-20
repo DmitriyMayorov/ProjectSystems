@@ -202,6 +202,7 @@
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\PageAddVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\PageCurrentVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\PagesVM.cs" />
+    <Compile Include="ViewModel\AdministrationProjectAndInfSections\TaskCurrentVM.cs" />
     <Compile Include="ViewModel\ReportsVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TaskAddMenuVM.cs" />
     <Compile Include="ViewModel\AdministrationProjectAndInfSections\TasksVM.cs" />
