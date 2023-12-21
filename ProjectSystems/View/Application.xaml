@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ProjectSystems.View"
         mc:Ignorable="d" 
         d:DesignHeight="600" 
-        d:DesignWidth="750"
+        d:DesignWidth="680"
         Background="Black"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>

@@ -128,7 +128,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                _currentInfSectionDTO = _currentInfSectionDTO == null ? ((InfSectionVM)CurrentViewPanel).SelectedSection : _currentInfSectionDTO;
+                if (CurrentViewPanel is InfSectionVM)
+                    _currentInfSectionDTO = ((InfSectionVM)CurrentViewPanel).SelectedSection;
+
                 Log.Debug("Выбранная информационная секция - Название: " + _currentInfSectionDTO.Name);
                 CurrentViewPanel = new PagesVM(_pageService, _currentInfSectionDTO);
             }
@@ -143,7 +145,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                _currentPageDTO = _currentPageDTO == null ? ((PagesVM)CurrentViewPanel).SelectedPage : _currentPageDTO;
+                if (CurrentViewPanel is PagesVM)
+                    _currentPageDTO = ((PagesVM)CurrentViewPanel).SelectedPage;
+
                 Log.Debug("Выбранная страница - Название: " + _currentPageDTO.Name);
                 CurrentViewPanel = new PageCurrentVM(_pageService, _currentPageDTO);
             }
@@ -158,7 +162,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                _currentTaskDTO = _currentTaskDTO == null ? ((TasksVM)CurrentViewPanel).SelectedTask : _currentTaskDTO;
+                _currentTaskDTO = ((TasksVM)CurrentViewPanel).SelectedTask;
                 Log.Debug("Выбранное задание - Название: " + _currentTaskDTO.Name);
                 CurrentViewPanel = new TaskCurrentVM(_taskService, _trackService, _workerService, _currentTaskDTO);
             }
