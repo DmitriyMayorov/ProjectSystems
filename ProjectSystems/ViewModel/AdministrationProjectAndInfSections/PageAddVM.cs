@@ -45,7 +45,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 if (SelectedName == null || SelectedName == "" ||
                     SelectedDescription == null || SelectedDescription == "")
                 {
-                    _notifier.ShowError("Не получилось добавить. Выберите название и описание!");
+                    _notifier.ShowWarning("Не получилось добавить. Выберите название и описание!");
                     return;
                 }
 

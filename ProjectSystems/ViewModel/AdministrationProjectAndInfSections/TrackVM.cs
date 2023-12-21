@@ -110,8 +110,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
             catch(Exception ex)
             {
-                _notifier.ShowError("Ошибка при выведении статистики. Смотрите журнал логирования");
-                Log.Error("Ошибка при выведении статистики - " + ex.Message);
+            
             }
         }
 

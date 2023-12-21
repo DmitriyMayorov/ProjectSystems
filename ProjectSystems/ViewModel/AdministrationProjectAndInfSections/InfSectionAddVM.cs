@@ -38,8 +38,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 if (SelectedName == null || SelectedName == "")
                 {
-                    Log.Error("Добавление информационной секции отменено. Не введено либо название, либо описание секции");
-                    _notifier.ShowError("Не удалось добавить. Выберите название!");
+                    Log.Warning("Добавление информационной секции отменено. Не введено либо название, либо описание секции");
+                    _notifier.ShowWarning("Не удалось добавить. Выберите название!");
                     return;
                 }
                 InfSectionDTO temp = new InfSectionDTO();

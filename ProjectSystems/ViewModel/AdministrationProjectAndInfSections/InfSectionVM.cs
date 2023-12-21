@@ -75,7 +75,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 if (SelectedSection == null)
                 {
-                    _notifier.ShowError("Выберите секцию для удаления");
+                    _notifier.ShowWarning("Выберите секцию для удаления");
                     return;
                 }
                 _infSerctionService.DeleteInfSection(SelectedSection.Id);
