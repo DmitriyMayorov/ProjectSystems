@@ -25,7 +25,7 @@
                             <ColumnDefinition Width="0.3*"/>
                             <ColumnDefinition Width="0.3*"/>
                             <ColumnDefinition Width="0.3*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0" Margin="15">
@@ -46,7 +46,7 @@
 
                         <Grid Grid.Column="3">
                             <WrapPanel>
-                                <Menu:Button Style="{StaticResource BtnStyle}"
+                                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                                              Command="{Binding LoadPdfFileCommand}"
                                              Margin="0" HorizontalAlignment="Right">
                                     <Image HorizontalAlignment="Right" Source="../Images/Import.png" Style="{StaticResource CRUD_Image_Style}"/>
@@ -97,7 +97,7 @@
                 <Grid>
                     
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
@@ -105,7 +105,7 @@
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
@@ -130,7 +130,7 @@
 
                         <Grid Grid.Column="1">
                             <WrapPanel>
-                                <Menu:Button Style="{StaticResource BtnStyle}"
+                                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                                              Command="{Binding LoadPdfFileSecondReportCommand}"
                                              Margin="0" HorizontalAlignment="Right">
                                     <Image HorizontalAlignment="Right" Source="../Images/Import.png" Style="{StaticResource CRUD_Image_Style}"/>

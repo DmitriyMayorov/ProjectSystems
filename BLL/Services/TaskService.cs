@@ -79,5 +79,55 @@ namespace BLL.Services
         {
             db.Tasks.Delete(id);
         }
+
+        public bool ToInProgress(TaskDTO task)
+        {
+            DAL.EF.Task taskCurrent = db.Tasks.GetItem(task.Id);
+            if (taskCurrent.State == "Ready")
+                return false;
+            taskCurrent.State = "InProgress";
+            SaveChanges();
+            return true;
+        }
+
+        public bool ToReview(TaskDTO task)
+        {
+            DAL.EF.Task taskCurrent = db.Tasks.GetItem(task.Id);
+            if (taskCurrent.State != "InProgress")
+                return false;
+            taskCurrent.State = "Review";
+            SaveChanges();
+            return true;
+        }
+
+        public bool ToStage(TaskDTO task)
+        {
+            DAL.EF.Task taskCurrent = db.Tasks.GetItem(task.Id);
+            if (taskCurrent.State != "Review")
+                return false;
+            taskCurrent.State = "Stage";
+            SaveChanges();
+            return true;
+        }
+
+        public bool ToTest(TaskDTO task)
+        {
+            DAL.EF.Task taskCurrent = db.Tasks.GetItem(task.Id);
+            if (taskCurrent.State != "Stage")
+                return false;
+            taskCurrent.State = "Test";
+            SaveChanges();
+            return true;
+        }
+
+        public bool ToReady(TaskDTO task)
+        {
+            DAL.EF.Task taskCurrent = db.Tasks.GetItem(task.Id);
+            if (taskCurrent.State != "Test")
+                return false;
+            taskCurrent.State = "Ready";
+            SaveChanges();
+            return true;
+        }
     }
 }

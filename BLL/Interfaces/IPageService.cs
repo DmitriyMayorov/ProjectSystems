@@ -10,13 +10,12 @@ namespace BLL.Interfaces
     public interface IPageService
     {
         List<PageDTO> GetPages();
+        List<PageDTO> GetPagesForCurrentInfSection(InfSectionDTO infSectionDTO);
 
         PageDTO GetPage(int id);
 
         void CreatePage(PageDTO page);
         void UpdatePage(PageDTO page);
         void DeletePage(int id);
-
-        List<PageDTO> GetPagesForCurrentInfSection(int id);
     }
 }

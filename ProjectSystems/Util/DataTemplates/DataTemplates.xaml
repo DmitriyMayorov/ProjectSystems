@@ -30,6 +30,10 @@
         <npview:TaskMenu/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type np:TaskCurrentVM}">
+        <npview:TaskCurrentMenu/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type np:InfSectionVM}">
         <npview:InfSectionsMenu/>
     </DataTemplate>

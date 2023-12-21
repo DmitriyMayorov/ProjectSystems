@@ -67,7 +67,8 @@ namespace ProjectSystems.ViewModel
 
         private void NavigationPanel(object obj) => CurrentView = new AdministrationProjectAndInfSections.NavigationPanelVM(_infSerctionService, _messageService,
                                                                                                                             _pageService,_projectService, _reportService,
-                                                                                                                            _taskService, _trackService, _loadFileService);
+                                                                                                                            _taskService, _trackService, _loadFileService,
+                                                                                                                            _workerService);
         private void Worker(object obj) => CurrentView = new WorkersVM(_workerService, _positionService);
         private void Projects(object obj) => CurrentView = new ProjectsVM(_projectService);
         private void Report(object obj) => CurrentView = new ReportsVM(_projectService, _reportService, _loadFileService);
@@ -115,7 +116,7 @@ namespace ProjectSystems.ViewModel
 
             CurrentView = new AdministrationProjectAndInfSections.NavigationPanelVM(_infSerctionService, _messageService,
                                                                                     _pageService, _projectService, _reportService,
-                                                                                    _taskService, _trackService, loadFileService);
+                                                                                    _taskService, _trackService, _loadFileService, _workerService);
             _loadFileService = loadFileService;
 
             Log.Information("Загрузка конструктора приложения - главного экрана");

@@ -5,6 +5,7 @@ using DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,11 @@ namespace BLL.Services
         public List<PageDTO> GetPages()
         {
             return db.Pages.GetList().Select(i => new PageDTO(i)).ToList();
+        }
+
+        public List<PageDTO> GetPagesForCurrentInfSection(InfSectionDTO infSectionDTO)
+        {
+            return db.Pages.GetList().Select(i => new PageDTO(i)).Where(i => i.IDSection == infSectionDTO.Id).ToList();
         }
 
         public PageDTO GetPage(int id)
@@ -54,9 +60,5 @@ namespace BLL.Services
             db.Pages.Delete(id);
         }
 
-        public List<PageDTO> GetPagesForCurrentInfSection(int id)
-        {
-            return db.Pages.GetList().Where(i => i.IDSection == id).Select(i => new PageDTO(i)).ToList();
-        }
     }
 }

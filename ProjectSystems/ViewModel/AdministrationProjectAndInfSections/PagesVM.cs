@@ -49,7 +49,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _addMenu = new PageAddMenu(_currentInfSection);
             _addMenu.ShowDialog();
 
-            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection.Id));
+            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection));
         }
 
         private void DeleteCommandExecute(object obj)
@@ -57,9 +57,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             try
             {
                 _pageService.DeletePage(_currentInfSection.Id);
-
-                Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection.Id));
-                _notifier.ShowInformation("Успешное удаление информационной секции");
+                Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection));
+                _notifier.ShowSuccess("Успешное удаление информационной секции");
             }
             catch (Exception ex)
             {
@@ -76,7 +75,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             AddCommand = new RelayCommand(AddCommandExecute);
             DeleteCommand = new RelayCommand(DeleteCommandExecute);
 
-            Pages = new ObservableCollection<PageDTO>(_pageService.GetPages());
+            Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection));
 
             _notifier = new Notifier(cfg =>
             {

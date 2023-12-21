@@ -24,8 +24,10 @@ namespace DAL.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<InfSection>()
-                .HasOptional(e => e.Page)
-                .WithRequired(e => e.InfSection);
+                .HasMany(e => e.Page)
+                .WithRequired(e => e.InfSection)
+                .HasForeignKey(e => e.IDSection)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Position>()
                 .HasMany(e => e.Workers)

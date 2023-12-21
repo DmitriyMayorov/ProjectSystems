@@ -10,6 +10,9 @@ namespace BLL.Interfaces
     public interface IWorkerService
     {
         List<WorkerDTO> GetWorkers();
+        List<WorkerDTO> GetAnalysts();
+        List<WorkerDTO> GetCoders();
+        List<WorkerDTO> GetTesters();
 
         WorkerDTO GetWorker(int id);
 

@@ -11,15 +11,15 @@
              Background="#272B2F">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
 
             <WrapPanel >
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding DataContext.InfSectionCommand,
           RelativeSource={RelativeSource AncestorType={x:Type local:PageAdministrationProjectAndInfSections}}}">
 
@@ -27,14 +27,14 @@
 
                 </Menu:Button>
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding AddCommand}">
 
                     <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding DeleteCommand}">
 
                     <Image Source="../../Images/Delete.png" Style="{StaticResource CRUD_Image_Style}"/>

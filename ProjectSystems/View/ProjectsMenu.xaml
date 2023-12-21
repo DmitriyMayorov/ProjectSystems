@@ -12,29 +12,29 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
 
             <WrapPanel >
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding AddProject}">
 
                     <Image Source="../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding UpdateProjects}">
 
                     <Image Source="../Images/Edit.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding RemoveProject}">
 
                     <Image Source="../Images/Delete.png" Style="{StaticResource CRUD_Image_Style}"/>

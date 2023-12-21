@@ -12,7 +12,7 @@
              Background="#272B2F">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
@@ -21,13 +21,18 @@
 
             <WrapPanel >
 
-                <Menu:Button Style="{StaticResource BtnStyle}"
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
                              Command="{Binding AddCommand}">
 
                     <Image Source="../../Images/Add.png" Style="{StaticResource CRUD_Image_Style}"/>
 
                 </Menu:Button>
 
+                <Menu:Button Style="{StaticResource BtnStyleCRUD}"
+                             Command="{Binding LoadPdfFileCommand}">
+                    <Image Source="../../Images/Import.png" Style="{StaticResource CRUD_Image_Style}"/>
+                </Menu:Button>
+                
             </WrapPanel>
 
         </Grid>
@@ -53,46 +58,29 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.9*"/>
-                <RowDefinition Height="0.1*"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0" Margin="5">
-                
-                <lvc:CartesianChart Loaded="CartesianChart_Loaded">
-                    <lvc:CartesianChart.Series>
-                        <lvc:StackedColumnSeries Values="{Binding CountHoursTrack}" StrokeThickness="2" 
+            
+            <lvc:CartesianChart Loaded="CartesianChart_Loaded">
+                <lvc:CartesianChart.Series>
+                    <lvc:StackedColumnSeries Values="{Binding CountHoursTrack}" StrokeThickness="2" 
                                  Fill="Blue" StackMode="Values" DataLabels="false" />
-                    </lvc:CartesianChart.Series>
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Статистика по заданию"  
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Статистика по заданию"  
                           Labels="{Binding LabelsTrack}" 
                           Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Name="Axis" Title="Количество часов" LabelFormatter="{Binding Formatter}" MinValue="0" >
-                            <lvc:Axis.Sections>
-                                <lvc:AxisSection Value="{Binding YAxis}" StrokeThickness="2" Stroke="Red"/>
-                            </lvc:Axis.Sections>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <lvc:CartesianChart.DataTooltip>
-                        <lvc:DefaultTooltip SelectionMode="OnlySender" ShowSeries="False"/>
-                    </lvc:CartesianChart.DataTooltip>
-                </lvc:CartesianChart>
-                
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Width="150"
-                    Margin="0, 0, 30, 0"
-                    Command="{Binding LoadPdfFileCommand}">
-                    Добавить
-                </Button>
-            </Grid>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Name="Axis" Title="Количество часов" LabelFormatter="{Binding Formatter}" MinValue="0" >
+                        <lvc:Axis.Sections>
+                            <lvc:AxisSection Value="{Binding YAxis}" StrokeThickness="2" Stroke="Red"/>
+                        </lvc:Axis.Sections>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.DataTooltip>
+                    <lvc:DefaultTooltip SelectionMode="OnlySender" ShowSeries="False"/>
+                </lvc:CartesianChart.DataTooltip>
+            </lvc:CartesianChart>
+            
         </Grid>
     </Grid>
 </UserControl>

@@ -29,11 +29,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private ITaskService _taskService;
         private ITrackService _trackService;
         private ILoadFileService _loadFileService;
+        private IWorkerService _workerService;
 
         private Notifier _notifier;
 
         private InfSectionDTO _currentInfSectionDTO;
         private PageDTO _currentPageDTO;
+        private TaskDTO _currentTaskDTO;
 
         private object _currentViewPanel;
         public object CurrentViewPanel
@@ -57,12 +59,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         }
 
         public ICommand InfSectionCommand { get; set; }
-        public ICommand TaskCommand { get; set; }
         public ICommand TrackCommand {  get; set; }
         public ICommand MessagesCommand {  get; set; }
 
         public ICommand PageCommand { get; set; }
         public ICommand PageCurrentCommand { get; set; }
+
+        public ICommand TaskCommand { get; set; }
+        public ICommand TaskCurrentCommand { get; set; }
 
         private void InfSection(object obj)
         {
@@ -124,7 +128,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                _currentInfSectionDTO = _currentInfSectionDTO == null ? ((InfSectionVM)CurrentViewPanel).SelectedSection : _currentInfSectionDTO;
+                if (CurrentViewPanel is InfSectionVM)
+                    _currentInfSectionDTO = ((InfSectionVM)CurrentViewPanel).SelectedSection;
+
                 Log.Debug("Выбранная информационная секция - Название: " + _currentInfSectionDTO.Name);
                 CurrentViewPanel = new PagesVM(_pageService, _currentInfSectionDTO);
             }
@@ -139,7 +145,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                _currentPageDTO = _currentPageDTO == null ? ((PagesVM)CurrentViewPanel).SelectedPage : _currentPageDTO;
+                if (CurrentViewPanel is PagesVM)
+                    _currentPageDTO = ((PagesVM)CurrentViewPanel).SelectedPage;
+
                 Log.Debug("Выбранная страница - Название: " + _currentPageDTO.Name);
                 CurrentViewPanel = new PageCurrentVM(_pageService, _currentPageDTO);
             }
@@ -150,8 +158,23 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
         }
 
+        private void TaskCurrent(object obj)
+        {
+            try
+            {
+                _currentTaskDTO = ((TasksVM)CurrentViewPanel).SelectedTask;
+                Log.Debug("Выбранное задание - Название: " + _currentTaskDTO.Name);
+                CurrentViewPanel = new TaskCurrentVM(_taskService, _trackService, _workerService, _currentTaskDTO);
+            }
+            catch (Exception ex)
+            {
+                _notifier.ShowError("Ошибка при переключении на окно задания. Смотрите журнал логирования");
+                Log.Error("Ошибка при переключении на окно задания - " + ex.Message);
+            }
+        }
+
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
-                                 IReportService reportService, ITaskService taskService, ITrackService trackService, ILoadFileService loadFileService)
+                                 IReportService reportService, ITaskService taskService, ITrackService trackService, ILoadFileService loadFileService, IWorkerService workerService)
         {
             _infSerctionService = infSectionService;
             _messageService = messageService;
@@ -161,14 +184,17 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _taskService = taskService;
             _trackService = trackService;
             _loadFileService = loadFileService;
+            _workerService = workerService; 
 
             InfSectionCommand = new RelayCommand(InfSection);
-            TaskCommand = new RelayCommand(Task);
             TrackCommand = new RelayCommand(Track);
             MessagesCommand = new RelayCommand(Message);
 
             PageCommand = new RelayCommand(Page);
             PageCurrentCommand = new RelayCommand(PageCurrent);
+
+            TaskCommand = new RelayCommand(Task);
+            TaskCurrentCommand = new RelayCommand(TaskCurrent);
 
             CurrentProject = _projectService.GetProjects().FirstOrDefault();
 

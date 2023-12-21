@@ -17,5 +17,11 @@ namespace BLL.Interfaces
         void CreateTask(TaskDTO task);
         void UpdateTask(TaskDTO task);
         void DeleteTask(int id);
+
+        bool ToInProgress(TaskDTO task);
+        bool ToReview(TaskDTO task);
+        bool ToStage(TaskDTO task);
+        bool ToTest(TaskDTO task);
+        bool ToReady(TaskDTO task);
     }
 }
