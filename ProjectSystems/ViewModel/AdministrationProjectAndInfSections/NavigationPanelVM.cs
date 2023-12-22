@@ -166,7 +166,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 _currentTaskDTO = ((TasksVM)CurrentViewPanel).SelectedTask;
                 Log.Debug("Выбранное задание - Название: " + _currentTaskDTO.Name);
-                CurrentViewPanel = new TaskCurrentVM(_taskService, _trackService, _workerService, _currentTaskDTO);
+                CurrentViewPanel = new TaskCurrentVM(_taskService, _trackService, _workerService, _currentTaskDTO, _status);
             }
             catch (Exception ex)
             {
@@ -192,10 +192,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             InfSectionCommand = new RelayCommand(InfSection);
             TrackCommand = new RelayCommand(Track);
             MessagesCommand = new RelayCommand(Message);
-
             PageCommand = new RelayCommand(Page);
             PageCurrentCommand = new RelayCommand(PageCurrent);
-
             TaskCommand = new RelayCommand(Task);
             TaskCurrentCommand = new RelayCommand(TaskCurrent);
 

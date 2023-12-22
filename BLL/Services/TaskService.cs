@@ -55,7 +55,6 @@ namespace BLL.Services
         {
             db.Tasks.Create(new DAL.EF.Task()
             {
-/*                Id = task.Id,*/
                 Name = task.Name,
                 Description = task.Description,
                 State = task.State,

@@ -42,7 +42,6 @@ namespace BLL.Services
         {
             db.InfSections.Create(new InfSection()
             {
-/*                Id = infSection.Id,*/
                 Name = infSection.Name,
                 IDProject = infSection.IDProject
             });

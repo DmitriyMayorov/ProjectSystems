@@ -20,7 +20,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
     {
         ITrackService _trackService;
         TaskDTO _taskDTO;
-
+        string _status;
         Notifier _notifier;
 
         private string selected_count_hours;
@@ -44,6 +44,12 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 TrackDTO temp = new TrackDTO();
                 temp.DateTrack = DateTime.Now;
                 temp.StatusTask = _taskDTO.State;
+                if (!(_trackService.isShouldCreateTask(temp, _status)))
+                {
+                    _notifier.ShowWarning("Нет прав доступа на добавление времени на таком этапе задания");
+                    return;
+                }
+
                 switch (temp.StatusTask)
                 {
                     case "Plan": temp.IDWorker = (int)_taskDTO.IDWorkerAnalyst; break;
@@ -74,10 +80,11 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
         }
 
-        public TrackAddVM(ITrackService trackService, TaskDTO taskDTO)
+        public TrackAddVM(ITrackService trackService, TaskDTO taskDTO, string status)
         {
             _trackService = trackService; 
             _taskDTO = taskDTO;
+            _status = status;
 
             AddCommand = new RelayCommand(AddCommandExecute);
 

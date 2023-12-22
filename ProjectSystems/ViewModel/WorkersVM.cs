@@ -35,6 +35,15 @@ namespace ProjectSystems.ViewModel
             set { _workersDTO = value; OnPropertyChanged(); }
         }
 
+        public ObservableCollection<PositionDTO> TEST { get; set; } 
+
+        private ObservableCollection<PositionDTO> _positions;
+        public ObservableCollection<PositionDTO> Positions
+        {
+            get { return _positions; }
+            set { _positions = value; OnPropertyChanged(); }
+        }
+
         private WorkerDTO _selectedWorker;
         public WorkerDTO SelectedWorker
         {
@@ -93,8 +102,9 @@ namespace ProjectSystems.ViewModel
             this.workerService = workerService;
             this.positionService = positionService;
 
+            TEST = new ObservableCollection<PositionDTO>(positionService.GetPositions());
             Workers = new ObservableCollection<WorkerDTO>(workerService.GetWorkers());
-
+            
             AddWorker = new RelayCommand(AddWorkerMenu);
             RemoveWorker = new RelayCommand(RemoveWorkerExecute);
             UpdateWorker = new RelayCommand(UpdateWorkerExexute);

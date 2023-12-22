@@ -55,17 +55,7 @@
                             <DataGridTextColumn Header="ФИО" Binding="{Binding Person}" Width="0.3*"/>
                             <DataGridTextColumn Header="Номер пасспорта" Binding="{Binding PassportNum}" Width="0.25*"/>
                             <DataGridTextColumn Header="Серия пасспорта" Binding="{Binding PassportSeries}" Width="0.25*"/>
-                            <DataGridTemplateColumn Header="Должность" Width="0.2*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ComboBox DisplayMemberPath="Name"
-                                                  SelectedValue="{Binding Specialization_id,
-                                                  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  SelectedValuePath="Id"
-                                                  ItemsSource="{Binding Path=DataContext.AllSpecializations, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Должность" Binding="{Binding Position.Name}" IsReadOnly="True" Width="0.25*"/>
                         </DataGrid.Columns>
 
                     </DataGrid>

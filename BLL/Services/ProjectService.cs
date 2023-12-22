@@ -36,7 +36,7 @@ namespace BLL.Services
 
         public void CreateProject(ProjectDTO project)
         {
-            db.Projects.Create(new Project() { /*Id = project.Id,*/ Name = project.Name, DeadLine = project.DeadLine });
+            db.Projects.Create(new Project() { Name = project.Name, DeadLine = project.DeadLine });
             SaveChanges();
         }
 

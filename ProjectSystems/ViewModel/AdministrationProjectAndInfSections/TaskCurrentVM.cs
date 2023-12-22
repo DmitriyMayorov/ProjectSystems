@@ -19,6 +19,7 @@ using ToastNotifications.Messages;
 using System.Windows.Shell;
 using System.Runtime.Remoting;
 using ProjectSystems.View.AdministrationProjectAndInfSections;
+using System.Runtime.Serialization;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -29,6 +30,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         IWorkerService _workerService;
 
         TaskDTO _taskDTO;
+        private string _status;
 
         Notifier _notifier;
         private TrackAddMenu addMenu;
@@ -126,6 +128,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             set { _countHours = value; OnPropertyChanged(); }
         }
 
+        public Func<double, string> Formatter { get; set; }
+
         public ICommand AddCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
 
@@ -142,7 +146,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void AddCommandExecute(object obj)
         {
-            addMenu = new TrackAddMenu(_taskDTO);
+            addMenu = new TrackAddMenu(_taskDTO, _status);
             addMenu.ShowDialog();
             CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
             LabelsTrack = new ObservableCollection<string>(new List<string>() { _taskDTO.State });
@@ -209,12 +213,12 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 _notifier.ShowWarning("В стадию Ready можно перейти только из стадии Test");
         }
 
-        public TaskCurrentVM(ITaskService taskService, ITrackService trackService, IWorkerService workerService, TaskDTO taskDTO)
+        public TaskCurrentVM(ITaskService taskService, ITrackService trackService, IWorkerService workerService, TaskDTO taskDTO, string status)
         {
             _taskService = taskService;
             _trackService = trackService;
             _workerService = workerService;
-
+            _status = status;
             _taskDTO = taskDTO;
 
             Name = _taskDTO.Name;
@@ -232,6 +236,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State)});
             LabelsTrack = new ObservableCollection<string>(new List<string>() { "State" });
+            Formatter = value => value.ToString();
 
             UpdateCommand = new RelayCommand(UpdateCommandExecute);
             AddCommand = new RelayCommand(AddCommandExecute);

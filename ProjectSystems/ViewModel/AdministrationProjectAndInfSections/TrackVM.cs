@@ -83,38 +83,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
         }
 
-        public void AddCommandExecute(object obj)
-        {
-            try
-            {
-                if (SelectedTask == null)
-                {
-                    _notifier.ShowWarning("Выберите задание!");
-                    return;
-                }
-                addMenu = new TrackAddMenu(SelectedTask);
-                addMenu.ShowDialog();
-
-                List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
-                foreach (var status in LabelsTrack)
-                {
-                    StatisticTrackDTO temp = new StatisticTrackDTO();
-                    temp.NameStatus = status;
-                    temp.CountHours = _trackService.GetSumHours(SelectedTask.Id, status);
-
-                    Stat.Add(temp);
-                }
-                ResultsTrack = Stat.ToArray().AsChartValues();
-                List<int> tempList = Stat.Select(x => x.CountHours).ToList();
-                CountHoursTrack = new ChartValues<int>(tempList);
-            }
-            catch(Exception ex)
-            {
-                _notifier.ShowError("Ошибка при фиксировании времени. Смотрите журанл логирования");
-                Log.Error("Ошибка при фиксировании времени - " + ex.Message);
-            }
-        }
-
         public void LoadPdfFileCommandExecute(object obj)
         {
             try
@@ -170,13 +138,12 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             LabelsTrack = new ObservableCollection<string>(new List<string>() { "Plan", "InProgress", "Review", "Stage", "Test" });
             Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTasks());
-            ChoiceTask = new RelayCommand(ChoiceTaskExecute);
             CountHoursTrack = new ChartValues<int>(new List<int> { 100, 100, 50, 24, 1 });
             Formatter = value => (value / 24.0 <= 1.0 || value <= 0) ? value + " часов" : (int)(value / 24) + " дней, " + (int)(value % 24) + " часов";
             YAxis = 0;
 
             ChoiceTask = new RelayCommand(ChoiceTaskExecute);
-            AddCommand = new RelayCommand(AddCommandExecute);
+
             LoadPdfFileCommand = new RelayCommand(LoadPdfFileCommandExecute);
 
             _notifier = new Notifier(cfg =>

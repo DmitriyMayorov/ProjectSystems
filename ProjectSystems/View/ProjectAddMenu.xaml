@@ -14,13 +14,13 @@
         WindowStyle="None"
         Background="Transparent">
     <Grid Margin="15">
-        <Border Background="MediumAquamarine" 
+        <Border Background="DarkGray" 
                 BorderThickness="5 2 5 2" CornerRadius="10"
                 Margin="3">
         </Border>
         <Grid Margin="15">
             <StackPanel>
-                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <TextBox Foreground="White" FontSize="20" Height="127"
                          Style="{StaticResource MaterialDesignTextBox}"
                          materialDesign:HintAssist.Hint="Название проекта"
@@ -32,7 +32,7 @@
                     </TextBox>
                 </Border>
 
-                <Border CornerRadius="8" Background="DarkTurquoise" Margin="5, 0, 5, 10">
+                <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <DatePicker Height="45" SelectedDate="{Binding Date}"
                                 Foreground="White">
                         <DatePicker.CalendarStyle>
@@ -49,7 +49,7 @@
                     <Button Width="152"
                             Margin="10, 5, 10, 0"
                             Height="32"
-                            Background="#FF33B0B3"
+                            Background="DarkSlateGray"
                             BorderBrush="Transparent" 
                             Click="Button_Click">
                         Закрыть
@@ -58,7 +58,7 @@
                             Margin="10, 5, 10, 0"
                             Command="{Binding AddCommand}" 
                             Click="Button_Click_1" Height="32"
-                            Background="#FF33B0B3"
+                            Background="DarkSlateGray"
                             BorderBrush="Transparent">
                         Добавить
                     </Button>

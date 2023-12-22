@@ -27,14 +27,14 @@ namespace ProjectSystems.View.AdministrationProjectAndInfSections
     {
         ITrackService trackService;
 
-        public TrackAddMenu(TaskDTO taskDTO)
+        public TrackAddMenu(TaskDTO taskDTO, string status)
         {
             InitializeComponent();
             var kernel = new StandardKernel(new NinjectRegistrations(), new ReposModule("ProjectSystemContext"));
 
             trackService = kernel.Get<ITrackService>();
 
-            DataContext = new TrackAddVM(trackService, taskDTO);
+            DataContext = new TrackAddVM(trackService, taskDTO, status);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

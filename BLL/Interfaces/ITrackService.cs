@@ -10,8 +10,9 @@ namespace BLL.Interfaces
     public interface ITrackService
     {
         List<TrackDTO> GetTracks();
-
         TrackDTO GetTrack(int id);
+
+        bool isShouldCreateTask(TrackDTO track, string status);
 
         int CreateTrack(TrackDTO track);
         void UpdateTrack(TrackDTO track);

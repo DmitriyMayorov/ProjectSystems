@@ -41,7 +41,7 @@ namespace BLL.Services
 
         public void CreatePage(PageDTO page)
         {
-            db.Pages.Create(new Page() { /*Id = page.Id, */ Name = page.Name, TextSection = page.TextSection,
+            db.Pages.Create(new Page() { Name = page.Name, TextSection = page.TextSection,
                                          IDSection = page.IDSection});
             SaveChanges();
         }

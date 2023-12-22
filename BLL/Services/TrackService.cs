@@ -71,5 +71,14 @@ namespace BLL.Services
         {
             return db.Tracks.GetList().Where(i => i.IDTask == idTask && i.StatusTask == status).Sum(i =>  i.CountHours);
         }
+
+        public bool isShouldCreateTask(TrackDTO track, string status)
+        {
+            if (status == "Coder" && track.StatusTask != "InProgress" && track.StatusTask != "Stage" && track.StatusTask != "Review")
+                return false;
+            if (status == "Tester" && track.StatusTask != "Test")
+                return false;
+            return true;
+        }
     }
 }
