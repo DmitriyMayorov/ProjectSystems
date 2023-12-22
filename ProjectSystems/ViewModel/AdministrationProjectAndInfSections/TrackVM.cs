@@ -130,14 +130,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         public Func<double, string> Formatter { get; set; }
 
-        public TrackVM(ITrackService trackService, ITaskService taskService, ILoadFileService loadFileService)
+        public TrackVM(ITrackService trackService, ITaskService taskService, ILoadFileService loadFileService, ProjectDTO project, string status)
         {
             _trackService = trackService;
             _taskService = taskService;
             _loadFileService = loadFileService;
 
             LabelsTrack = new ObservableCollection<string>(new List<string>() { "Plan", "InProgress", "Review", "Stage", "Test" });
-            Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTasks());
+            Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(project, status));
             CountHoursTrack = new ChartValues<int>(new List<int> { 100, 100, 50, 24, 1 });
             Formatter = value => (value / 24.0 <= 1.0 || value <= 0) ? value + " часов" : (int)(value / 24) + " дней, " + (int)(value % 24) + " часов";
             YAxis = 0;

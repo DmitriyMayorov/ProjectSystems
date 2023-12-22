@@ -78,10 +78,11 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                     _notifier.ShowWarning("Выберите секцию для удаления");
                     return;
                 }
+                string name = SelectedSection.Name;
                 _infSerctionService.DeleteInfSection(SelectedSection.Id);
                 Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
-                _notifier.ShowError("Успешное удаление информационной секции");
-                Log.Information("Удаление информационной секции из базы данных. Название информационной секции - " + SelectedSection.Name);
+                _notifier.ShowSuccess("Успешное удаление информационной секции");
+                Log.Information("Удаление информационной секции из базы данных. Название информационной секции - " + name);
             }
             catch(Exception ex)
             {

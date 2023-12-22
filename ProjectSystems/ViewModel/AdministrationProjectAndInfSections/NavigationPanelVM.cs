@@ -102,7 +102,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService);
+                CurrentViewPanel = new TrackVM(_trackService, _taskService, _loadFileService, CurrentProject, _status);
                 Log.Information("Выбор в навигационной панели пользовательского элемента с треккингом времени для заданий");
             }
             catch(Exception ex)
