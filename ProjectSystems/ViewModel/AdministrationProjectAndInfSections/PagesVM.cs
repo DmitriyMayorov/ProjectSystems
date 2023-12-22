@@ -56,14 +56,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                _pageService.DeletePage(_currentInfSection.Id);
+                _pageService.DeletePage(_selected_page.Id);
                 Pages = new ObservableCollection<PageDTO>(_pageService.GetPagesForCurrentInfSection(_currentInfSection));
-                _notifier.ShowSuccess("Успешное удаление информационной секции");
+                _notifier.ShowSuccess("Успешное удаление страницы");
             }
             catch (Exception ex)
             {
-                _notifier.ShowError("Ошибка при удалении информационной страницы. Смотрите журанл логирования");
-                Log.Error("Ошибка при удалении информационной страницы - " + ex.Message);
+                _notifier.ShowError("Ошибка при удалении страницы. Смотрите журанл логирования");
+                Log.Error("Ошибка при удалении страницы - " + ex.Message);
             }
         }
 

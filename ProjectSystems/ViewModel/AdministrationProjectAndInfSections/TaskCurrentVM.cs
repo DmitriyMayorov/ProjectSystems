@@ -85,8 +85,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private ObservableCollection<WorkerDTO> _workerTesterDTO;
         public ObservableCollection<WorkerDTO> WorkerTesterDTO
         {
-            get { return _workerCoderDTO; }
-            set { _workerCoderDTO = value; OnPropertyChanged(); }
+            get { return _workerTesterDTO; }
+            set { _workerTesterDTO = value; OnPropertyChanged(); }
         }
 
         private WorkerDTO _selectedTesterDTO;
@@ -218,14 +218,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _taskDTO = taskDTO;
 
             Name = _taskDTO.Name;
-             Description = _taskDTO.Description;
-            WorkerAnalystDTO = new ObservableCollection<WorkerDTO>(_workerService.GetAnalysts());
-            SelectedAnalystDTO = _taskDTO.WorkerAnalyst;
+            Description = _taskDTO.Description;
             WorkerCoderDTO = new ObservableCollection<WorkerDTO>(_workerService.GetCoders());
             SelectedCoderDTO = _taskDTO.WorkerCoder;
-            SelectedTechlidDTO = _taskDTO.WorkerCreater;
+            SelectedTechlidDTO = _taskDTO.WorkerTester;
+            WorkerAnalystDTO = new ObservableCollection<WorkerDTO>(_workerService.GetAnalysts());
+            SelectedAnalystDTO = _taskDTO.WorkerAnalyst;
             WorkerTesterDTO = new ObservableCollection<WorkerDTO>(_workerService.GetTesters());
-            SelectedTesterDTO = _taskDTO.WorkerTester;
+            SelectedTesterDTO = _taskDTO.WorkerCreater;
 
             Priority = new ObservableCollection<string>(new List<string>() { "low", "medium", "high" });
             SelectedPriority = _taskDTO.Priority;

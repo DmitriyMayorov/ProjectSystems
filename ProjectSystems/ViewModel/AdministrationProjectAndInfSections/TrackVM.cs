@@ -167,7 +167,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _taskService = taskService;
             _loadFileService = loadFileService;
 
-            LabelsTrack = new ObservableCollection<string>(new List<string>() { "Plan", "InProgress", "CodeRewiew", "Stage", "Test" });
+            LabelsTrack = new ObservableCollection<string>(new List<string>() { "Plan", "InProgress", "Review", "Stage", "Test" });
             Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTasks());
             ChoiceTask = new RelayCommand(ChoiceTaskExecute);
             CountHoursTrack = new ChartValues<int>(new List<int> { 100, 100, 50, 24, 1 });

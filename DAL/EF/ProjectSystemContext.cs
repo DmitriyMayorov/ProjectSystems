@@ -27,13 +27,13 @@ namespace DAL.EF
                 .HasMany(e => e.Page)
                 .WithRequired(e => e.InfSection)
                 .HasForeignKey(e => e.IDSection)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Position>()
                 .HasMany(e => e.Workers)
                 .WithRequired(e => e.Position)
                 .HasForeignKey(e => e.IDPosition)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Project>()
                 .HasMany(e => e.InfSections)
@@ -51,7 +51,7 @@ namespace DAL.EF
                 .HasMany(e => e.Messages)
                 .WithRequired(e => e.Task)
                 .HasForeignKey(e => e.IDTask)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Task>()
                 .HasMany(e => e.Tracks)

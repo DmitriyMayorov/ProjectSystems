@@ -171,9 +171,9 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             Category = new ObservableCollection<string>(new List<string>() { "NEW", "BFX" });
             Priorities = new ObservableCollection<string>(new List<string> { "low", "medium", "high" });
-            AnalystWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
-            CoderWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
-            TesterWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetWorkers());
+            AnalystWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetAnalysts());
+            CoderWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetCoders());
+            TesterWorkers = new ObservableCollection<WorkerDTO>(_workerService.GetTesters());
 
             SelectedDate = DateTime.Now;
 

@@ -34,6 +34,7 @@ namespace BLL.Services
                      i => i.IDPosition,
                      j => j.Id,
                      (i, j) => new {
+                         Id = i.Id,
                          Pers = i.Person,
                          PS = i.PassportSeries,
                          PN = i.PassportNum,
@@ -41,7 +42,7 @@ namespace BLL.Services
                          PosID = i.IDPosition
                      })
                     .ToList().Where(i => i.Pos == "Аналитик").ToList()
-                    .Select(i => new WorkerDTO() { Person = i.Pers, PassportNum = i.PN, PassportSeries = i.PS, IDPosition = i.PosID }).ToList();
+                    .Select(i => new WorkerDTO() { Id = i.Id, Person = i.Pers, PassportNum = i.PN, PassportSeries = i.PS, IDPosition = i.PosID }).ToList();
         }
 
         public List<WorkerDTO> GetCoders()
@@ -50,6 +51,7 @@ namespace BLL.Services
                      i => i.IDPosition,
                      j => j.Id,
                      (i, j) => new {
+                         Id = i.Id,
                          Pers = i.Person,
                          PS = i.PassportSeries,
                          PN = i.PassportNum,
@@ -57,7 +59,7 @@ namespace BLL.Services
                          PosID = i.IDPosition
                      })
                     .ToList().Where(i => i.Pos == "Программист").ToList()
-                    .Select(i => new WorkerDTO() { Person = i.Pers, PassportNum = i.PN, PassportSeries = i.PS, IDPosition = i.PosID }).ToList();
+                    .Select(i => new WorkerDTO() { Id = i.Id, Person = i.Pers, PassportNum = i.PN, PassportSeries = i.PS, IDPosition = i.PosID }).ToList();
         }
 
         public List<WorkerDTO> GetTesters()
@@ -66,7 +68,7 @@ namespace BLL.Services
                      i => i.IDPosition,
                      j => j.Id,
                      (i, j) => new {
-                         ID = i.Id,
+                         Id = i.Id,
                          Pers = i.Person,
                          PS = i.PassportSeries,
                          PN = i.PassportNum,
@@ -74,7 +76,7 @@ namespace BLL.Services
                          PosID = i.IDPosition
                      })
                     .ToList().Where(i => i.Pos == "Тестировщик").ToList()
-                    .Select(i => new WorkerDTO() { Person = i.Pers, PassportNum = i.PN, PassportSeries = i.PS, IDPosition = i.PosID }).ToList();
+                    .Select(i => new WorkerDTO() { Id = i.Id, Person = i.Pers, PassportNum = i.PN, PassportSeries = i.PS, IDPosition = i.PosID }).ToList();
         }
 
         public WorkerDTO GetWorker(int id)
