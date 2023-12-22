@@ -96,7 +96,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _pageService = pageService;
             _projectDTO = projectDTO;
 
-            Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
+            Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSectionsForCurrentProject(_projectDTO));
 
             AddInfSectionCommand = new RelayCommand(AddInfSectionCommandExecute);
             UpdateInfSectionCommand = new RelayCommand(UpdateInfSectionCommandExecute);

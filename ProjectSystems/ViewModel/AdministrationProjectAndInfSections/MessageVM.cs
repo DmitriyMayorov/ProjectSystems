@@ -24,6 +24,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         ITaskService _taskService;
         Notifier _notifier;
 
+        private string _status;
+
         private ObservableCollection<TaskDTO> _tasks;
         public ObservableCollection<TaskDTO> Tasks
         {
@@ -111,12 +113,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
         }
 
-        public MessageVM(ITaskService taskService, IMessageService messageService)
+        public MessageVM(ITaskService taskService, IMessageService messageService, ProjectDTO project, string status)
         {
             _taskService = taskService; 
             _messageService = messageService;
+            _status = status;
 
-            Tasks = new ObservableCollection<TaskDTO>(taskService.GetTasks());
+            Tasks = new ObservableCollection<TaskDTO>(taskService.GetTaskByStatusTaskFromCurrentProject(project, _status));
 
             AddCommand = new RelayCommand(AddCommandExecute);
             ChoiseCommand = new RelayCommand(ChoiseCommandExecute);

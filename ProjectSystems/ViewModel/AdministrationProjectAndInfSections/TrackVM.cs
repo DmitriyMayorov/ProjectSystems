@@ -110,7 +110,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
             catch(Exception ex)
             {
-            
+                _notifier.ShowError("Ошибка при фиксировании времени. Смотрите журанл логирования");
+                Log.Error("Ошибка при фиксировании времени - " + ex.Message);
             }
         }
 

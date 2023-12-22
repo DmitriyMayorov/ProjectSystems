@@ -29,6 +29,8 @@ namespace ProjectSystems.ViewModel
         IWorkerService _workerService;
         ILoadFileService _loadFileService;
 
+        private string _status;
+
         private object _currentView;
         public object CurrentView
         {
@@ -68,7 +70,7 @@ namespace ProjectSystems.ViewModel
         private void NavigationPanel(object obj) => CurrentView = new AdministrationProjectAndInfSections.NavigationPanelVM(_infSerctionService, _messageService,
                                                                                                                             _pageService,_projectService, _reportService,
                                                                                                                             _taskService, _trackService, _loadFileService,
-                                                                                                                            _workerService);
+                                                                                                                            _workerService, _status);
         private void Worker(object obj) => CurrentView = new WorkersVM(_workerService, _positionService);
         private void Projects(object obj) => CurrentView = new ProjectsVM(_projectService);
         private void Report(object obj) => CurrentView = new ReportsVM(_projectService, _reportService, _loadFileService);
@@ -94,14 +96,15 @@ namespace ProjectSystems.ViewModel
             _trackService = trackService;
             _workerService = workerService;
             _loadFileService = loadFileService;
+            _status = status;
 
-            if (status == "Coder")
+            if (_status == "Coder")
             {
                 IsEnableCRUDWorkers = Visibility.Hidden;
                 IsEnableCRUDProjects = Visibility.Hidden;
                 IsEnableReports = Visibility.Hidden;
             }
-            if (status == "Tester")
+            if (_status == "Tester")
             {
                 IsEnableCRUDWorkers = Visibility.Hidden;
                 IsEnableCRUDProjects = Visibility.Hidden;
@@ -116,7 +119,7 @@ namespace ProjectSystems.ViewModel
 
             CurrentView = new AdministrationProjectAndInfSections.NavigationPanelVM(_infSerctionService, _messageService,
                                                                                     _pageService, _projectService, _reportService,
-                                                                                    _taskService, _trackService, _loadFileService, _workerService);
+                                                                                    _taskService, _trackService, _loadFileService, _workerService, _status);
             _loadFileService = loadFileService;
 
             Log.Information("Загрузка конструктора приложения - главного экрана");

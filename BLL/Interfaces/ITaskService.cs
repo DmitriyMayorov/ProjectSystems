@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     {
         List<TaskDTO> GetTasks();
         List<TaskDTO> GetTasksByProjectID(int projectID);
+        List<TaskDTO> GetTaskByStatusTaskFromCurrentProject(ProjectDTO project, string status);
 
         TaskDTO GetTask(int id);
 

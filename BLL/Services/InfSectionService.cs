@@ -28,6 +28,11 @@ namespace BLL.Services
             return db.InfSections.GetList().Select(i => new InfSectionDTO(i)).ToList();
         }
 
+        public List<InfSectionDTO> GetInfSectionsForCurrentProject(ProjectDTO project)
+        {
+            return db.InfSections.GetList().Where(i => i.IDProject == project.Id).Select(i => new InfSectionDTO(i)).ToList();
+        }
+
         public InfSectionDTO GetInfSection(int id)
         {
             return new InfSectionDTO(db.InfSections.GetItem(id));

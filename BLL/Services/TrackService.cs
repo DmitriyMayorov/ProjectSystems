@@ -34,15 +34,21 @@ namespace BLL.Services
             return new TrackDTO(db.Tracks.GetItem(id));
         }
 
-        public void CreateTrack(TrackDTO track)
+        public int CreateTrack(TrackDTO track)
         {
-            if (track.StatusTask == "Ready" || track.CountHours <= 0)
-            {
-                return;
-            }
+            //0 - код ошибки - ошибки нет
+            //1 - код ошибки - ошибка статуса. Нельзя добавлять время для выполненного задания
+            //2 - код ошибки - ошибка зафиксированного времени. Нельзя добавлять время меньше либо равному 0 или времени, суммарно зартеканному за день больше 24
+            if (track.StatusTask == "Ready")
+                return 1;
+            if (track.CountHours <= 0 || (GetSumHours(track.IDTask, track.StatusTask) + track.CountHours) >= 24)
+                return 2;
+
             db.Tracks.Create(new Track() { CountHours = track.CountHours, DateTrack = track.DateTrack,
                                             IDTask = track.IDTask, IDWorker = track.IDWorker, StatusTask = track.StatusTask});
             SaveChanges();
+
+            return 0;
         }
 
         public void UpdateTrack(TrackDTO track)

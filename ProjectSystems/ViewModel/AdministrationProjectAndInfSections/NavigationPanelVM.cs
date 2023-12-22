@@ -37,6 +37,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private PageDTO _currentPageDTO;
         private TaskDTO _currentTaskDTO;
 
+        private string _status;
+
         private object _currentViewPanel;
         public object CurrentViewPanel
         {
@@ -55,7 +57,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         public ProjectDTO CurrentProject
         {
             get { return _currentProject; }
-            set { _currentProject = value; CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, _currentProject); OnPropertyChanged(); }
+            set { _currentProject = value; CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, _currentProject, _status); OnPropertyChanged(); }
         }
 
         public ICommand InfSectionCommand { get; set; }
@@ -86,7 +88,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
+                CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject, _status);
                 Log.Information("Выбор в навигационной панели пользовательского элемента с заданиями");
             }
             catch(Exception ex)
@@ -114,7 +116,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                CurrentViewPanel = new MessageVM(_taskService, _messageService);
+                CurrentViewPanel = new MessageVM(_taskService, _messageService, CurrentProject, _status);
                 Log.Information("Выбор в навигационной панели пользовательского элемента с сообщениями по заданию");
             }
             catch(Exception ex)
@@ -174,7 +176,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         }
 
         public NavigationPanelVM(IInfSerctionService infSectionService, IMessageService messageService, IPageService pageService, IProjectService projectService,
-                                 IReportService reportService, ITaskService taskService, ITrackService trackService, ILoadFileService loadFileService, IWorkerService workerService)
+                                 IReportService reportService, ITaskService taskService, ITrackService trackService, ILoadFileService loadFileService, IWorkerService workerService, string status)
         {
             _infSerctionService = infSectionService;
             _messageService = messageService;
@@ -184,7 +186,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _taskService = taskService;
             _trackService = trackService;
             _loadFileService = loadFileService;
-            _workerService = workerService; 
+            _workerService = workerService;
+            _status = status;
 
             InfSectionCommand = new RelayCommand(InfSection);
             TrackCommand = new RelayCommand(Track);
@@ -198,7 +201,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             CurrentProject = _projectService.GetProjects().FirstOrDefault();
 
-            CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject);
+            CurrentViewPanel = new TasksVM(_taskService, _trackService, _messageService, CurrentProject, _status);
             Projects = new ObservableCollection<ProjectDTO>(_projectService.GetProjects());
 
             _notifier = new Notifier(cfg =>

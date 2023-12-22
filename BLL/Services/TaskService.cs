@@ -33,6 +33,19 @@ namespace BLL.Services
             return db.Tasks.GetList().Select(i => new TaskDTO(i)).Where(i => i.IDProject ==  projectID).ToList();
         }
 
+        public List<TaskDTO> GetTaskByStatusTaskFromCurrentProject(ProjectDTO project, string status)
+        {
+            if (status == "Analyst")
+                return db.Tasks.GetList().Select(i => new TaskDTO(i)).Where(i => i.IDProject == project.Id).ToList();
+            else if (status == "Coder")
+                return db.Tasks.GetList().Select(i => new TaskDTO(i)).
+                                Where(i => i.IDProject == project.Id && (i.State == "InProgress" || i.State == "Review" || i.State == "Stage")).ToList();
+            else if (status == "Tester")
+                return db.Tasks.GetList().Select(i => new TaskDTO(i)).Where(i => i.IDProject == project.Id && (i.State == "Test")).ToList();
+            else
+                return new List<TaskDTO>();
+        }
+
         public TaskDTO GetTask(int id)
         {
             return new TaskDTO(db.Tasks.GetItem(id));

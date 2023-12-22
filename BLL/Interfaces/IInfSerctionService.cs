@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     public interface IInfSerctionService
     {
         List<InfSectionDTO> GetInfSections();
+        List<InfSectionDTO> GetInfSectionsForCurrentProject(ProjectDTO project);
 
         InfSectionDTO GetInfSection(int id);
 

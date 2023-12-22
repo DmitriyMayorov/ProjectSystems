@@ -13,7 +13,7 @@ namespace BLL.Interfaces
 
         TrackDTO GetTrack(int id);
 
-        void CreateTrack(TrackDTO track);
+        int CreateTrack(TrackDTO track);
         void UpdateTrack(TrackDTO track);
         void DeleteTrack(int id);
 

@@ -51,7 +51,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                     case "Review": temp.IDWorker = (int)_taskDTO.IDWorkerMentor; break;
                     case "Stage": temp.IDWorker = (int)_taskDTO.IDWorkerCoder; break;
                     case "Test": temp.IDWorker = (int)_taskDTO.IDWorkerTester; break;
-                    case "Ready": _notifier.ShowError("Нельзя добавлять время в выполненные задания"); return;
+                    case "Ready": break;
                     default:
                         _notifier.ShowError("Ошибка!");
                         return;
@@ -59,8 +59,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 temp.IDTask = _taskDTO.Id;
                 temp.CountHours = Int32.Parse(SelectedCountHours);
 
-                _trackService.CreateTrack(temp);
-                _notifier.ShowSuccess("Успешное добавление");
+                int flagResult = _trackService.CreateTrack(temp);
+                if (flagResult == 0)
+                    _notifier.ShowSuccess("Успешное добавление");
+                if (flagResult == 1)
+                    _notifier.ShowWarning("Нельзя добавлять время в выполненные задания");
+                if (flagResult == 2)
+                    _notifier.ShowWarning("Нельзя фиксировать отрицательное число часов или 0. Нельзя фиксировать больше 24 часов за день");
             }
             catch(Exception ex)
             {

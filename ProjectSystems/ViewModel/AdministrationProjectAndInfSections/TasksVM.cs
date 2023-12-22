@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
@@ -25,6 +26,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         IMessageService _messageService;
 
         private Notifier _notifier;
+
+        public string _status;
 
         ProjectDTO _projectDTO;
         TaskAddMenu addMenu;
@@ -51,7 +54,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             addMenu = new TaskAddMenu(_projectDTO);
             addMenu.ShowDialog();
-            Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTasksByProjectID(_projectDTO.Id));
+            GetTasks(_status);
         }
 
         private void UpdateCommandExecute(object obj)
@@ -65,18 +68,32 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         private void RemoveCommandExecute(object obj)
         {
             _taskService.DeleteTask(SelectedTask.Id);
-            Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTasksByProjectID(_projectDTO.Id));
+            GetTasks(_status);
         }
 
-        public TasksVM(ITaskService taskService, ITrackService trackService, IMessageService messageService, ProjectDTO project)
+        public void GetTasks(string status)
+        {
+            if (status == "Analyst")
+                Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
+            else if (status == "Coder")
+                Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
+            else if (status == "Tester")
+                Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
+            else
+            {
+                Tasks = null;
+                _notifier.ShowError("не правильный статус");
+            }
+        }
+
+        public TasksVM(ITaskService taskService, ITrackService trackService, IMessageService messageService, ProjectDTO project, string status)
         {
             _taskService = taskService;
             _trackService = trackService;
             _messageService = messageService;
 
             _projectDTO = project;
-
-            Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTasksByProjectID(_projectDTO.Id));
+            _status = status;
 
             AddTask = new RelayCommand(AddTaskExecute);
             UpdateTask = new RelayCommand(UpdateCommandExecute);
@@ -96,6 +113,8 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
                 cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
             });
+
+            GetTasks(_status);
         }
     }
 }
