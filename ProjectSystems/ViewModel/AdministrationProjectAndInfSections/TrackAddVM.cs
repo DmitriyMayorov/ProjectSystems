@@ -71,7 +71,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 if (flagResult == 1)
                     _notifier.ShowWarning("Нельзя добавлять время в выполненные задания");
                 if (flagResult == 2)
-                    _notifier.ShowWarning("Нельзя фиксировать отрицательное число часов или 0. Нельзя фиксировать больше 24 часов за день");
+                    _notifier.ShowWarning("Нельзя фиксировать отрицательное число часов или 0. Нельзя фиксировать больше 8 часов за день");
             }
             catch(Exception ex)
             {

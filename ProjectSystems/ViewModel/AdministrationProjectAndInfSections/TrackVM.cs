@@ -23,6 +23,8 @@ using System.Windows;
 using ToastNotifications.Messages;
 using Serilog;
 
+using Dialog = System.Windows.Forms;
+
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
     public class TrackVM : ViewModelBase
@@ -93,6 +95,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                     return;
                 }
                 List<StatisticTrackDTO> Stat = new List<StatisticTrackDTO>();
+
                 foreach (var status in LabelsTrack)
                 {
                     StatisticTrackDTO temp = new StatisticTrackDTO();
@@ -101,8 +104,15 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                     Stat.Add(temp);
                 }
 
+                Dialog.SaveFileDialog menu = new Dialog.SaveFileDialog();
+                menu.Filter = "txt files (*.pdf)|*.pdf|All files (*.*)|*.*";
+
+                if (menu.ShowDialog() != Dialog.DialogResult.OK)
+                    return;
+                string pathwithname = menu.FileName;
+
                 string header = "Отчёт о количестве затраченных часов\n Название:\n" + SelectedTask.Name;
-                _loadFileService.SaveStatisitcForCurrentTask("TaskReport.pdf", Stat, header);
+                _loadFileService.SaveStatisitcForCurrentTask(pathwithname, Stat, header);
                 _notifier.ShowSuccess("Отчёт создан в PDF");
             }
             catch(Exception ex)

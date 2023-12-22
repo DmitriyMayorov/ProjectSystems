@@ -25,6 +25,8 @@ using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using Serilog;
 
+using Dialog = System.Windows.Forms;
+
 namespace ProjectSystems.ViewModel
 {
     public class ReportsVM : ViewModelBase
@@ -182,10 +184,16 @@ namespace ProjectSystems.ViewModel
                     _notifier.ShowWarning("Выберите временной промежуток!");
                     return;
                 }
-                System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-                dialog.ShowDialog();
+
+                Dialog.SaveFileDialog menu = new Dialog.SaveFileDialog();
+                menu.Filter = "txt files (*.pdf)|*.pdf|All files (*.*)|*.*";
+
+                if (menu.ShowDialog() != Dialog.DialogResult.OK)
+                    return;
+                string pathwithname = menu.FileName;
+
                 string header = "Отчёт по эффективности работы сотрудников \nза период между " + StartDate.Date.ToString() + " и " + EndDate.Date.ToString() + "\n";
-                _loadFileService.SaveStatisticForAllPerson("StatisticWorker.pdf", _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
+                _loadFileService.SaveStatisticForAllPerson(pathwithname, _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
                 _notifier.ShowSuccess("Отчёт создан в PDF");
             }
             catch(Exception ex)
@@ -204,11 +212,17 @@ namespace ProjectSystems.ViewModel
                     _notifier.ShowWarning("Выберите проект!");
                     return;
                 }
-                System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-                dialog.ShowDialog();
+
+                Dialog.SaveFileDialog menu = new Dialog.SaveFileDialog();
+                menu.Filter = "txt files (*.pdf)|*.pdf|All files (*.*)|*.*";
+
+                if (menu.ShowDialog() != Dialog.DialogResult.OK)
+                    return;
+                string pathwithname = menu.FileName;
+
                 var result = _reportService.MakeCountTasksForCurrentProjectByStates(CurrentProject);
                 string header = "Отчёт по состяонию заданий на " + DateTime.Now + "\n" + " для проекта " + CurrentProject.Name;
-                _loadFileService.SaveStatisitcForTasksInCurrentProjectByStates("ProjectStatistic.pdf", result, header);
+                _loadFileService.SaveStatisitcForTasksInCurrentProjectByStates(pathwithname, result, header);
                 _notifier.ShowSuccess("Отчёт создан в PDF");
             }
             catch( Exception ex)
