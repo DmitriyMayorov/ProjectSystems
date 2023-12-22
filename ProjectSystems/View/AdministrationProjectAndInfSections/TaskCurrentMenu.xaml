@@ -135,8 +135,8 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="140"/>
                     <RowDefinition Height="0.7*"/>
                 </Grid.RowDefinitions>
 
@@ -144,7 +144,7 @@
                     <Border Background="#372B2F"
                             Margin="15"
                             CornerRadius="15">
-                        <TextBox Text="{Binding Name}" Margin="15"
+                        <TextBox Text="{Binding Name}" Margin="10"
                                  Foreground="White"
                                  materialDesign:HintAssist.Hint="Название"
                                  TextWrapping="WrapWithOverflow"
@@ -156,27 +156,54 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <TextBlock Text="TEST"
+                        <StackPanel>
+                            <TextBlock Text="Нынешний статус задания" Foreground="White"
+                                       Margin="15, 0, 0, 0"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 15, 10">
+                                <TextBlock Text="{Binding SelectedState}"
                                    Margin="15"
-                                   Width="350"
+                                   Width="Auto"
                                    Foreground="White"
                                    FontSize="16"/>
+                            </Border>
+                        </StackPanel>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Border CornerRadius="8" Background="#372B2F" Margin="0, 0, 15, 10">
-                            <ComboBox materialDesign:HintAssist.Hint="Категория"
+                        <StackPanel>
+                            <TextBlock Text="Приоритет" Foreground="White"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="0, 0, 15, 10">
+                                <ComboBox materialDesign:HintAssist.Hint="Приоритет"
                                       FontSize="20" Height="50" 
                                       BorderBrush="Transparent"  
                                       ItemsSource="{Binding Priority}"
                                       SelectedItem="{Binding SelectedPriority}"
                                       Foreground="White">
-                                <ComboBox.Resources>
-                                    <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
-                                </ComboBox.Resources>
-                            </ComboBox>
-                        </Border>
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <StackPanel>
+                            <TextBlock Text="Категория" Foreground="White"/>
+                            <Border CornerRadius="8" Background="#372B2F" Margin="0, 0, 15, 10">
+                                <ComboBox materialDesign:HintAssist.Hint="Категория"
+                                      FontSize="20" Height="50" 
+                                      BorderBrush="Transparent"  
+                                      ItemsSource="{Binding Category}"
+                                      SelectedItem="{Binding SelectedCategory}"
+                                      Foreground="White">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                    </ComboBox.Resources>
+                                </ComboBox>
+                            </Border>
+                        </StackPanel>
                     </Grid>
                 </Grid>
 
@@ -193,8 +220,11 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
-                            <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 5, 10">
-                                <ComboBox materialDesign:HintAssist.Hint="Программист"
+                            <StackPanel>
+                                <TextBlock Text="Программист" Foreground="White" Margin="15, 0, 5, 0"/>
+                                <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 5, 10">
+                                    <ComboBox materialDesign:HintAssist.Hint="Программист"
+                                      Margin="5"
                                       FontSize="20" Height="50" 
                                       BorderBrush="Transparent"  
                                       ItemsSource="{Binding WorkerCoderDTO}"
@@ -202,16 +232,20 @@
                                       Text="{Binding SelectedCoderDTO.Person}"
                                       Foreground="White"
                                       DisplayMemberPath="Person">
-                                    <ComboBox.Resources>
-                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
-                                    </ComboBox.Resources>
-                                </ComboBox>
-                            </Border>
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
+                                </Border>
+                            </StackPanel>
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <Border CornerRadius="8" Background="#372B2F" Margin="10, 0, 15, 10">
-                                <ComboBox materialDesign:HintAssist.Hint="Техлид"
+                            <StackPanel>
+                                <TextBlock Text="Техлид" Foreground="White" Margin="10, 0, 5, 0"/>
+                                <Border CornerRadius="8" Background="#372B2F" Margin="10, 0, 15, 10">
+                                    <ComboBox materialDesign:HintAssist.Hint="Техлид"
+                                      Margin="5"
                                       FontSize="20" Height="50" 
                                       BorderBrush="Transparent"  
                                       ItemsSource="{Binding WorkerCoderDTO}"
@@ -219,11 +253,12 @@
                                       Text="{Binding SelectedTechlidDTO.Person}"
                                       Foreground="White"
                                       DisplayMemberPath="Person">
-                                    <ComboBox.Resources>
-                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
-                                    </ComboBox.Resources>
-                                </ComboBox>
-                            </Border>
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
+                                </Border>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                     
@@ -234,8 +269,11 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
-                            <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 5, 10">
-                                <ComboBox materialDesign:HintAssist.Hint="Тестировщик"
+                            <StackPanel>
+                                <TextBlock Text="Тестировщик" Foreground="White" Margin="15, 0, 5, 0"/>
+                                <Border CornerRadius="8" Background="#372B2F" Margin="15, 0, 5, 10">
+                                    <ComboBox materialDesign:HintAssist.Hint="Тестировщик"
+                                      Margin="5"        
                                       FontSize="20" Height="50" 
                                       BorderBrush="Transparent"  
                                       ItemsSource="{Binding WorkerTesterDTO}"
@@ -243,16 +281,20 @@
                                       Text="{Binding SelectedTesterDTO.Person}"
                                       Foreground="White"
                                       DisplayMemberPath="Person">
-                                    <ComboBox.Resources>
-                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
-                                    </ComboBox.Resources>
-                                </ComboBox>
-                            </Border>
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
+                                </Border>
+                            </StackPanel>
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <Border CornerRadius="8" Background="#372B2F" Margin="10, 0, 15, 10">
-                                <ComboBox materialDesign:HintAssist.Hint="Аналитик"
+                            <StackPanel>
+                                <TextBlock Text="Аналитик" Foreground="White" Margin="10, 0, 5, 0"/>
+                                <Border CornerRadius="8" Background="#372B2F" Margin="10, 0, 15, 10">
+                                    <ComboBox materialDesign:HintAssist.Hint="Аналитик"
+                                      Margin="5"
                                       FontSize="20" Height="50" 
                                       BorderBrush="Transparent"  
                                       ItemsSource="{Binding WorkerAnalystDTO}"
@@ -260,11 +302,12 @@
                                       Text="{Binding SelectedAnalystDTO.Person}"
                                       Foreground="White"
                                       DisplayMemberPath="Person">
-                                    <ComboBox.Resources>
-                                        <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
-                                    </ComboBox.Resources>
-                                </ComboBox>
-                            </Border>
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="MaterialDesignPaper" Color="#372B2F"/>
+                                        </ComboBox.Resources>
+                                    </ComboBox>
+                                </Border>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                 </Grid>

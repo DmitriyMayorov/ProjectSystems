@@ -32,23 +32,5 @@ namespace BLL.Services
         {
             return new PositionDTO(db.Positions.GetItem(id));
         }
-
-        public void CreatePosition(PositionDTO position)
-        {
-            db.Positions.Create(new Position() { Id = position.Id, Name = position.Name});
-            SaveChanges();
-        }
-
-        public void UpdatePosition(PositionDTO position)
-        {
-            Position pos = db.Positions.GetItem(position.Id);
-            pos.Name = position.Name;
-            SaveChanges();
-        }
-
-        public void DeletePosition(int id)
-        {
-            db.Positions.Delete(id);
-        }
     }
 }

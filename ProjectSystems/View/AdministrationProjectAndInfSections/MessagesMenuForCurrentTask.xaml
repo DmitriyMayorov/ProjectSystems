@@ -24,7 +24,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <Border Background="CadetBlue" Margin="15" CornerRadius="15">
+                <Border Background="#372B2F" Margin="15" CornerRadius="15">
                     <ComboBox Margin="10, 5" 
                           ItemsSource="{Binding Tasks}"
                           SelectedItem="{Binding SelectedTask}"
@@ -45,7 +45,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Border Background="CadetBlue" Margin="15" CornerRadius="15">
+            <Border Background="#372B2F" Margin="15" CornerRadius="15">
                 <ListView ItemsSource="{Binding Messages}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -81,11 +81,12 @@
                 <ColumnDefinition Width="0.1*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Background="CadetBlue" Margin="15, 12, 15, 15"
+            <Border Background="#372B2F" Margin="15, 12, 15, 15"
                     CornerRadius="15">
                 <Grid Grid.Column="0">
                     <TextBox Margin="10" Text="{Binding NewMessageText}"
-                             BorderBrush="Transparent"/>
+                             BorderBrush="Transparent" Foreground="White"
+                             FontSize="14"/>
                 </Grid>
             </Border>
 

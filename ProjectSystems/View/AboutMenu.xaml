@@ -156,7 +156,7 @@
                     </TreeViewItem.Header>
                 </TreeViewItem>
             </TreeView>
-            <TextBlock Margin="10" Grid.Column="1" Text="{Binding AboutText}"
+            <TextBlock Margin="15" Grid.Column="1" Text="{Binding AboutText}"
                        Foreground="White" FontSize="14" TextWrapping="WrapWithOverflow"/>
          </Grid>
     </Grid>

@@ -12,9 +12,5 @@ namespace BLL.Interfaces
         List<PositionDTO> GetPositions();
 
         PositionDTO GetPosition(int id);
-
-        void CreatePosition(PositionDTO position);
-        void UpdatePosition(PositionDTO position);
-        void DeletePosition(int id);
     }
 }

@@ -112,6 +112,27 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             set { _selectedPriority = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<string> _category;
+        public ObservableCollection<string> Category
+        {
+            get { return _category; }
+            set { _category = value; OnPropertyChanged(); }
+        }
+
+        private string _selectedCategory;
+        public string SelectedCategory
+        {
+            get { return _selectedCategory; }
+            set { _selectedCategory = value; OnPropertyChanged(); }
+        }
+
+        private string _selectedState;
+        public string SelectedState
+        {
+            get { return _selectedState; }
+            set { _selectedState = value; OnPropertyChanged(); }
+        }
+
         private ChartValues<StatisticTrackDTO> _result;
         public ChartValues<StatisticTrackDTO> ResultsTrack
         {
@@ -158,6 +179,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 _notifier.ShowSuccess("Задание перешло в стадию InProgress");
                 _taskDTO.State = "InProgress";
+                SelectedState = _taskDTO.State;
                 CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
             }
             else
@@ -170,6 +192,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 _notifier.ShowSuccess("Задание перешло в стадию Review");
                 _taskDTO.State = "Review";
+                SelectedState = _taskDTO.State;
                 CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
             }
             else
@@ -182,6 +205,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 _notifier.ShowSuccess("Задание перешло в стадию Stage");
                 _taskDTO.State = "Stage";
+                SelectedState = _taskDTO.State;
                 CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
             }
             else
@@ -194,6 +218,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 _notifier.ShowSuccess("Задание перешло в стадию Test");
                 _taskDTO.State = "Test";
+                SelectedState = _taskDTO.State;
                 CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
             }
             else
@@ -207,6 +232,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             {
                 _notifier.ShowSuccess("Задание перешло в стадию Ready");
                 _taskDTO.State = "Ready";
+                SelectedState = _taskDTO.State;
                 CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
             }
             else
@@ -233,9 +259,12 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
             Priority = new ObservableCollection<string>(new List<string>() { "low", "medium", "high" });
             SelectedPriority = _taskDTO.Priority;
+            Category = new ObservableCollection<string>(new List<string>() { "BFX", "NEW" });
+            SelectedCategory = _taskDTO.Category;
+            SelectedState = _taskDTO.State;
 
             CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State)});
-            LabelsTrack = new ObservableCollection<string>(new List<string>() { "State" });
+            LabelsTrack = new ObservableCollection<string>(new List<string>() { "" });
             Formatter = value => value.ToString();
 
             UpdateCommand = new RelayCommand(UpdateCommandExecute);

@@ -11,6 +11,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
@@ -44,6 +45,20 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             get { return _selected_task; }
             set { _selected_task = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _visAdd;
+        public Visibility VisAdd
+        {
+            get { return _visAdd; }
+            set { _visAdd = value; OnPropertyChanged(); }
+        }
+
+        private Visibility _visRemove;
+        public Visibility VisRemove
+        {
+            get { return _visRemove; }
+            set { _visRemove = value; OnPropertyChanged(); }
         }
 
         public ICommand AddTask { get; set; }
@@ -86,6 +101,19 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             }
         }
 
+        public void GetPersmission(string status)
+        {
+            if (status == "Analyst" || status == "Tester")
+                VisAdd = VisRemove = Visibility.Visible;
+            else if (status == "Coder")
+                VisAdd = VisRemove = Visibility.Hidden;
+            else
+            {
+                VisAdd = VisRemove = Visibility.Hidden;
+                _notifier.ShowError("не правильный статус");
+            }
+        }
+
         public TasksVM(ITaskService taskService, ITrackService trackService, IMessageService messageService, ProjectDTO project, string status)
         {
             _taskService = taskService;
@@ -115,6 +143,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             });
 
             GetTasks(_status);
+            GetPersmission(_status);
         }
     }
 }

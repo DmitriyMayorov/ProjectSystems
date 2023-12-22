@@ -41,7 +41,7 @@ namespace BLL.Services
             //2 - код ошибки - ошибка зафиксированного времени. Нельзя добавлять время меньше либо равному 0 или времени, суммарно зартеканному за день больше 24
             if (track.StatusTask == "Ready")
                 return 1;
-            if (track.CountHours <= 0 || (GetSumHours(track.IDTask, track.StatusTask) + track.CountHours) >= 24)
+            if (track.CountHours <= 0 || (GetSumHours(track.IDTask, track.StatusTask) + track.CountHours) > 8)
                 return 2;
 
             db.Tracks.Create(new Track() { CountHours = track.CountHours, DateTrack = track.DateTrack,
