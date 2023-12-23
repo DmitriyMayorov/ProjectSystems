@@ -87,7 +87,7 @@
                              Command="{Binding AboutCommand}">
                         <Grid>
 
-                            <Image Source="../Images/Settings.png" Style="{StaticResource Image_Style}"/>
+                            <Image Source="../Images/Info.png" Style="{StaticResource Image_Style}"/>
 
                         </Grid>
 

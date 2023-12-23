@@ -21,13 +21,26 @@ namespace DAL.RepositoryPgs
             this.db = psc;
         }
 
-        public List<ReportTasksForPerson> MakeTasksForPerson(int IDPerson)
+        public List<ReportCountCompletedTasks> MakeCompletedTasks()
         {
-            //Заглушка
-            return new List<ReportTasksForPerson>();
+            List<Worker> wokerks = db.Workers.ToList();
+            List<ReportCountCompletedTasks> result = new List<ReportCountCompletedTasks>();
+            foreach (var worker in wokerks)
+            {
+                ReportCountCompletedTasks task = new ReportCountCompletedTasks() {
+                                                                                  ID = worker.Id,
+                                                                                  Person = worker.Person,
+                                                                                  CountCompletedTasks = db.Tasks.ToList().
+                                                                                                        Where(i => (i.State == "Ready" &&
+                                                                                                                    (i.IDWorkerAnalyst == worker.Id || i.IDWorkerTester == worker.Id ||
+                                                                                                                    i.IDWorkerCoder == worker.Id || i.IDWorkerMentor == worker.Id))).Count() 
+                                                                                 };
+                result.Add(task);
+            }
+            return result;
         }
 
-        public List<ReportStatisticByAllPerson> MakeDiagnosisReport(DateTime firstDate, DateTime secondTime)
+        public List<ReportStatisticByAllPerson> MakeCountTrackingHours(DateTime firstDate, DateTime secondTime)
         {
             //Заглушка
             NpgsqlParameter param1 = new NpgsqlParameter("fd", firstDate);

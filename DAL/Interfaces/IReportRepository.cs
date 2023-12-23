@@ -10,8 +10,8 @@ namespace DAL.Interfaces
 {
     public interface IReportRepository
     {
-        List<ReportTasksForPerson> MakeTasksForPerson(int IDPerson);
-        List<ReportStatisticByAllPerson> MakeDiagnosisReport(DateTime firstDate, DateTime secondTime);
+        List<ReportCountCompletedTasks> MakeCompletedTasks();
+        List<ReportStatisticByAllPerson> MakeCountTrackingHours(DateTime firstDate, DateTime secondTime);
         List<ReportProjectStates> MakeCountTasksForCurrentProjectByStates(int IDProject);
     }
 }

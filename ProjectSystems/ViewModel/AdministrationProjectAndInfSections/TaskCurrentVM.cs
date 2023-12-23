@@ -162,7 +162,24 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void UpdateCommandExecute(object obj)
         {
-            _taskService.UpdateTask(_taskDTO);
+            try
+            {
+                _taskDTO.Name = Name;
+                _taskDTO.Description = Description;
+                _taskDTO.IDWorkerAnalyst = SelectedAnalystDTO?.Id;
+                _taskDTO.IDWorkerCoder = SelectedCoderDTO?.Id;
+                _taskDTO.IDWorkerMentor = SelectedTechlidDTO?.Id;
+                _taskDTO.IDWorkerTester = SelectedTesterDTO?.Id;
+                _taskDTO.Category = SelectedCategory;
+                _taskDTO.Priority = SelectedPriority;
+                _taskService.UpdateTask(_taskDTO);
+                _notifier.ShowSuccess("Успешное обновление задания");
+            }
+            catch (Exception ex)
+            {
+                _notifier.ShowError("Ошибка при обновлении задания. Смотри журнал логирования");
+                Log.Error("Ошибка при обновлении задания - " + ex.Message);
+            }
         }
 
         private void AddCommandExecute(object obj)
@@ -175,68 +192,107 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 
         private void ToInProgressExecute(object obj)
         {
-            if (_taskService.ToInProgress(_taskDTO))
+            try
             {
-                _notifier.ShowSuccess("Задание перешло в стадию InProgress");
-                _taskDTO.State = "InProgress";
-                SelectedState = _taskDTO.State;
-                CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                if (_taskService.ToInProgress(_taskDTO))
+                {
+                    _notifier.ShowSuccess("Задание перешло в стадию InProgress");
+                    _taskDTO.State = "InProgress";
+                    SelectedState = _taskDTO.State;
+                    CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                }
+                else
+                    _notifier.ShowWarning("В стадию InProgress можно перейти только из всех стадий, кроме Ready");
             }
-            else
-                _notifier.ShowWarning("В стадию InProgress можно перейти только из всех стадий, кроме Ready");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при изменении состояние задания на InProgress. Смотри журнал логирования");
+                Log.Error("Ошибка при изменении состояние задания на InProgress - " + ex.Message);
+            }
         }
 
         private void ToReviewExecute(object obj) 
         {
-            if (_taskService.ToReview(_taskDTO))
+            try
             {
-                _notifier.ShowSuccess("Задание перешло в стадию Review");
-                _taskDTO.State = "Review";
-                SelectedState = _taskDTO.State;
-                CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                if (_taskService.ToReview(_taskDTO))
+                {
+                    _notifier.ShowSuccess("Задание перешло в стадию Review");
+                    _taskDTO.State = "Review";
+                    SelectedState = _taskDTO.State;
+                    CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                }
+                else
+                    _notifier.ShowWarning("В стадию Review можно перейти только из стадии InProgress");
             }
-            else
-                _notifier.ShowWarning("В стадию Review можно перейти только из стадии InProgress");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при изменении состояние задания на Review. Смотри журнал логирования");
+                Log.Error("Ошибка при изменении состояние задания на Review - " + ex.Message);
+            }
         }
 
         private void ToStageExecute(object obj)
         {
-            if (_taskService.ToStage(_taskDTO))
+            try
             {
-                _notifier.ShowSuccess("Задание перешло в стадию Stage");
-                _taskDTO.State = "Stage";
-                SelectedState = _taskDTO.State;
-                CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                if (_taskService.ToStage(_taskDTO))
+                {
+                    _notifier.ShowSuccess("Задание перешло в стадию Stage");
+                    _taskDTO.State = "Stage";
+                    SelectedState = _taskDTO.State;
+                    CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                }
+                else
+                    _notifier.ShowWarning("В стадию Stage можно перейти только из стадии Review");
             }
-            else
-                _notifier.ShowWarning("В стадию Stage можно перейти только из стадии Review");
+            catch( Exception ex)
+            {
+                _notifier.ShowError("Ошибка при изменении состояние задания на Stage. Смотри журнал логирования");
+                Log.Error("Ошибка при изменении состояние задания на Stage - " + ex.Message);
+            }
         }
 
         private void ToTestExecute(object obj)
         {
-            if (_taskService.ToTest(_taskDTO))
+            try
             {
-                _notifier.ShowSuccess("Задание перешло в стадию Test");
-                _taskDTO.State = "Test";
-                SelectedState = _taskDTO.State;
-                CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                if (_taskService.ToTest(_taskDTO))
+                {
+                    _notifier.ShowSuccess("Задание перешло в стадию Test");
+                    _taskDTO.State = "Test";
+                    SelectedState = _taskDTO.State;
+                    CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                }
+                else
+                    _notifier.ShowWarning("В стадию Test можно перейти только из стадии Stage");
             }
-            else
-                _notifier.ShowWarning("В стадию Test можно перейти только из стадии Stage");
-
+            catch( Exception ex)
+            {
+                _notifier.ShowError("Ошибка при изменении состояние задания на Test. Смотри журнал логирования");
+                Log.Error("Ошибка при изменении состояние задания на Test - " + ex.Message);
+            }
         }
 
         private void ToReadyExecute(object obj)
         {
-            if (_taskService.ToReady(_taskDTO))
+            try
             {
-                _notifier.ShowSuccess("Задание перешло в стадию Ready");
-                _taskDTO.State = "Ready";
-                SelectedState = _taskDTO.State;
-                CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                if (_taskService.ToReady(_taskDTO))
+                {
+                    _notifier.ShowSuccess("Задание перешло в стадию Ready");
+                    _taskDTO.State = "Ready";
+                    SelectedState = _taskDTO.State;
+                    CountHoursTrack = new ChartValues<int>(new List<int> { _trackService.GetSumHours(_taskDTO.Id, _taskDTO.State) });
+                }
+                else
+                    _notifier.ShowWarning("В стадию Ready можно перейти только из стадии Test");
             }
-            else
-                _notifier.ShowWarning("В стадию Ready можно перейти только из стадии Test");
+            catch(Exception ex)
+            {
+                _notifier.ShowError("Ошибка при изменении состояние задания на Ready. Смотри журнал логирования");
+                Log.Error("Ошибка при изменении состояние задания на Ready - " + ex.Message);
+            }
         }
 
         public TaskCurrentVM(ITaskService taskService, ITrackService trackService, IWorkerService workerService, TaskDTO taskDTO, string status)

@@ -11,8 +11,8 @@ namespace BLL.Interfaces
 {
     public interface IReportService
     {
+        List<ReportCompletedTaskForWorkersDTO> GetReportCompletedTasksForWorkers();
         List<ReportStatisticByAllPersonDTO> GetStatisticByAllPerson(DateTime startDate, DateTime endDate);
-        List<ReportTasksForPersonDTO> GetTasksForPerson(string Person);
         List<ReportProjectStatesDTO> MakeCountTasksForCurrentProjectByStates(ProjectDTO project);
     }
 }

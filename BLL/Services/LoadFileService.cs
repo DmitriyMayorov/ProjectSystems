@@ -23,7 +23,7 @@ namespace BLL.Services
             this.db = db;
         }
 
-        public void SaveStatisticForAllPerson(string filename, List<ReportStatisticByAllPersonDTO> data, string header)
+        public void SaveStatisticForAllPerson(string filename, List<ReportStatisticByAllPersonDTO> dataWorkersHourst, List<ReportCompletedTaskForWorkersDTO> dataTasks, string header)
         {
             Document document = new Document();
 
@@ -34,8 +34,6 @@ namespace BLL.Services
             BaseFont baseFont = BaseFont.CreateFont(@"C:\КПО КР\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
-            PdfPTable table = new PdfPTable(4);
-
             Paragraph headerPDF = new Paragraph(header, font);
             headerPDF.Capacity = 4;
             headerPDF.Alignment = 1;
@@ -44,21 +42,36 @@ namespace BLL.Services
             Paragraph temp = new Paragraph(" ", font);
             document.Add(temp);
 
+            PdfPTable table = new PdfPTable(3);
 
             table.AddCell(new PdfPCell(new Phrase(new Phrase("Работник", font))));
             table.AddCell(new PdfPCell(new Phrase(new Phrase("Должность", font))));
             table.AddCell(new PdfPCell(new Phrase(new Phrase("Количество часов", font))));
-            table.AddCell(new PdfPCell(new Phrase(new Phrase("Количество выполненных заданий", font))));
 
-            foreach (ReportStatisticByAllPersonDTO item in data)
+            foreach (ReportStatisticByAllPersonDTO item in dataWorkersHourst)
             {
                 table.AddCell(new Phrase(item.Person, font));
                 table.AddCell(new Phrase(item.Position, font));
                 table.AddCell(new Phrase(item.CountHours.ToString(), font));
-                table.AddCell(new Phrase(item.CountCompletedTasks.ToString(), font));
             }
 
             document.Add(table);
+
+            Paragraph tempSecond = new Paragraph(" ", font);
+            document.Add(tempSecond);
+
+            PdfPTable tableCountCompletedTasks = new PdfPTable(2);
+
+            tableCountCompletedTasks.AddCell(new PdfPCell(new Phrase(new Phrase("Работник", font))));
+            tableCountCompletedTasks.AddCell(new PdfPCell(new Phrase(new Phrase("Количество выполненных заданий", font))));
+
+            foreach (ReportCompletedTaskForWorkersDTO item in dataTasks)
+            {
+                tableCountCompletedTasks.AddCell(new Phrase(item.Person, font));
+                tableCountCompletedTasks.AddCell(new Phrase(item.CompletedTasks.ToString(), font));
+            }
+
+            document.Add(tableCountCompletedTasks);
 
             Paragraph record = new Paragraph("\nПодпись ____________", font);
             record.Capacity = 4;

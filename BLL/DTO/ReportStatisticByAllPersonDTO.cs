@@ -16,8 +16,6 @@ namespace BLL.DTO
 
         public long CountHours { get; set; }
 
-        public long CountCompletedTasks { get; set; }
-
         public string Position { get; set; }
 
         public ReportStatisticByAllPersonDTO() { }
@@ -27,7 +25,6 @@ namespace BLL.DTO
             ID = rep.ID;
             Person = rep.Person;
             CountHours = rep.CountHours;
-            CountCompletedTasks = rep.CountCompletedTasks;
             Position = rep.Position;
         }
 

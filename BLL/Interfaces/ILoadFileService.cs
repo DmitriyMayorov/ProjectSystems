@@ -10,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface ILoadFileService
     {
-        void SaveStatisticForAllPerson(string filename, List<ReportStatisticByAllPersonDTO> data, string header);
+        void SaveStatisticForAllPerson(string filename, List<ReportStatisticByAllPersonDTO> dataWorkersHourst, List<ReportCompletedTaskForWorkersDTO> dataTasks, string header);
         void SaveStatisitcForCurrentTask(string filename, List<StatisticTrackDTO> data, string header);
         void SaveStatisitcForTasksInCurrentProjectByStates(string filename, List<ReportProjectStatesDTO> data, string header);
     }

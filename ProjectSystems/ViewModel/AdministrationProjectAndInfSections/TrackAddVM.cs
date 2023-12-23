@@ -66,6 +66,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 temp.CountHours = Int32.Parse(SelectedCountHours);
 
                 int flagResult = _trackService.CreateTrack(temp);
+
                 if (flagResult == 0)
                     _notifier.ShowSuccess("Успешное добавление");
                 if (flagResult == 1)

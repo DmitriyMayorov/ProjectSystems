@@ -18,15 +18,15 @@ namespace BLL.Services
             this.db = db;
         }
 
-        public List<ReportStatisticByAllPersonDTO> GetStatisticByAllPerson(DateTime startDate, DateTime endDate)
+        public List<ReportCompletedTaskForWorkersDTO> GetReportCompletedTasksForWorkers()
         {
-            var result = db.Reports.MakeDiagnosisReport(startDate, endDate);
-            return result.Select(i => new ReportStatisticByAllPersonDTO(i)).ToList();
+            return db.Reports.MakeCompletedTasks().Select(i => new ReportCompletedTaskForWorkersDTO(i)).ToList();
         }
 
-        public List<ReportTasksForPersonDTO> GetTasksForPerson(string Person)
+        public List<ReportStatisticByAllPersonDTO> GetStatisticByAllPerson(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            var result = db.Reports.MakeCountTrackingHours(startDate, endDate);
+            return result.Select(i => new ReportStatisticByAllPersonDTO(i)).ToList();
         }
 
         public List<ReportProjectStatesDTO> MakeCountTasksForCurrentProjectByStates(ProjectDTO project)

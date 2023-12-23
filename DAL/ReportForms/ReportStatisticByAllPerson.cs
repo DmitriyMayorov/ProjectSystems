@@ -15,8 +15,6 @@ namespace DAL.ReportForms
 
         public long CountHours { get; set; }
 
-        public long CountCompletedTasks { get; set; }
-
         public string Position { get; set; }
     }
 }

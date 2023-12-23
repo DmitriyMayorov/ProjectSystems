@@ -57,7 +57,7 @@ namespace DAL.EF
                 .HasMany(e => e.Tracks)
                 .WithRequired(e => e.Task)
                 .HasForeignKey(e => e.IDTask)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Worker>()
                 .HasMany(e => e.Messages)

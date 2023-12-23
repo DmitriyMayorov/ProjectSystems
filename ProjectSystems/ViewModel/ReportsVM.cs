@@ -131,18 +131,19 @@ namespace ProjectSystems.ViewModel
                     _notifier.ShowWarning("Выбрите временной промежуток");
                     return;
                 }
-                var temp = _reportService.GetStatisticByAllPerson(StartDate, EndDate);
-                CountHoursTrack = new ChartValues<int>(temp.Select(i => (int)i.CountHours).ToList());
-                LabelsTrack = new ObservableCollection<string>(temp.Select(i => i.Person.ToString()).ToList());
+                var tempFirstDiagram = _reportService.GetStatisticByAllPerson(StartDate, EndDate);
+                CountHoursTrack = new ChartValues<int>(tempFirstDiagram.Select(i => (int)i.CountHours).ToList());
+                LabelsTrack = new ObservableCollection<string>(tempFirstDiagram.Select(i => i.Person.ToString()).ToList());
 
+                var tempSecondDiagram = _reportService.GetReportCompletedTasksForWorkers();
                 Series.Clear();
-                foreach (var item in temp)
+                foreach (var item in tempSecondDiagram)
                 {
                     Series.Add(new PieSeries()
                     {
                         Title = item.Person,
                         DataLabels = true,
-                        Values = new ChartValues<ObservableValue>() { new ObservableValue(item.CountCompletedTasks) }
+                        Values = new ChartValues<ObservableValue>() { new ObservableValue(item.CompletedTasks) }
                     });
                 }
                 VisDiagram = Visibility.Visible;
@@ -193,7 +194,7 @@ namespace ProjectSystems.ViewModel
                 string pathwithname = menu.FileName;
 
                 string header = "Отчёт по эффективности работы сотрудников \nза период между " + StartDate.Date.ToString() + " и " + EndDate.Date.ToString() + "\n";
-                _loadFileService.SaveStatisticForAllPerson(pathwithname, _reportService.GetStatisticByAllPerson(StartDate, EndDate), header);
+                _loadFileService.SaveStatisticForAllPerson(pathwithname, _reportService.GetStatisticByAllPerson(StartDate, EndDate), _reportService.GetReportCompletedTasksForWorkers(), header);
                 _notifier.ShowSuccess("Отчёт создан в PDF");
             }
             catch(Exception ex)

@@ -17,6 +17,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
 {
@@ -69,35 +70,21 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             addMenu = new TaskAddMenu(_projectDTO);
             addMenu.ShowDialog();
-            GetTasks(_status);
-        }
-
-        private void UpdateCommandExecute(object obj)
-        {
-            foreach (TaskDTO task in Tasks)
-            {
-                _taskService.UpdateTask(task);
-            }
+            Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
         }
 
         private void RemoveCommandExecute(object obj)
         {
-            _taskService.DeleteTask(SelectedTask.Id);
-            GetTasks(_status);
-        }
-
-        public void GetTasks(string status)
-        {
-            if (status == "Analyst")
-                Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
-            else if (status == "Coder")
-                Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
-            else if (status == "Tester")
-                Tasks = _projectDTO == null ? new ObservableCollection<TaskDTO>() : new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
-            else
+            try
             {
-                Tasks = null;
-                _notifier.ShowError("не правильный статус");
+                _taskService.DeleteTask(SelectedTask.Id);
+                Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
+                _notifier.ShowSuccess("Успешное удаление задания");
+            }
+            catch(Exception ex) 
+            {
+                _notifier.ShowError("Ошибка при удалении задания. Смотрите журанл логирования");
+                Log.Error("Ошибка при удалении задания - " + ex.Message);
             }
         }
 
@@ -124,7 +111,6 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
             _status = status;
 
             AddTask = new RelayCommand(AddTaskExecute);
-            UpdateTask = new RelayCommand(UpdateCommandExecute);
             RemoveTask = new RelayCommand(RemoveCommandExecute);
 
             _notifier = new Notifier(cfg =>
@@ -142,7 +128,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
             });
 
-            GetTasks(_status);
+            Tasks = new ObservableCollection<TaskDTO>(_taskService.GetTaskByStatusTaskFromCurrentProject(_projectDTO, _status));
             GetPersmission(_status);
         }
     }
