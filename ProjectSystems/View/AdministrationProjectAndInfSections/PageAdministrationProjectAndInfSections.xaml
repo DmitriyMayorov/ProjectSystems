@@ -46,7 +46,7 @@
                                  Command="{Binding TaskCommand}">
                         <Grid>
                             
-                            <TextBlock Text="Tasks" Style="{StaticResource Text_Style}"/>
+                            <TextBlock Text="Задания" Style="{StaticResource Text_Style}"/>
 
                             <Image Source="../../Images/Task.png" Width="30" Height="30"
                                    HorizontalAlignment="Left" Margin="15, 0, 0, 0"/>
@@ -58,7 +58,7 @@
                                  Command="{Binding InfSectionCommand}">
                         <Grid>
 
-                            <TextBlock Text="Sections" Style="{StaticResource Text_Style}"/>
+                            <TextBlock Text="Инф. секции" Style="{StaticResource Text_Style}"/>
 
                             <Image Source="../../Images/SectionPage.png" Width="30" Height="30"
                                    HorizontalAlignment="Left" Margin="15, 0, 0, 0"/>
@@ -70,7 +70,7 @@
                                  Command="{Binding TrackCommand}">
                         <Grid>
 
-                            <TextBlock Text="Tracking" Style="{StaticResource Text_Style}"/>
+                            <TextBlock Text="Треккинг" Style="{StaticResource Text_Style}"/>
 
                             <Image Source="../../Images/Tracking.png" Width="30" Height="30"
                                    HorizontalAlignment="Left" Margin="15, 0, 0, 0"/>
@@ -85,7 +85,7 @@
                             <Image Source="../../Images/Message.png" Width="30" Height="30"
                                    HorizontalAlignment="Left" Margin="15, 0, 0, 0"/>
 
-                            <TextBlock Text="Messages" Style="{StaticResource Text_Style}"/>
+                            <TextBlock Text="Сообщения" Style="{StaticResource Text_Style}"/>
 
                         </Grid>
                     </Menu:Button>
