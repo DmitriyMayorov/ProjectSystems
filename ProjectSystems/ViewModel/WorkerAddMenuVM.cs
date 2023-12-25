@@ -70,6 +70,12 @@ namespace ProjectSystems.ViewModel
                     _notifier.ShowWarning("Некорректные данные");
                     return;
                 }
+                int tempResult = 0;
+                if (!Int32.TryParse(PassportNum,out tempResult) || !Int32.TryParse(PassportSeries, out tempResult))
+                {
+                    _notifier.ShowWarning("Некорректные данные");
+                    return;
+                }
                 WorkerDTO temp = new WorkerDTO();
                 temp.Person = _fio;
                 temp.PassportNum = Int32.Parse(_passport_num);

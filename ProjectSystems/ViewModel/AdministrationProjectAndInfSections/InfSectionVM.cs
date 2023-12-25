@@ -52,7 +52,7 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             _infSectionMenu = new InfSectionAddMenu(_projectDTO);
             _infSectionMenu.ShowDialog();
-            Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSections());
+            Sections = new ObservableCollection<InfSectionDTO>(_infSerctionService.GetInfSectionsForCurrentProject(_projectDTO));
         }
 
         private void UpdateInfSectionCommandExecute(object obj)

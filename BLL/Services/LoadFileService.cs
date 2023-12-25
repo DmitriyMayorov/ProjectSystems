@@ -31,7 +31,7 @@ namespace BLL.Services
 
             document.Open();
 
-            BaseFont baseFont = BaseFont.CreateFont(@"C:\КПО КР\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont baseFont = BaseFont.CreateFont(@"C:\Windows\Fonts\times.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
             Paragraph headerPDF = new Paragraph(header, font);
@@ -93,7 +93,7 @@ namespace BLL.Services
 
             string test = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            BaseFont baseFont = BaseFont.CreateFont(@"C:\КПО КР\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont baseFont = BaseFont.CreateFont(@"C:\Windows\Fonts\times.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
             PdfPTable table = new PdfPTable(2);
@@ -137,7 +137,7 @@ namespace BLL.Services
 
             string test = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            BaseFont baseFont = BaseFont.CreateFont(@"C:\КПО КР\BLL\TimesNewRooman.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont baseFont = BaseFont.CreateFont(@"C:\Windows\Fonts\times.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
             PdfPTable table = new PdfPTable(2);

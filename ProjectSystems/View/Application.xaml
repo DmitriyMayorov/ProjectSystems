@@ -8,6 +8,7 @@
         d:DesignHeight="600" 
         d:DesignWidth="680"
         Background="Black"
+        Title="Система управления проектами"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <ContentControl Content="{Binding CurrentView}"/>

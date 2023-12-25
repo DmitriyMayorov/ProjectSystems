@@ -136,7 +136,7 @@
 
                 <Border CornerRadius="8" Background="DarkSlateGray" Margin="5, 0, 5, 10">
                     <DatePicker Height="45" SelectedDate="{Binding SelectedDate}"
-                                Foreground="White">
+                                Foreground="White" Language="RU">
                         <DatePicker.CalendarStyle>
                             <Style TargetType="Calendar" BasedOn="{StaticResource MaterialDesignCalendarPortrait}">
                                 <Style.Resources>

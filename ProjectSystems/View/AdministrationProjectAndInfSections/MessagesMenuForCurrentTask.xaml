@@ -59,14 +59,14 @@
                                   VerticalAlignment="Center"
                                   Margin="5">
                                     <TextBlock Text="{Binding DateMessage}" 
-                                               FontSize="18"/>
+                                               FontSize="14" TextWrapping="WrapWithOverflow"/>
                                 </Grid>
 
                                 <Grid Grid.Column="1"
                                   VerticalAlignment="Center"
                                   Margin="5">
-                                    <TextBox Text="{Binding TextMessage}"
-                                             FontSize="18"/>
+                                    <TextBlock Text="{Binding TextMessage}"
+                                             FontSize="16" TextWrapping="WrapWithOverflow"/>
                                 </Grid>
                             </Grid>
                         </DataTemplate>

@@ -45,8 +45,6 @@
 
         </Grid>
 
-        
-        <!--Replace to ListView-->
         <Grid Grid.Row="1" Margin="10, 10, 10, 10">
             <Border CornerRadius="15" Margin="10">
                 <DataGrid Foreground="White" x:Name="TaskGrid"
