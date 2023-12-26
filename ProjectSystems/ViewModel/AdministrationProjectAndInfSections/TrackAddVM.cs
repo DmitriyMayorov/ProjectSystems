@@ -63,6 +63,13 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                         return;
                 }
                 temp.IDTask = _taskDTO.Id;
+                int tempresult = 0;
+                if (!(Int32.TryParse(SelectedCountHours, out tempresult)))
+                {
+                    _notifier.ShowWarning("Не валидные данные");
+                    return;
+                }
+
                 temp.CountHours = Int32.Parse(SelectedCountHours);
 
                 int flagResult = _trackService.CreateTrack(temp);

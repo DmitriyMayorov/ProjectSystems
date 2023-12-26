@@ -130,11 +130,12 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
         {
             try
             {
-                if (Name == null || Description == null)
+                if (Name == null || Description == null || SelectedCategory == null || SelectedPriority == null)
                 {
-                    _notifier.ShowWarning("Выберите все нужные данные");
+                    _notifier.ShowWarning("Заполните минимально поля описания, названия, категории и приоритета");
                     return;
                 }
+
                 TaskDTO temp = new TaskDTO();
                 temp.Name = Name;
                 temp.Description = Description;
@@ -147,10 +148,14 @@ namespace ProjectSystems.ViewModel.AdministrationProjectAndInfSections
                 temp.WorkerTechlid = SelectedTechlid;
                 temp.WorkerTester = SelectedTester;
                 temp.IDProject = _projectDTO.Id;
-                temp.IDWorkerAnalyst = SelectedAnalyst.Id;
-                temp.IDWorkerCoder = SelectedCoder.Id;
-                temp.IDWorkerMentor = SelectedTechlid.Id;
-                temp.IDWorkerTester = SelectedTester.Id;
+                if (SelectedAnalyst != null)
+                    temp.IDWorkerAnalyst = SelectedAnalyst.Id;
+                if (SelectedCoder != null)
+                    temp.IDWorkerCoder = SelectedCoder.Id;
+                if (SelectedTechlid != null)
+                    temp.IDWorkerMentor = SelectedTechlid.Id;
+                if (SelectedTester != null)
+                    temp.IDWorkerTester = SelectedTester.Id;
 
                 _taskService.CreateTask(temp);
                 _notifier.ShowSuccess("Успешное создание задания");

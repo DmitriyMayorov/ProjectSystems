@@ -65,12 +65,15 @@ namespace BLL.DTO
             Priority = tk.Priority;
             IDWorkerCreater = tk.IDWorkerCreater;
             Deadline = tk.Deadline;
-
-            WorkerAnalyst = new WorkerDTO(tk.Worker);
-            WorkerCoder = new WorkerDTO(tk.Worker1);
-/*            WorkerTechlid = new WorkerDTO(tk.Worker2);*/
-            WorkerTester = new WorkerDTO(tk.Worker3);
-            WorkerCreater = new WorkerDTO(tk.Worker4);
+            if  (tk.Worker != null)
+                WorkerAnalyst = new WorkerDTO(tk.Worker);
+            if (tk.Worker1 != null)
+                WorkerCoder = new WorkerDTO(tk.Worker1);
+            /*            WorkerTechlid = new WorkerDTO(tk.Worker2);*/
+            if (tk.Worker3 != null)
+                WorkerTester = new WorkerDTO(tk.Worker3);
+            if (tk.Worker4 != null)
+                WorkerCreater = new WorkerDTO(tk.Worker4);
 
             Project = new ProjectDTO(tk.Project);
         }

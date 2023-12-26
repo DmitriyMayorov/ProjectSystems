@@ -46,14 +46,14 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView Grid.Row="3"
+            <ListView Grid.Row="3" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ItemsSource="{Binding Pages}"
                   SelectedItem="{Binding SelectedPage}"
                   VerticalAlignment="Top" Background="{x:Null}">
 
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10"/>
+                        <WrapPanel Margin="0, 0, 0, 10"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 

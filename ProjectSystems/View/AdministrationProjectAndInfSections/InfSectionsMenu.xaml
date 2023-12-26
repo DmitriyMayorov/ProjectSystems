@@ -45,7 +45,7 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListView
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ItemsSource="{Binding Sections}"
                   SelectedItem="{Binding SelectedSection}"
                   VerticalAlignment="Top">
