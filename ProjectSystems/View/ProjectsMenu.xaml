@@ -59,7 +59,7 @@
                         <DataGridTemplateColumn Header="Срок окончания" Width="0.5*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding DeadLine}" BorderBrush="Transparent"/>
+                                    <DatePicker SelectedDate="{Binding DeadLine}" BorderBrush="White"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
